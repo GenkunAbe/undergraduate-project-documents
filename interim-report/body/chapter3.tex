@@ -15,7 +15,7 @@
 在测试阶段，也即特征提取阶段，将最后的$p$个$n$分类器去掉，直接将$p$个256维的向量拼接（concatenate）为向量$\textbf g$或将$p$个2048维的向量拼接为向量$\textbf h$作为原始行人图像的特征表示。
 
 \subsubsection{Refined Part Pooling (RPP)}
-Part-based Convolutional Baseline (PCB) 将Feature Maps在竖直方向上均匀分成$p$个水平条，以获得行人各部位的特征。此方法有操作简单、运算量少、易于实现的优点，但忽略了人与人之间各部位的位置差距。因此，有必要在Baseline的基础上进行改进，不再局限于一个规范的矩形，而是通过计算判断每一个像素点「应该属于」哪一个部分。对于不同通道、相同位置的像素点，进行统一处理。
+Part-based Convolutional Baseline (PCB) 将Feature Maps在竖直方向上均匀分成$p$个水平条，以获得行人各部位的特征。此方法有操作简单、运算量少、易于实现的优点，但忽略了人与人之间各部位的位置差距。因此，有必要在Baseline的基础上进行改进，不再局限于一个规范的矩形，而是通过计算判断每一个像素点「应该属于」哪一个部分。如图\ref{fig:refined}所示。对于不同通道、相同位置的像素点，进行统一处理。
 
 于是目标就成了：给定一个列向量（column vector，表示不同通道、相同位置的像素点），判断其属于哪一个部分。这就变成了一个分类问题。在这里使用一个线性神经网络层，来将所有的列向量分类。线性神经网络层有权重$W$和偏置$b$组成，为了简化表示，这里省略偏置$b$。对于一个列向量$f$，其属于第$i$个部分的概率$P(p_i|f)$为：
 \begin{equation}
@@ -29,15 +29,7 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i|f_j)\times f_j
 \end{equation}
 其中$H$、$W$分别代表Feature Map的高和宽。
 
-如图\ref{fig:refined}所示。
-
-完整的PCB+RPP架构图如图\ref{fig:structure2}所示。
-
-\subsection{摄像头部署方案的评价指标}
-
-\subsection{强化学习模型}
-
-\subsection{面向CPU集群的分布式深度学习训练框架}
+如此一来即可得到与PCB算法等价的输出，再经过与PCB算法后半部分相同的$1\times1$卷积层和分类器，便完成了Refined Part Pooling (RPP)算法的训练模型。完整的PCB+RPP架构图如图\ref{fig:structure2}所示。
 
 \begin{figure}
 \centering
@@ -45,6 +37,24 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i|f_j)\times f_j
 \caption{Refined Part Pooling示意图}
 \label{fig:refined}
 \end{figure}
+
+\subsection{监控摄像头部署方案的评价指标}
+
+监控摄像头的部署方案包括摄像头的数量以及部署位置。摄像头的部署位置会影响监控场景的完整性、监控画面的光线质量以及监控目标的呈现角度。而监控摄像头数量受成本预算的限制，不可能无限增加，因此在预算有限的约束下，如何设计监控摄像头的部署位置，使得监控效果最优，便成为一个值得研究的问题。而在研究优化问题之前，需要定义监控摄像头部署方案的评价指标。
+
+监控效果的优劣可以定义为在当前的监控方案下，跨摄像头追踪特定行人的能力。当前在多摄像头多行人追踪（Multi-Target Multi-Camera Tracking，Multi-Target Multi-Camera Tracking）领域主流的评价指标有多目标跟踪准确度（MOTA）和识别F值（IDF1）。
+
+\subsubsection{多目标跟踪准确度（MOTA）}
+
+多目标跟踪准确度（Multiple Object Tracking Accuracy，MOTA）
+
+\subsubsection{识别F值（IDF1）}
+
+识别F值（Identification F-Score，IDF1）
+
+\subsection{强化学习模型}
+
+\subsection{面向CPU集群的分布式深度学习训练框架}
 
 \begin{figure}
 \centering
