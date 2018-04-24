@@ -1,0 +1,11 @@
+*.aux
+*.out
+*.bbl
+*.nav
+*.snm
+*.toc
+*.log
+*.xml
+*.blg
+*.pdf
+.vscode

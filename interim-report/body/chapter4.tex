@@ -1,0 +1,75 @@
+\section{项目内容}
+
+\subsection{数据采集}
+
+\subsection{数据预处理}
+
+\subsection{行人重识别领域state-of-the-art论文复现}
+
+\subsubsection{模型训练}
+
+\subsubsection{特征提取}
+
+\subsection{强化学习框架实现}
+
+\subsection{面向CPU集群的分布式深度学习训练框架}
+
+
+\subsection{代码编写}
+有了对论文思想的理解，再加上PyTorch这一强大的工具，代码实现起来就没那么困难了。
+PyTorch采用面向对象的思想，其中的模型和数据集都是以类的形式存在的，所以需要
+先写一个网络模型类和一个数据加载类。
+
+\subsubsection{改造神经网络模型}
+不同于 Caffe 把网络模型参数定义在一个配置文件内，以及 TensorFlow 的面向过程的搭建方式，
+PyTorch 里面网络模型的定义采用面向对象的方法，只需要继承 torch.nn.Module 类，并且重载
+里面的 \_\_init\_\_\(\) 方法和 forward\(\) 方法，便完成了一个神经网络的构造。\\
+
+\begin{python}
+class Net(nn.Module):
+    def __init__(self, out_size=1501):
+        super(Net, self).__init__()
+        resnet = resnet50(pretrained=True)
+        backbone_model = nn.Sequential(*list(resnet.children())[:-2])
+        self.resnet = backbone_model
+        self.resnet = self.resnet
+        init_val = [torch.zeros(24, 8) for _ in range(6)]
+        self.Ws = nn.ParameterList([Parameter(init_val[i]) for i in range(6)])
+        self.avgpool = nn.AvgPool2d((24, 8))
+        self.conv1 = nn.Conv2d(2048, 256, 1)
+        self.fcs = nn.ModuleList([nn.Linear(256, out_size) for _ in range(6)])
+
+    def forward(self, x):
+        x = self.resnet.forward(x)
+        xs = [None for _ in range(6)]
+        for i in range(6):
+            x_i = torch.mul(x, self.Ws[i])
+            x_i = self.avgpool(x_i)
+            x_i = F.relu(self.conv1(x_i))
+            x_i = x_i.view(-1, 256)
+            x_i = self.fcs[i](x_i)
+            xs[i] = x_i
+        return xs
+\end{python}
+
+\subsubsection{读入训练/测试数据}
+在行人重识别领域比较有影响力的数据集有Market1501，数据集的格式是原始的JPG图片，所以
+需要加载自己的训练集，这种情况下最好还是继承 Dataset 类比较方便。
+
+Dataset 类的本质是定义了数据所在的位置，以及数据需要预处理的方法。至于数据的位置是在
+硬盘里面还是提前加载到内存里面，由该类的内部实现决定。
+
+\subsubsection{训练过程代码}
+
+普通的单机训练过程主要定义损失函数、优化器，然后将输入数据经过网络模型的forward过程
+得到输出，用损失函数计算误差，将误差通过backward算得每一个中间参数的梯度，最后使用
+梯度下降优化器更新参数的梯度，完成一次迭代训练。
+
+若是使用GPU训练，则需要将模型和数据都放入GPU，在GPU内进行forward和backward操作。
+
+若是使用分布式训练，则需要初始化各节点与master节点的通信连接，然后等待master节点发来
+的训练任务。
+
+\subsubsection{测试过程代码}
+
+测试采用了与原论文中相同的Rank1、Rank5、Rank10和mAP指标，保证复现结果的正确性。
