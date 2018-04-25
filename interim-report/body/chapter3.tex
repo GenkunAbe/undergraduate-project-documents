@@ -42,19 +42,7 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i|f_j)\times f_j
 
 监控摄像头的部署方案包括摄像头的数量以及部署位置。摄像头的部署位置会影响监控场景的完整性、监控画面的光线质量以及监控目标的呈现角度。而监控摄像头数量受成本预算的限制，不可能无限增加，因此在预算有限的约束下，如何设计监控摄像头的部署位置，使得监控效果最优，便成为一个值得研究的问题。而在研究优化问题之前，需要定义监控摄像头部署方案的评价指标。
 
-监控效果的优劣可以定义为在当前的监控方案下，跨摄像头追踪特定行人的能力。当前在多摄像头多行人追踪（Multi-Target Multi-Camera Tracking，Multi-Target Multi-Camera Tracking）领域主流的评价指标有多目标跟踪准确度（MOTA）和识别F值（IDF1）。
-
-\subsubsection{多目标跟踪准确度（MOTA）}
-
-多目标跟踪准确度（Multiple Object Tracking Accuracy，MOTA）
-
-\subsubsection{识别F值（IDF1）}
-
-识别F值（Identification F-Score，IDF1）
-
-\subsection{强化学习模型}
-
-\subsection{面向CPU集群的分布式深度学习训练框架}
+监控效果的优劣可以定义为在当前的监控方案下，跨摄像头追踪特定行人的能力。当前在多摄像头多行人追踪（Multi-Target Multi-Camera Tracking，Multi-Target Multi-Camera Tracking）领域主流的评价指标有多目标跟踪准确度（$\mathit{MOTA}$）和识别F值（$\mathit{IDF_1}$）。
 
 \begin{figure}
 \centering
@@ -62,3 +50,37 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i|f_j)\times f_j
 \caption{PCB+RPP架构图}
 \label{fig:structure2}
 \end{figure}
+
+\subsubsection{多目标跟踪准确度（$\mathit{MOTA}$）}
+
+多目标跟踪准确度（Multiple Object Tracking Accuracy，$\mathit{MOTA}$）是衡量多目标追踪效果的常见指标。对于一段视频，其画面帧的总数为$T$，那么该段视频的多目标追踪准确度（$\mathit{MOTA}$）的定义为：
+\begin{equation}
+\mathit{MOTA}=1-\frac{\mathit{FP}+\mathit{FN}+\Phi}{T}
+\end{equation}
+其中$\mathit{FN}$是视频所有帧中将负样本预测为正的总数，$\mathit{FP}$是视频所有帧中将正样本预测为负的总数，$\Phi$是预测序列中标签跳变的次数。MOTA指标的值域为$(-\infty,1]$，越接近1代表跟踪的效果越好。
+
+\subsubsection{识别F值（$\mathit{IDF_1}$）}
+
+相比与$\mathit{MOTA}$中更多地关注目标人群的召回率以及目标追踪的稳定性，识别F值（Identification F-Score，$\mathit{IDF_1}$）更关注多摄像头多行人追踪过程中，行人标签的准确率。对于一段总帧数为$T$的视频，其识别F值（$\mathit{IDF_1}$）定义为：
+\begin{equation}
+\mathit{IDF_1}=\frac{2\times\mathit{IDTP}}{2\times\mathit{IDTP}+\mathit{IDFP}+\mathit{IDFN}}
+\end{equation}
+其中$\mathit{IDTP}$是视频所有帧中将人物标签预测准确的总和，$\mathit{IDFP}$是视频所有帧中将正样本的人物标签预测错误的总和，$\mathit{IDFN}$是视频所有帧中将负样本的人物标签预测错误的总和。
+
+\subsubsection{评价指标与当前的数据库结合}
+
+结合本项目的实际情况，以及第一次预拍摄收集到的数据集的特点，将原始的17个摄像头中的第1个作为行人重识别算法的图库图片来源，其余16个摄像头按照物理位置和拍摄画面分为$G=5$组，每组摄像头个数为2至4个不等，定义$N=16$为待分配的摄像头总数，第$i$组的摄像头个数为$C_i$，同一组内摄像头大致拍摄到同一个物理位置，代表人物监控追踪场景中重点关注的位置。第$i$组的第$j$个摄像头定义为$c_{i,j}$，摄像头$c_{i,j}$的画面帧集合为$I_{c_{i,j}}$。假设在预算有限的前提下，每个位置（每个分组）只能选择1个摄像头，如何从组内选择合适的摄像头，使得监控效果最佳，便是需要解决的问题。该优化问题可以用数学语言形式化表示为：
+\begin{equation}
+\max \left\{\mathop{\rm eval}\left(\sum_{i=1}^G I_{c_{i,j}}\right)\middle\vert 1\leq i \leq G, 1\leq j \leq C_i\right\}
+\end{equation}
+其中$I_1+I_2$表示摄像头1的视频数据与摄像头2的视频数据在时序上依次拼接。$\mathop{\rm eval}(I)$表示对视频数据$I$做多目标跟踪准确度（$\mathit{MOTA}$）或识别F值（$\mathit{IDF_1}$）评估。
+
+\subsection{强化学习模型}
+
+强化学习（Reinforcement Learning）是近年来十分流行的人工智能算法，相比于监督学习（Supervised Learning），强化学习不需要整个环境（Environment）所有情况的监督信息，只需要环境在某种特定的情况下给出相应的反馈（Reward）。在很多现实问题当中，优化空间的状态个数可能是个非常大的数字，且很证明是否收集到足够多样本，可以用来近似代表位置环境状态的分布。同时，在围棋问题中\cite{silver2016mastering}，各状态空间很难用监督的方法给每个状态评估价值，而强化学习只需要环境在每次动作（Action）之后给出相应的反馈，即可逐渐向更优的方向前进。强化学习也不属于无监督学习（Unsupervised Learning），无监督学习对于出现在测试集却不在训练集的样本没有处理能力，只能错误地分到已有的类中，而强化学习可以应对没有遇到的情况。
+
+强化学习模型中的一般形式是一个智能体（Agent）在一个客观的环境（Environment）中，每一个时刻处于一个状态（State），根据当前状态和某种策略（Policy）采取某种动作（Action），然后得到环境的反馈（Reward），并据此按照状态转移规则转移到下一个状态。在本项目中，根据要解决的具体问题，将上述概念相应定义如下：
+
+当前的状态的集合$S=\left\{\mathbf{s}\middle\vert\mathbf{s}\in\mathbb{R}^{N}, s_i\in\{0, 1\}\right\}$，其中$s_i=1$表示选择了第$i$个摄像头。智能体可以采取的动作集合$A=\left\{\mathbf{a}\middle\vert\mathbf{a}\in\mathbb{R}^N,\mathbf{a}_i \in \{0,1\}\right\}$，按照策略 $P$ 来变更状态， 1 表示选择该摄像头。在本项目中，进行了 Action 之后， State 是确定的，不存在一个 Action 可能导致几个不同的 State 的情况，所以状态转移概率 $\pi({\bf s}^{t}|{\bf s}^{t-1}, {\bf a})\equiv1$。
+
+\subsection{面向CPU集群的分布式深度学习训练框架}
