@@ -83,15 +83,15 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i\,\vert\,f_j)\times f_j
 
 当前的状态的集合$S=\left\{\boldsymbol{s}\,\middle\vert\,\boldsymbol{s}\in\mathbb{R}^{N}, s_i\in\{0, 1\}\right\}$，其中$s_i=1$表示选择了第$i$个摄像头。智能体可以采取的动作集合为$A=\left\{\boldsymbol{a}\,\middle\vert\,\boldsymbol{a}\in\mathbb{R}^N,\boldsymbol{a}_i \in \{0,1\}\right\}$，按照策略 $P$ 来选择动作， 1 表示选择该摄像头，0表示不选该摄像头。在本项目中，进行了动作之后， 状态是确定的，不存在一个动作可能导致几个不同的后续状态的情况，即状态转移概率 $\pi\left(\boldsymbol{s}^t\,\middle\vert\,\boldsymbol{s}^{t-1}, \boldsymbol{a}\right)\equiv1$。执行动作之后得到的反馈$r=\mathop{\rm{eval}}\left(I^{(t+1)}\right)-\mathop{\rm{eval}}\left(I^{(t)}\right)$，其中$I^{(t)}$表示$t$时刻的视频数据，由$t$时刻的状态$\boldsymbol{s}^{(t)}$决定。当前状态 $S$ 的长期价值$V:S\to \mathbb{R}^N$，是一个可学习的变量，代表智能体对于当前环境的认识程度。智能体应对当前状态的策略$P:V \to A$，是长期价值 $V$ 到动作 $A$ 的映射，可以简单地用贪心的策略，即选择概率最高的 5 个摄像头。也可以用 Policy Network ，即深度神经网络来实现。在本项目中采用简单的贪心策略实现。
 
-按照以上定义，智能体的一个动作就是选择一个合法的摄像头部署方案。对于一个动作，它的反馈就是下一个状态的性能指标（$\mathit{MOTA}$ 或 $\mathit{IDF_1}$）减去当前状态的性能指标。在反馈已知的前提下，适合用 Q-Learning\cite{watkins1989learning} 算法。在Q-Learning算法中，智能体关于当前状态的长期价值表示为一个价值矩阵$Q$。Q-Learning算法首先随机初始化各个状态的长期价值，让智能体在环境中随机游走，每走一步会得到一个反馈，根据反馈更新当前状态的长期价值，直到收敛。智能体从而可学习出一个对于该环境的认知。本项目中使用Q-Learning算法求当前状态的长期价值如算法\ref{alg:qlearning}所示。
+按照以上定义，智能体的一个动作就是选择一个合法的摄像头部署方案。对于一个动作，它的反馈就是下一个状态的性能指标（$\mathit{MOTA}$ 或 $\mathit{IDF_1}$）减去当前状态的性能指标。在反馈已知的前提下，适合用 Q-Learning\cite{watkins1989learning} 算法。在Q-Learning算法中，智能体关于当前状态的长期价值表示为一个价值矩阵$Q$。Q-Learning算法首先随机初始化各个状态的长期价值，让智能体在环境中随机游走，每走一步会得到一个反馈，根据反馈更新当前状态的长期价值，直到收敛。智能体从而可学习出一个对于该环境的认知。本项目中使用Q-Learning算法求当前状态的长期价值如算法\ref{alg:qlearning}所示，其中最关键的算法在于如何更新长期价值$Q$，更新的公式中包含两个参数学习率$\alpha$和远见性$\gamma$，学习率$\alpha$表示$Q$的更新速度，远见性$\gamma$的取值范围为$(0, 1)$，表示智能体对于当前反馈与长远价值的重视程度，$\gamma$越大，代表越重视长远价值。
 
 \begin{algorithm}
     \caption{Q-Learning 算法求当前状态的长期价值}
     \label{alg:qlearning}
     \begin{algorithmic}[1]
-        \Require 状态集合$S$、动作集合$A$、迭代次数$N$
+        \Require 状态集合$S$、动作集合$A$、生命周期数$N$、学习率$\alpha$、远见性$\gamma$
         \Ensure 长期价值矩阵$Q$
-        \Function {QLearning}{$S, A, N$}
+        \Function {QLearning}{$S, A, N, \alpha, \gamma$}
             \State 随机初始化长期价值矩阵$Q$
             \For{$i=0\to N$}
                 \State $\boldsymbol{s}^{(0)}\gets\boldsymbol{s}^\star$，$\boldsymbol{s}^\star$为从状态集合$S$中随机初始化的智能体的状态
