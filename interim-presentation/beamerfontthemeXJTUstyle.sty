@@ -1,0 +1,34 @@
+
+\mode<presentation>
+%%    font
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathrsfs}
+\RequirePackage{calrsfs}
+\@ifpackageloaded{fontspec}{
+    \PassOptionsToPackage{no-math}{fontspec}
+}{
+    \RequirePackage[no-math]{fontspec}
+}
+
+% 全局字体（西文字体）
+\RequirePackage{xltxtra,xunicode}
+\setmainfont[Mapping=tex-text]{Times New Roman}
+\setsansfont[Mapping=tex-text]{思源黑体 Regular}
+\setmonofont{Fira Code}
+
+%% 中文字体
+\setCJKmainfont[BoldFont={思源宋体 Bold}, ItalicFont={AR PL UKai CN}]{Source Han Serif SC}
+\setCJKsansfont[BoldFont={思源黑体 Bold}]{思源黑体 Regular}
+\setCJKmonofont{AR PL UKai CN}       % macos word
+
+\usefonttheme{professionalfonts}
+\usefonttheme[onlymath]{serif}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{subtitle}{size=\Large, series=\mdseries}
+\setbeamerfont{author}{size=\small, series=\bfseries}
+\setbeamerfont{date}{size=\small}
+
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+
+\mode<all>
