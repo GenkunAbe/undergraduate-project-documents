@@ -7,6 +7,7 @@
 \RequirePackage{color}
 \RequirePackage{caption}
 \RequirePackage{adjustbox}
+\RequirePackage{setspace}
 \usetikzlibrary{external}
 %\RequirePackage[numbers,sort&compress,super,square]{natbib}
 %% hyperref
@@ -53,9 +54,11 @@
       \vfill
       \vspace{\baselineskip}
       \centering
+      \begin{spacing}{2.0}
       {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}
+      \end{spacing}
 
-      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\vspace*{\baselineskip}
+      % {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\vspace*{\baselineskip}
 
     \vspace*{2\baselineskip}
       \begin{beamercolorbox}[wd=\beamer@plainpagewidth,center,sep=\baselineskip]{frametitle}%

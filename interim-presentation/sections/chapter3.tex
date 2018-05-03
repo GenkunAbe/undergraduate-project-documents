@@ -1,31 +1,27 @@
-\section{实验结果}
+\section{今后工作}
 
-\subsection{自采集数据呈现}
+\subsection{多集群CPU}
 
-    \begin{frame}{行人重识别的研究内容}
+    \begin{frame}{多集群CPU分布式训练}
     \begin{block}{}
-    行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
+    深度神经网络模型的训练过程一般可分为前向计算（Forward）、误差反向传播（Loss Backpropagation）和参数更新。其中前向计算和反向传播的计算量很大，而且可以针对不同的训练数据进行同步计算，因此深度神经网络模型的训练过程在结构上很适合进行分布式训练。
     \end{block}
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/dist}
+    \caption{分布式神经网络训练架构图}
+    \label{fig:dist}
+    \end{figure}
     \end{frame}
 
-    \begin{frame}{多集群CPU}
+\subsection{文献翻译 + 论文写作}
+
+    \begin{frame}{文献翻译 + 论文写作}
     \begin{block}{}
-    要实现行人的重识别需要借助计算机视觉领域的技术。目前的计算机视觉算法的前沿关注点主要集中在深度学习技术。由于深度学习的海量计算需求和GPU强大的并行计算能力，大部分深度学习模型都是借助GPU来调整模型参数。然而使用GPU进行运算也存在许多问题，例如GPU设备通常比较昂贵，且少见于嵌入式设备中。同时GPU的显存普遍不高，限制了模型的规模以及每一批次数据的规模。与此同时，多CPU集群具有硬件成本低、搭建方式灵活以及部署广泛等优点，然而对于深度学习算法在多CPU集群上的研究与应用少之又少。因此，有必要对深度学习算法在多CPU集群上的性能表现进行深入的调查、分析和研究。
-    \end{block}
-    \end{frame}
-
-\subsection{论文复现}
-
-    \begin{frame}{行人重识别的研究内容}
-    \begin{block}{}
-    行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
-    \end{block}
-    \end{frame}
-
-\subsection{强化学习}
-
-    \begin{frame}{行人重识别的研究内容}
-    \begin{block}{}
-    行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
+    当前进度：
+    \begin{enumerate}
+        \item 文献翻译 40\%
+        \item 论文写作 60\%
+    \end{enumerate}
     \end{block}
     \end{frame}

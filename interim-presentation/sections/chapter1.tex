@@ -1,31 +1,47 @@
 \section{项目背景及意义}
 
-\subsection{行人重识别}
-
     \begin{frame}{行人重识别的研究内容}
     \begin{block}{}
     行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
     \end{block}
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth,trim={0 200 0 0},clip=true]{figures/vis3}
+    \caption{行人重识别解决的问题}
+    \label{fig:reid_intro}
+    \end{figure}
     \end{frame}
+
+
+    \begin{frame}{摄像头选择}
+    \begin{block}{}
+    从下图可以看出，相同拍摄地点的不同摄像头所拍摄的画面之间存在较大差异，如角度、光线、拍摄范围与通过时长。这些差异可能会影响行人跟踪的效果。
+    \end{block}
+    \begin{table}
+    \centering
+    \begin{tabular}{c}
+    \includegraphics[width=12mm]{figures/1-1}~\includegraphics[width=12mm]{figures/1-2} \\
+    \includegraphics[width=12mm]{figures/1-4}~\includegraphics[width=12mm]{figures/1-5}~\includegraphics[width=12mm]{figures/1-6} \\
+    \includegraphics[width=12mm]{figures/2-1}~\includegraphics[width=12mm]{figures/2-2}~\includegraphics[width=12mm]{figures/2-3}~\includegraphics[width=12mm]{figures/2-4} \\
+    \includegraphics[width=12mm]{figures/3-1}~\includegraphics[width=12mm]{figures/3-2}~\includegraphics[width=12mm]{figures/3-3} \\
+    \includegraphics[width=12mm]{figures/3-4}~\includegraphics[width=12mm]{figures/3-5}~\includegraphics[width=12mm]{figures/3-6}~\includegraphics[width=12mm]{figures/3-7} \\
+    \end{tabular}
+    \end{table}
+    \end{frame}
+
 
     \begin{frame}{多集群CPU}
     \begin{block}{}
-    要实现行人的重识别需要借助计算机视觉领域的技术。目前的计算机视觉算法的前沿关注点主要集中在深度学习技术。由于深度学习的海量计算需求和GPU强大的并行计算能力，大部分深度学习模型都是借助GPU来调整模型参数。然而使用GPU进行运算也存在许多问题，例如GPU设备通常比较昂贵，且少见于嵌入式设备中。同时GPU的显存普遍不高，限制了模型的规模以及每一批次数据的规模。与此同时，多CPU集群具有硬件成本低、搭建方式灵活以及部署广泛等优点，然而对于深度学习算法在多CPU集群上的研究与应用少之又少。因此，有必要对深度学习算法在多CPU集群上的性能表现进行深入的调查、分析和研究。
-    \end{block}
-    \end{frame}
-
-\subsection{摄像头选择}
-
-    \begin{frame}{行人重识别的研究内容}
-    \begin{block}{}
-    行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
-    \end{block}
-    \end{frame}
-
-\subsection{多集群CPU}
-
-    \begin{frame}{行人重识别的研究内容}
-    \begin{block}{}
-    行人重识别，指的是在多个视野不重叠的监控视频中，重新识别那些之前出现过的行人，即把当前行人与之前已标记的人物相对应。
+    目前大部分深度学习模型都是借助GPU来调整模型参数。\\
+    GPU 缺点：
+    \begin{enumerate}
+        \item GPU设备通常比较昂贵，且少见于嵌入式设备中
+        \item GPU的显存普遍不高，限制了模型的规模及数据量
+    \end{enumerate}
+    多CPU集群优势：
+    \begin{enumerate}
+        \item 硬件成本低、搭建方式灵活以及部署广泛
+        \item 对于深度学习算法在多CPU集群上的研究与应用少之又少
+    \end{enumerate}
     \end{block}
     \end{frame}

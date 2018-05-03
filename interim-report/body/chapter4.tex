@@ -21,7 +21,7 @@
 有了每一个演员演员进入每一个摄像头的时间点，然后再分别估计每一个摄像头画面中演员停留的平均时间，即可得到每一个演员在每一个视频文件中的时间段，从而利用 FFmpeg 将每一个演员在没一个摄像头的视频片断切割出来。
 此阶段的输出是：每个演员在每个摄像头的视频片断。
 
-\subsubsection{行人识别}
+\subsubsection{行人检测}
 行人识别属于计算机视觉领域中的目标识别（Object Detection）问题，目前目标识别问题state-of-the-art 是何凯明等人的Mask RCNN\cite{he2017mask}模型。Mask RCNN在Faster RCNN\cite{ren2015faster}的基础上，添加了一条网络分支，以实现在目标检测的同时，将每个像素分割出来，得到高质量的分割结果。
 
 在本项目中，使用了Mask RCNN作者公开的源代码项目Detectron\cite{Detectron2018}作为行人检测工具，该项目中包含预训练的网络参数和目标检测API，预训练模型在训练过程中使用了COCO 2014\cite{lin2014microsoft}数据集，模型的后端深度神经网络使用了ResNet-101\cite{he2016deep}网络。
