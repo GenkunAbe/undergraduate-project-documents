@@ -74,6 +74,15 @@
   \fi
 \fi
 
+% 字体颜色
+\RequirePackage{xcolor}
+% 下划线
+\RequirePackage{ulem}
+%多行
+\RequirePackage{multirow}
+%背景图片
+\RequirePackage[pages=some]{background}
+
 % Math & format packages
 \RequirePackage[fleqn]{amsmath}
 \RequirePackage{amssymb}
@@ -225,6 +234,10 @@
         \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
         \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
     \setCJKfamilyfont{hei}{SimHei}
+    \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
+    \newcommand{\fangsong}{\CJKfamily{fangsong}}
+    \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
+    \newcommand{\hwzs}{\CJKfamily{hwzs}}
 %   \else
 %     \setmainfont[Ligatures=TeX]{FreeSerif}
 %     \setCJKmainfont{AR PL UMing CN}
@@ -316,8 +329,31 @@
     }%
 }
 
+%本科任务书
+\thu@define@term{fromyear}
+\thu@define@term{frommonth}
+\thu@define@term{fromday}
+\thu@define@term{toyear}
+\thu@define@term{tomonth}
+\thu@define@term{todayy}
+\thu@define@term{place}
+\thu@define@term{background}
+\thu@define@term{rawmaterial}
+\thu@define@term{maintask}
+\thu@define@term{requirement}
+\thu@define@term{finalmaterial}
+\thu@define@term{mainreference}
 % Interfaces, or terms
 \thu@define@term{cauthor}
+\thu@define@term{stuid}
+\thu@define@term{covertitlefirst}
+\thu@define@term{covertitlesecond}
+\thu@define@term{cschool}
+\thu@define@term{cactualinstitution}
+\thu@define@term{cmajor}
+\thu@define@term{cclass}
+\thu@define@term{cyear}
+\thu@define@term{cmonth}
 \thu@define@term{ctitle}
 \thu@define@term{csupervisor}
 \thu@define@term{cabstract}
@@ -346,13 +382,13 @@
 
 % Geometry specifications
 \topmargin=-1in % 消除页眉-边界距离初始值
-\headheight=5.5mm % 该设定使得效果与官方doc模板相似
+\headheight=6.5mm % 该设定使得效果与官方doc模板相似
 \textheight=242mm % 297-30-25
 \footskip=7.5mm
 \setlength\voffset{2cm} % 规范：页眉距边界2.0cm, one inch + \voffset + \topmargin = 2cm.
 % 规范：上装订线边距3cm，即上边距到正文3cm。
 % 需要 1 inch + \voffset + \topmargin + \headheight + \headsep = 3.0cm
-\headsep= 4.5mm
+\headsep= 3.5mm
 \pagenumbering{Roman}
 \xiaosi
 \setlength{\parindent}{2em}
@@ -485,27 +521,181 @@
       \linespread{1.2} \selectfont
     \fi
 
+    \newcommand{\coverul}[3]{%
+        \renewcommand \ULdepth {#1}%
+        \renewcommand \ULthickness {#2}%
+        \uline{#3}%
+    }
+    \newcommand{\coverboxul}[4]{%
+        \coverul{#1}{#2}{\makebox[#3]{\hfill{#4}\hfill}}
+    }
+    \newcommand{\ezcoverul}[1]{
+        \coverul{3pt}{1pt}{#1}
+    }
+    \newcommand{\ezcoverboxul}[2]{
+        \ezcoverul{\makebox[#1]{\hfill{#2}\hfill}}
+    }
+    \newcommand{\eztaskul}[1]{
+        \coverul{2pt}{0.8pt}{#1}
+    }
+    \newcommand{\eztaskboxul}[2]{
+        \eztaskul{\makebox[#1]{\hfill{#2}\hfill}}
+    }
+    \newcommand{\eztaskfillul}[1]{
+        \eztaskul{\hspace{\fill}#1\hspace{\fill}}
+    }
+
     \renewcommand\footnoterule{\vspace*{-3pt}% eggache!
         \hrule width 0.25\textwidth height 0.4pt
             \vspace*{2.6pt}}
 
     \fancypagestyle{plain}{%
       \fancyhf{}
-      \fancyhead[CO]{\if@mainmatter\wuhao \ifxjtu@inmainbody\thechapter\quad\fi \leftmark\fi}
-      \fancyhead[CE]{\wuhao \ifxjtu@bachelor
-                        西安交通大学本科毕业设计（论文）
-                        \fi}
+      \fancyhead[CO]{\begin{spacing}{0.3}\wuhao\leftmark\end{spacing}}
+      \fancyhead[CE]{\begin{spacing}{0.3}\wuhao 西安交通大学本科毕业设计（论文）\end{spacing}}
       \fancyfoot[OR,EL]{\xiaowu ~\thepage~}
       \renewcommand{\headrulewidth}{\if@mainmatter 0.5pt\else 0pt \fi}
       \renewcommand{\headrule}{\hrule \@height \headrulewidth \@width \headwidth \vskip .5pt
       \hrule \@height \headrulewidth \@width \headwidth \vskip -\headrulewidth}
-
     }
     \pagestyle{plain}
 
     \type{本科}
+
+    \renewcommand\xjtuchead{
+        \thispagestyle{empty}
+        \newgeometry{headheight=5.5mm,textheight=257mm,voffset=2cm,headsep=4.5mm,textwidth=146.6mm,left=31.7mm,right=31.7mm}
+        \topmargin=-1in
+        \begin{center}
+            \vspace*{-4pt}
+            \includegraphics[width=11422590sp]{logo_red}\\
+            \vspace{\baselineskip}
+            \vspace{4pt}
+            {\renewcommand{\CJKglue}{\hskip 3.55pt}\fangsong\xiaochu\textcolor{red}{\textbf{毕业设计（论文）}}}\\
+            \vspace{2\baselineskip}
+            \vspace{1pt}
+            \sanhao\textbf{
+                \begin{tabular}{ @{}p{146.6mm} }
+                \makebox[3em]{题\hspace{\fill}目}\ezcoverboxul{\textwidth-3em}{\xjtu@covertitlefirst}\\[8pt]
+                \makebox[3em]{\hfill}\ezcoverboxul{\textwidth-3em}{\xjtu@covertitlesecond}\\[14pt]
+                \vspace{2\baselineskip}
+                \ezcoverul{~\xjtu@cschool~}学院~
+                \ezcoverul{~\xjtu@cmajor~}系（专业）~
+                \ezcoverul{~\xjtu@cclass~}班\\
+                \vspace{\baselineskip}
+                \makebox[4em][s]{学生姓名}\ezcoverboxul{\textwidth-4em}{\xjtu@cauthor}\\
+                \vspace{\baselineskip}
+                \makebox[4em][s]{学\hspace{\fill}号}\ezcoverboxul{\textwidth-4em}{\xjtu@stuid}\\
+                \vspace{\baselineskip}
+                \makebox[4em][s]{指导教师}\ezcoverboxul{\textwidth-4em}{\xjtu@csupervisor}\\
+                \vspace{\baselineskip}
+                \makebox[6em][s]{设计所在单位}\ezcoverboxul{\textwidth-6em}{\xjtu@cactualinstitution}\\
+            \end{tabular}}
+            \vskip 2\baselineskip
+            \vskip -3pt
+            \sanhao\textbf{\xjtu@cyear 年~\xjtu@cmonth 月~}
+        \end{center}
+
+        \restoregeometry
+    }
+
+    \newcommand\ctaskdescription{
+        \setcounter{page}{1}
+        \chaptermark{毕业设计（论文）任务书}
+        \xiaosi{
+            \begin{center}
+                \begin{tabular}{p{23.2em}l}
+                    \\[3pt]
+                    & \makebox[6em]{系\hspace{\fill}(\hspace{\fill}专\hspace{\fill}业\hspace{\fill})}~\eztaskboxul{5.5em}{\hfill}\\
+                    \multicolumn{1}{c}{\multirow{2}{*}{\sanhao\hwzs\textbf{西~~安~~交~~通~~大~~学}}}
+                    & \makebox[6em]{系(专业)主任}~\eztaskboxul{5.5em}{\hfill}\\
+                    & \makebox[6em]{批\hspace{\fill}准\hspace{\fill}日\hspace{\fill}期}~\eztaskboxul{5.5em}{\hfill}\\
+                \end{tabular}
+                \vskip 2\baselineskip
+                {\erhao 毕业设计(论文)任务书}\\
+                \vspace{20pt}
+            \end{center}
+            \eztaskul{~\xjtu@cschool~}学院~
+            \eztaskul{~\xjtu@cmajor~}系(专业)~
+            \eztaskul{~\xjtu@cclass~}班~\hspace{\fill}
+            学生~\eztaskul{\xjtu@cauthor}\\\vspace{-10pt}\\
+            毕业设计(论文)课题~\eztaskfillul{\xjtu@ctitle}\\\vspace{-10pt}\\
+            毕业设计(论文)工作自~\eztaskfillul{\xjtu@fromyear}~年~\eztaskfillul{\xjtu@frommonth}~月~\eztaskfillul{\xjtu@fromday}~日起至~\eztaskfillul{\xjtu@toyear}~年~\eztaskfillul{\xjtu@tomonth}~月~\eztaskfillul{\xjtu@todayy}~日止\\\vspace{-10pt}\\
+            毕业设计(论文)进行地点：\eztaskfillul{\xjtu@place}
+
+            \vskip 10pt
+            {\noindent 课题的背景、意义及培养目标}\vspace{-15pt}\\
+
+            \uline{\xjtu@background}
+
+            \vskip 10pt
+            {\noindent 设计(论文)的原始数据与资料}\vspace{-15pt}\\
+
+            \uline{\xjtu@rawmaterial}
+
+            \vskip 10pt
+            {\noindent 课题的主要任务}\vspace{-15pt}\\
+
+            \uline{\xjtu@maintask}
+
+            \vskip 10pt
+            {\noindent 课题的基本要求(工程设计类题应有技术经济分析要求)}\vspace{-15pt}\\
+
+            \uline{\xjtu@requirement}
+
+            \vskip 10pt
+            {\noindent 完成任务后提交的书面材料要求(图纸规格、数量，论文字数，外文翻译字数等)}\vspace{-15pt}\\
+
+            \uline{\xjtu@finalmaterial}
+
+            \vskip 10pt
+            {\noindent 主要参考文献}\vspace{-15pt}\\
+
+            \uline{\xjtu@mainreference}
+
+            \vspace{\fill}
+
+            \begin{flushright}
+                指导教师\eztaskboxul{15em}{\hfil}\\[14pt]
+                接受设计（论文）任务日期\eztaskboxul{7em}{\hfil}\\[14pt]
+                （注：由指导教师填写）\hspace{\fill}学生签名：\eztaskboxul{7em}{\hfil}\\
+            \end{flushright}
+        }
+        \clearpage
+    }
+
+    \newcommand\creviewopinion{
+        \chaptermark{毕业设计(论文)考核评议书}
+        \backgroundsetup{
+            position={80mm,-105mm},
+            scale=1,
+            color=black,
+            opacity=1,
+            angle=0,
+            contents={\includegraphics[width=\paperwidth]{page3}}
+        }
+        \BgThispage
+        \textcolor{white}{\_}
+        \clearpage
+    }
+
+    \newcommand\cfinalresult{
+        \chaptermark{毕业设计(论文)答辩结果}
+        \backgroundsetup{
+            position={80mm,-105mm},
+            scale=1,
+            color=black,
+            opacity=1,
+            angle=0,
+            contents={\includegraphics[width=\paperwidth]{page4}}
+        }
+        \BgThispage
+        \textcolor{white}{\_}
+        \clearpage
+    }
+
     \renewcommand\xjtucinfopage{
-        \chaptermark{摘要}
+        \chaptermark{摘\quad 要}
         \noindent {\bf
         论文题目： \xjtu@ctitle\\
         学生姓名： \xjtu@cauthor\\
@@ -572,7 +762,7 @@
                                 \fi}
                 \fancyfoot[ER,OL]{\small ~\thepage~}
                 \renewcommand{\headrulewidth}{\if@mainmatter 0.5pt\else 0pt \fi}
-                \renewcommand{\headrule}{\hrule \@height \headrulewidth \@width \headwidth \vskip .5pt
+                \renewcommand{\headrule}{\vspace*{10pt}\hrule \@height \headrulewidth \@width \headwidth \vskip .5pt
                 \hrule \@height \headrulewidth \@width \headwidth \vskip -\headrulewidth}
             }
             \pagestyle{plain}

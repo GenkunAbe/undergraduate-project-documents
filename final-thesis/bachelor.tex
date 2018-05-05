@@ -25,8 +25,8 @@
 % The Current Maintainer of this work is Aetf.
 %
 \documentclass[
-    bachelor, 
-    %bigskip, % sets linespread factor to 1.5
+    bachelor,
+    % bigskip, % sets linespread factor to 1.5
     %propfont, % whether to use property fonts
     %nofont, % remember to manally set the fonts
     pdflinks,
@@ -40,7 +40,12 @@
 
     % 请修改 meta.tex 中的论文元信息
     \input{pages/meta.tex}
+    \input{pages/task.tex}
 
+    \xjtuchead
+    \ctaskdescription
+    \creviewopinion
+    \cfinalresult
     \xjtucinfopage
     \xjtueinfopage
     \xjtutoc
@@ -53,7 +58,7 @@
 
         % 绪论
         \input{pages/intro.tex}
-        
+
         % 以同样方法添加更多章节
 
         % 结论与展望
