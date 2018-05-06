@@ -8,4 +8,5 @@
 *.xml
 *.blg
 *.pdf
+*.bcf
 .vscode
