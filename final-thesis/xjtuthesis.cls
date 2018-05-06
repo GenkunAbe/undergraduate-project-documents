@@ -82,6 +82,8 @@
 \RequirePackage{multirow}
 %背景图片
 \RequirePackage[pages=some]{background}
+%附录
+\RequirePackage{appendix}
 
 % Math & format packages
 \RequirePackage[fleqn]{amsmath}
@@ -227,25 +229,26 @@
 
 % Font-family
 \ifxjtu@nofont\else
-%   \ifxjtu@propfont
+  \ifxjtu@propfont
     \setmainfont[Ligatures=TeX]{Times New Roman}
     \setCJKmainfont{SimSun}
     \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{SimSun}
         \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
         \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
     \setCJKfamilyfont{hei}{SimHei}
-    \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
-    \newcommand{\fangsong}{\CJKfamily{fangsong}}
-    \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
-    \newcommand{\hwzs}{\CJKfamily{hwzs}}
-%   \else
-%     \setmainfont[Ligatures=TeX]{FreeSerif}
-%     \setCJKmainfont{AR PL UMing CN}
-%     \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{AR PL UMing CN}
-%         \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
-%         \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
-%     \setCJKfamilyfont{hei}{SimHei}
-%   \fi
+  \else
+    \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
+    \setCJKmainfont[BoldFont={思源宋体 Bold}, ItalicFont={AR PL UKai CN}]{Source Han Serif SC}
+    \setCJKsansfont[BoldFont={思源黑体 Bold}]{思源黑体 Regular}
+    \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{Source Han Serif SC}
+        \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
+        \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
+    \setCJKfamilyfont{hei}{思源黑体 Regular}
+  \fi
+  \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
+  \newcommand{\fangsong}{\CJKfamily{fangsong}}
+  \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
+  \newcommand{\hwzs}{\CJKfamily{hwzs}}
 \fi
 
 \def\thu@define@term#1{
@@ -462,41 +465,42 @@
 
 \newcommand{\xjtuappendix}{
     \begin{appendix}
-    \renewcommand{\thechapter}{附录\arabic{chapter}}
-    \chaptermark{附录}
+    % \renewcommand{\thechapter}{附录\Alph{chapter}}
+    \chaptermark{附\quad 录}
 }
 \newcommand{\xjtuendappendix}{\end{appendix}}
 \newcommand{\xjtuappendixchapter}[1]{
     \stepcounter{chapter}
-    \chapter*{\thechapter\quad#1}
-    \addcontentsline{toc}{chapter}{\thechapter\quad #1}
+    \chapter*{附录\thechapter\quad#1}
+    \addcontentsline{toc}{chapter}{附录\thechapter\quad #1}
 }
 \newcommand{\xjtuappendixsection}[1]{
     \stepcounter{section}
     \section*{#1}
-    \addcontentsline{toc}{section}{\thesection\quad #1}
+    % \addcontentsline{toc}{section}{\thesection\quad #1}
 }
 \newcommand{\xjtuappendixsubsection}[1]{
     \stepcounter{subsection}
+    \vspace*{0.5cm}
     \subsection*{#1}
-    \addcontentsline{toc}{subsection}{\thesubsection\quad #1}
+    % \addcontentsline{toc}{subsection}{\thesubsection\quad #1}
 }
 \newcommand{\xjtuappendixsubsubsection}[1]{
     \stepcounter{subsubsection}
     \subsubsection*{#1}
-    \addcontentsline{toc}{subsubsection}{\thesubsubsection\quad #1}
+    % \addcontentsline{toc}{subsubsection}{\thesubsubsection\quad #1}
 }
 \newcommand{\xjtuappendixechapter}[1]{
     \echapter*{\thechapter\quad#1}
-    \addcontentsline{toe}{chapter}{\thechapter\quad #1}
+    % \addcontentsline{toe}{chapter}{\thechapter\quad #1}
 }
 \newcommand{\xjtuappendixesection}[1]{
     \esection*{#1}
-    \addcontentsline{toe}{section}{\thesection\quad #1}
+    % \addcontentsline{toe}{section}{\thesection\quad #1}
 }
 \newcommand{\xjtuappendixesubsection}[1]{
     \esubsection*{#1}
-    \addcontentsline{toe}{subsection}{\thesubsection\quad #1}
+    % \addcontentsline{toe}{subsection}{\thesubsection\quad #1}
 }
 \newcommand{\xjtuappendixesubsubsection}[1]{
 }
@@ -790,6 +794,8 @@
     }
 
     \newcommand{\xjtubib}[1]{ {
+        \phantomsection
+        \addcontentsline{toc}{chapter}{参考文献}
         \wuhao
         \printbibliography
         \clearpage

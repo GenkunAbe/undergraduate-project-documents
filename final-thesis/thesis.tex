@@ -1,7 +1,7 @@
 \documentclass[
     bachelor,
     % bigskip, % sets linespread factor to 1.5
-    %propfont, % whether to use property fonts
+    propfont, % whether to use property fonts
     %nofont, % remember to manally set the fonts
     pdflinks,
     %colorlinks,
@@ -57,8 +57,6 @@
     \newrefsection
         % 绪论
         \input{pages/introduction.tex}
-        % 相关工作
-        \input{pages/relativework.tex}
         % 理论框架
         \input{pages/theory.tex}
         % 算法实现
@@ -69,16 +67,16 @@
         \input{pages/conclusion.tex}
     \xjtuendcontent
 
+    % 致谢
+    \input{pages/acknowledgements.tex}
+
     % 参考文献
     \xjtubib{bibliography}
 
-    % 附页
+    % 附录
     \xjtuappendix
         \input{pages/appendice.tex}
     \xjtuendappendix
-
-    % 致谢
-    \input{pages/acknowledgements.tex}
 
 \end{document}
 

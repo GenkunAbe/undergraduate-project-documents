@@ -1,42 +1,28 @@
-% appendice.tex
-%
-% Aetf <aetf@unlimitedcodeworks.xyz>
-% Copyright 2016 Aetf <aetf@unlimitedcodeworks.xyz>
-%
-% multiple1902 <multiple1902@gmail.com>
-% Copyright 2011~2012, multiple1902 (Weisi Dai)
-%
-% Project Home: https://github.com/Aetf/xjtuthesis
-%
-% It is strongly recommended that you read documentations located at
-%   https://github.com/Aetf/xjtuthesis/wiki
-% in advance of your compilation if you have not read them before.
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
-% of this license or (at your option) any later version.
-% The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status `maintained'.
-%
-% The Current Maintainer of this work is Aetf.
-%
+\xjtuappendixchapter{外文文献翻译}
 
-\iffalse
-\xjtuappendixchapter{附录}
-\xjtuappendixechapter{Appendices}
-% 超过一个 section 时用 Appendices, 否则用 Appendix
+    \begin{center}
+        \sihao\textbf{Mask R-CNN：用于预测遮罩的区域卷积神经网络}
+    \end{center}
 
-    \xjtuappendixsection{二级标题}
+    \textbf{摘要}：我们展现了一个概念意义上简单、稳定以及通用的目标实例划分框架。我们的方法能够高效地检测图片中目标，与此同时还能为目标实例生成高质量的划分遮罩。我们的方法在Faster R-CNN的基础上，增加了一条用于预测目标物体遮罩的分支，与现存的预测目标物体边界框的分支\emph{并行}。我们将此方法称为Mask R-CNN。Mask R-CNN训练简单，且仅比处理帧速为5fps的Faster R-CNN增加了少量的运算量。不仅如此，在Mask R-CNN框架上增加其它的任务也十分简单，例如允许我们在相同的框架下估计人物的姿势。我们的方法在COCO系列挑战中的三个任务都取得了最佳成绩，包括实例分割、边界框目标检测以及人物姿势检测。在没有使用调参技巧的情况下，Mask R-CNN超过了每个任务中所有现存的单一模型框架，包括COCO 2016挑战的冠军。我们希望我们的模型能够成为一个坚实的基础模型，为今后实例级别的识别研究减轻负担。本框架的源代码已经公开在：\url{https://github.com/facebookresearch/Detectron}.
 
-        \xjtuappendixsubsection{三级标题}
+    \xjtuappendixsection{引言}
+    在过去很短的时间内，计算机视觉社区快速地提高了目标检测和语义分割的结果。在很大的程度上，一些强大的基础模型驱动了这些结果，例如用于目标检测任务的Fast/Faster R-CNN 框架以及用于语义分割的全卷积网络（FCN）框架。这些方法的概念很新颖，在提供了灵活性和稳健性的同时，也提供了快速的训练和检测。我们本次工作的目标是开发一个同等有效的\emph{实例分割}框架。
 
-            \xjtuappendixsubsubsection{四级标题}
+    实例分割非常具有挑战性，因为它需要在正确地检测出一张图片中所有目标的同时，精确地划分每一个实例物体。因此实例分割问题包含了传统计算机视觉领域中的\emph{目标检测}和\emph{语义分割}任务。其中目标检测的任务是对于图片中的每一个目标进行分类，并使用边界框定位目标。而语义分割的目标是将图片中的每一个像素分类为一些固定的类别，而不区分每一个目标实例。\footnote{我们使用术语\emph{目标检测}表示检测目标的边界框，而不是遮罩；使用术语\emph{语义分割}表示将每一个像素分类而不区分目标实例，与通用的术语一致。同时我们使用术语\emph{实例分割}来表示既包含语义分割也包含目标检测的任务。} 对于实例分割任务，有人可能会认为需要一个复杂的方法才能得到好的结果。然而我们展示了一个极其简单、灵活以及快速的系统，能够超越先前在实例分割领域最先进的成果。
 
-    \xjtuappendixchapter{还是附录}
+    我们这个称为\emph{Mask R-CNN}的方法是Faster R-CNN的扩展，增加了一个用于预测每一个感兴趣区域（Region of Interest，RoI）的分割遮罩的分支，该分支与现有的用于分类及边界框回归的分支\emph{并行}（图~\ref{fig:teaser}）。该遮罩分支是一个应用于每一个感兴趣区域的全连接卷积网络，用于像素到像素级别的分割遮罩预测。Faster R-CNN框架便于用很多种灵活的架构设计实现，对于一个特定的Faster R-CNN网络，基于此的Mask R-CNN模型很也容易实现和训练。不仅如此，遮罩分支仅增加了少量的计算量，使得一个快速的系统和实验成为可能。
 
-        \xjtuappendixsection{测试}
-\fi
+    Mask R-CNN的原则是作为Faster R-CNN的一个直观的扩展框架，然而正确地构造遮罩分支是取得好结果的关键。更重要的是，Faster R-CNN不是为在输入和输出之间像素到像素对齐而设计的。这种设计在\emph{RoIPool}运用粗粒度的空间量化进行特征提取时最为明显。其中RoIPool是\emph{事实上的}处理实例的核心操作。为了解决不对齐的问题，我们提出了简单、免量化的层，称为\emph{RoIAlign}，其完整地保留了额外的空间位置。尽管这看上去是一个很小的改变，然而具有很大的影响：它将遮罩预测的准确率相对提升了10\%到50\%，并且在更严格的评估方式下提升更明显。我们的第二个发现是，有必要将遮罩预测与分类预测\emph{解耦}：我们独立地对每个类别进行二元遮罩预测，取消了不同类别之间的竞争，同时利用网络中RoI分类分支进行类别预测。与之相反的，全卷积网络通常用于对每个像素进行多分类操作，该操作将分割与分类耦合起来，这样的传统方法在我们的实验的实例分割任务中表现不佳。
+
+    在没有使用任何调参技巧的情况下，Mask R-CNN的表现超过了所有先前在COCO实例分割任务中最优秀的单模型的结果，包括依靠高度工程化技巧赢得2016年挑战的冠军。作为一个附带的结果，我们的方法在COCO目标检测任务中依然表现出色。在控制变量分析对比实验中，我们评估了模型中多个基本的组成部分，这让我们能够评估模型的稳健性以及分析核心元素的影响。
+
+    我们的模型在单张GPU上每一帧的运行时间大约为200毫秒，在一台拥有8张GPU的机器上使用COCO数据集进行训练大约需要花费两天。我们相信如此快的训练和测试速度，以及模型的灵活性和准确性，能够让今后的实例分割研究获益。
+
+    最后，我们通过利用COCO姿势关键点数据库完成人类姿势估计任务简单展示了该框架的通用性。通过将每一个关键点看作是一个有固定个数1的二元遮罩，再加上一些很小的修改，就可以将原始的Mask R-CNN框架应用于检测每一个人物实例的姿势。在没有任何调参技巧的情况下，Mask R-CNN的表现超过了COCO 2016人物姿势关键点挑战的获胜者，同时检测速度依然是每秒5帧。因此Mask R-CNN可以更宽泛地看作是一个用于\emph{实例级别}的识别的灵活框架，并且可以很轻易地扩展到其它的复杂任务当中。
+
+    我们已经将源代码公开以促进今后的研究工作。
+
+    \xjtuappendixsection{相关工作}
+
+    \paragraph{R-CNN：} 基于区域的卷积神经网络（Region-based CNN，R-CNN）这样的用于边界框目标检测的方法，通常被用于处理大量的目标候选区域，同时独立地在每一个RoI上评估卷积网络。在2014年，经过扩展的R-CNN可通过RoIPool用于处理在特征图上的RoI，使其取得更高的准确率和更快的速度。Faster R-CNN再度扩展了此项工作，其使用区域候选网络（Region Proposal Network，RPN）来学习注意力机制。Faster R-CNN相比于之后的改进模型更加灵活和稳健 ，同时其依然是当前多个评估标准中领先的框架。
