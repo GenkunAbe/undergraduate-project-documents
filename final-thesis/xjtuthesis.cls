@@ -313,6 +313,7 @@
         \noindent 声明
     \fi
     \chaptermark{目\quad 录}
+    \clearpage
 }
 \newcommand\xjtutoe{
     \tableofengcontents
@@ -600,6 +601,7 @@
     }
 
     \newcommand\ctaskdescription{
+        \newrefsection
         \setcounter{page}{1}
         \chaptermark{毕业设计（论文）任务书}
         \xiaosi{
@@ -663,7 +665,7 @@
                 （注：由指导教师填写）\hspace{\fill}学生签名：\eztaskboxul{7em}{\hfil}\\
             \end{flushright}
         }
-        \clearpage
+        \cleardoublepage
     }
 
     \newcommand\creviewopinion{
