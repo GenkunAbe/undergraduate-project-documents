@@ -93,7 +93,7 @@
 \RequirePackage{longtable}
 \RequirePackage{booktabs}
 \RequirePackage{subfig}
-\RequirePackage[numbers,super,square,sort&compress]{natbib}
+\RequirePackage[style=gb7714-2015]{biblatex}
 \RequirePackage{setspace}
 \RequirePackage[shortlabels]{enumitem}
 \setenumerate[1]{1),fullwidth,itemindent=\parindent,listparindent=\parindent,itemsep=0.05\baselineskip,partopsep=0pt,parsep=0ex,topsep=0.1\baselineskip}
@@ -337,12 +337,12 @@
 \thu@define@term{tomonth}
 \thu@define@term{todayy}
 \thu@define@term{place}
-\thu@define@term{background}
+\thu@define@term{cbackground}
 \thu@define@term{rawmaterial}
 \thu@define@term{maintask}
 \thu@define@term{requirement}
 \thu@define@term{finalmaterial}
-\thu@define@term{mainreference}
+\thu@define@term{othertaskreference}
 % Interfaces, or terms
 \thu@define@term{cauthor}
 \thu@define@term{stuid}
@@ -626,32 +626,34 @@
             \vskip 10pt
             {\noindent 课题的背景、意义及培养目标}\vspace{-15pt}\\
 
-            \uline{\xjtu@background}
+            \xjtu@cbackground
 
             \vskip 10pt
             {\noindent 设计(论文)的原始数据与资料}\vspace{-15pt}\\
 
-            \uline{\xjtu@rawmaterial}
+            \xjtu@rawmaterial
 
             \vskip 10pt
             {\noindent 课题的主要任务}\vspace{-15pt}\\
 
-            \uline{\xjtu@maintask}
+            \xjtu@maintask
 
             \vskip 10pt
             {\noindent 课题的基本要求(工程设计类题应有技术经济分析要求)}\vspace{-15pt}\\
 
-            \uline{\xjtu@requirement}
+            \xjtu@requirement
 
             \vskip 10pt
             {\noindent 完成任务后提交的书面材料要求(图纸规格、数量，论文字数，外文翻译字数等)}\vspace{-15pt}\\
 
-            \uline{\xjtu@finalmaterial}
+            \xjtu@finalmaterial
 
             \vskip 10pt
             {\noindent 主要参考文献}\vspace{-15pt}\\
 
-            \uline{\xjtu@mainreference}
+            \defbibheading{taskbib}[]{}
+            \printbibliography[heading=taskbib]
+            \xjtu@othertaskreference
 
             \vspace{\fill}
 
@@ -786,15 +788,10 @@
     }
 
     \newcommand{\xjtubib}[1]{ {
-        \clearpage
-        \phantomsection % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=tocbibind
-        \addcontentsline{toc}{chapter}{参考文献}
-
         \wuhao
-        \bibliographystyle{gbt7714-2005-xjtu}
-        \bibliography{#1}
+        \printbibliography
         \clearpage
-        } }
+    } }
 
    \let\oldfootnote\footnote
    \renewcommand \footnote[1]{\oldfootnote{\xiaowu #1}}
