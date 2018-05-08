@@ -86,7 +86,7 @@
 \RequirePackage{appendix}
 
 % Math & format packages
-\RequirePackage[fleqn]{amsmath}
+\RequirePackage[]{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{indentfirst}
 \RequirePackage{tabularx}
@@ -401,8 +401,8 @@
 \setcounter{secnumdepth}{3}
 
 % Section titles, style
-\titleformat{\chapter}[block]{\sanhao}{}{1em}{\begin{center}}[\end{center}]
-\titlespacing{\chapter}{0em}{0\baselineskip}{1\baselineskip}
+\titleformat{\chapter}[block]{\sanhao}{}{0em}{\centering}[]
+\titlespacing{\chapter}{0em}{0.5em}{1em}
 \titleformat{\section}[hang]{\xiaosan}{\thesection}{1em}{}
 \titlespacing{\section}{0em}{1\baselineskip}{0.5\baselineskip}
 \titleformat{\subsection}{\sihao}{\thesubsection}{1em}{}
@@ -467,6 +467,17 @@
     \begin{appendix}
     % \renewcommand{\thechapter}{附录\Alph{chapter}}
     \chaptermark{附\quad 录}
+    % \renewcommand{\tablename}{附录\thechapter -表}
+    % \renewcommand{\figurename}{附录\thechapter -图}
+    \renewcommand\thefigure{% thanks to fitsir<at>gmail.com
+     \ifnum \c@chapter>\z@ 附录\thechapter-\fi\@arabic\c@figure%
+    }
+    \renewcommand\thetable{%
+        \ifnum \c@chapter >\z@ 附录\thechapter-\fi \@arabic \c@table%
+    }
+    \renewcommand\theequation{%
+        \ifnum \c@chapter >\z@ 附录\thechapter-\fi \@arabic \c@equation%
+    }
 }
 \newcommand{\xjtuendappendix}{\end{appendix}}
 \newcommand{\xjtuappendixchapter}[1]{
@@ -556,8 +567,8 @@
 
     \fancypagestyle{plain}{%
       \fancyhf{}
-      \fancyhead[CO]{\begin{spacing}{0.3}\wuhao\leftmark\end{spacing}}
-      \fancyhead[CE]{\begin{spacing}{0.3}\wuhao 西安交通大学本科毕业设计（论文）\end{spacing}}
+      \fancyhead[OC]{\begin{spacing}{0.3}\if@mainmatter\wuhao \ifxjtu@inmainbody\thechapter\quad\fi \leftmark\fi\end{spacing}}
+      \fancyhead[EC]{\begin{spacing}{0.3}\wuhao 西安交通大学本科毕业设计（论文）\end{spacing}}
       \fancyfoot[OR,EL]{\xiaowu ~\thepage~}
       \renewcommand{\headrulewidth}{\if@mainmatter 0.5pt\else 0pt \fi}
       \renewcommand{\headrule}{\hrule \@height \headrulewidth \@width \headwidth \vskip .5pt
@@ -715,6 +726,8 @@
           摘\quad 要
         \end{center}
 
+        \vskip 0.5em
+
         \xjtu@cabstract
 
         \mbox{}
@@ -732,11 +745,14 @@
         Supervisor: \xjtu@esupervisor\\
         }
 
+        \vspace*{-0.5em}
+
         \begin{center}
           \sanhao
           ABSTRACT
         \end{center}
 
+        \vskip -1em
 
         {
         \setlength{\parindent}{0em}
@@ -761,33 +777,19 @@
 
     \renewcommand\xjtucontent{
         \cleardoublepage
-        \ifodd\arabic{page}\else
-            \fancypagestyle{plain}{%
-                \fancyhf{}
-                \fancyhead[CE]{\if@mainmatter\wuhao \thechapter\quad\leftmark\fi}
-                \fancyhead[CO]{\wuhao \ifxjtu@bachelor
-                                西安交通大学本科毕业设计（论文）
-                                \fi}
-                \fancyfoot[ER,OL]{\small ~\thepage~}
-                \renewcommand{\headrulewidth}{\if@mainmatter 0.5pt\else 0pt \fi}
-                \renewcommand{\headrule}{\vspace*{10pt}\hrule \@height \headrulewidth \@width \headwidth \vskip .5pt
-                \hrule \@height \headrulewidth \@width \headwidth \vskip -\headrulewidth}
-            }
-            \pagestyle{plain}
-        \fi
         \pagenumbering{arabic}
-        \titleformat{\chapter}[block]{\sanhao}{}{0em}{\begin{center}\thechapter\quad}[\end{center}]
+        \titleformat{\chapter}[block]{\sanhao}{}{0em}{\centering\thechapter\quad}[]
         \xjtu@inmainbodytrue
     }
     \renewcommand\xjtuendcontent{
         \newpage
-        \titleformat{\chapter}[block]{\sanhao}{}{0em}{\begin{center}}[\end{center}]
+        \titleformat{\chapter}[block]{\sanhao}{}{0em}{\centering}[]
         \titleformat{\section}[hang]{\xiaosan}{}{0em}{\thesection\quad }[\vskip -0.5em]
         \titleformat{\subsection}{\sihao}{}{0em}{\vskip -1.5em \thesubsection\quad{}}
         \titleformat{\subsubsection}{}{}{0em}{\thesubsubsection\quad}[]
-        \titlecontents{chapter}[0em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
-        \titlecontents{section}[1.5em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
-        \titlecontents{subsection}[3.8em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
+        % \titlecontents{chapter}[0em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
+        % \titlecontents{section}[1.5em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
+        % \titlecontents{subsection}[3.8em]{}{\thecontentslabel\quad}{}{\dotfill\contentspage[{\makebox[0pt][r]{\thecontentspage}}]}
         \titlespacing{\subsection}{0em}{0.5\baselineskip}{0\baselineskip}
         \titlespacing{\subsubsection}{0em}{0.2\baselineskip}{0\baselineskip}
         \xjtu@inmainbodyfalse
@@ -796,8 +798,8 @@
     \newcommand{\xjtubib}[1]{ {
         \phantomsection
         \addcontentsline{toc}{chapter}{参考文献}
-        \wuhao
-        \printbibliography
+        \defbibheading{xjtubibhead}[]{\chapter*{参考文献}\vspace{2\baselineskip}\wuhao}
+        \printbibliography[heading=xjtubibhead]
         \clearpage
     } }
 
