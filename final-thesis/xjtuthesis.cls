@@ -478,6 +478,8 @@
     \renewcommand\theequation{%
         \ifnum \c@chapter >\z@ 附录\thechapter-\fi \@arabic \c@equation%
     }
+    \captionsetup[table]{font={stretch=0.7}}
+    \captionsetup[figure]{font={stretch=0.7}}
 }
 \newcommand{\xjtuendappendix}{\end{appendix}}
 \newcommand{\xjtuappendixchapter}[1]{

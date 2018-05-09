@@ -4,19 +4,19 @@
     \sihao\textbf{Mask R-CNN：用于预测遮罩的区域卷积神经网络}
 \end{center}
 
-\textbf{摘要}：我们展现了一个概念意义上简单、稳定以及通用的目标实例划分框架。我们的方法能够高效地检测图片中目标，与此同时还能为目标实例生成高质量的划分遮罩。我们的方法在Faster R-CNN的基础上，增加了一条用于预测目标物体遮罩的分支，与现存的预测目标物体边界框的分支\emph{并行}。我们将此方法称为Mask R-CNN。Mask R-CNN训练简单，且仅比处理帧速为5fps的Faster R-CNN增加了少量的运算量。不仅如此，在Mask R-CNN框架上增加其它的任务也十分简单，例如允许我们在相同的框架下估计人物的姿势。我们的方法在COCO系列挑战中的三个任务都取得了最佳成绩，包括实例分割、边界框目标检测以及人物姿势检测。在没有使用调参技巧的情况下，Mask R-CNN超过了每个任务中所有现存的单一模型框架，包括COCO 2016挑战的冠军。我们希望我们的模型能够成为一个坚实的基础模型，为今后实例级别的识别研究减轻负担。本框架的源代码已经公开在：\url{https://github.com/facebookresearch/Detectron}.
+\textbf{摘要}：我们展现了一个概念意义上简单、稳定以及通用的目标实例划分框架。我们的方法能够高效地检测图片中目标，与此同时还能为目标实例生成高质量的划分遮罩。我们的方法在Faster R-CNN的基础上，增加了一条用于预测目标物体遮罩的分支，与现存的预测目标物体边界框的分支\emph{并行}。我们将此方法称为Mask R-CNN。Mask R-CNN训练简单，且仅比处理帧速为5fps的Faster R-CNN增加了少量的运算量。不仅如此，在Mask R-CNN框架上增加其它的任务也十分简单，例如允许我们在相同的框架下估计人物的姿势。我们的方法在COCO系列挑战中的三个任务都取得了最佳成绩，包括实例分割、边界框目标检测以及人体姿态检测。在没有使用调参技巧的情况下，Mask R-CNN超过了每个任务中所有现存的单一模型框架，包括COCO 2016挑战的冠军。我们希望我们的模型能够成为一个坚实的基础模型，为今后实例级别的识别研究减轻负担。本框架的源代码已经公开在：\url{https://github.com/facebookresearch/Detectron}.
 
 \xjtuappendixsection{引言}
 在过去很短的时间内，计算机视觉社区快速地提高了目标检测和语义分割的结果。在很大的程度上，一些强大的基础模型驱动了这些结果，例如用于目标检测任务的Fast/Faster R-CNN 框架以及用于语义分割的全卷积网络（FCN）框架。这些方法的概念很新颖，在提供了灵活性和稳健性的同时，也提供了快速的训练和检测。我们本次工作的目标是开发一个同等有效的\emph{实例分割}框架。
 
 \begin{figure}
-\begin{minipage}{0.45\textwidth}
+\begin{minipage}{0.35\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/mask_rcnn/teaser}\vspace{2mm}
   \caption{用于实例分割的\textbf{Mask\hspace{0.1297em}R-CNN}框架。}
   \label{fig:teaser}
 \end{minipage}\hspace{1.5em}
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.6\textwidth}
   \begin{minipage}{0.365\linewidth}
   \includegraphics[width=\textwidth,trim={0 0 7.5mm 0},clip]{figures/mask_rcnn/roialign}
   \end{minipage}\hspace{0.5em}
@@ -37,7 +37,7 @@ Mask R-CNN的原则是作为Faster R-CNN的一个直观的扩展框架，然而�
 
 我们的模型在单张GPU上每一帧的运行时间大约为200毫秒，在一台拥有8张GPU的机器上使用COCO数据集进行训练大约需要花费两天。我们相信如此快的训练和测试速度，以及模型的灵活性和准确性，能够让今后的实例分割研究获益。
 
-最后，我们通过利用COCO姿势关键点数据库完成人类姿势估计任务简单展示了该框架的通用性。通过将每一个关键点看作是一个有固定个数1的二元遮罩，再加上一些很小的修改，就可以将原始的Mask R-CNN框架应用于检测每一个人物实例的姿势。在没有任何调参技巧的情况下，Mask R-CNN的表现超过了COCO 2016人物姿势关键点挑战的获胜者，同时检测速度依然是每秒5帧。因此Mask R-CNN可以更宽泛地看作是一个用于\emph{实例级别}的识别的灵活框架，并且可以很轻易地扩展到其它的复杂任务当中。
+最后，我们通过利用COCO姿势关键点数据库完成人类姿势估计任务简单展示了该框架的通用性。通过将每一个关键点看作是一个有固定个数1的二元遮罩，再加上一些很小的修改，就可以将原始的Mask R-CNN框架应用于检测每一个人物实例的姿势。在没有任何调参技巧的情况下，Mask R-CNN的表现超过了COCO 2016人体姿态关键点挑战的获胜者，同时检测速度依然是每秒5帧。因此Mask R-CNN可以更宽泛地看作是一个用于\emph{实例级别}的识别的灵活框架，并且可以很轻易地扩展到其它的复杂任务当中。
 
 我们已经将源代码公开以促进今后的研究工作。
 
@@ -216,7 +216,7 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  \emph{RoIAlign} & \bd{30.9} & \bd{51.8} & \bd{32.1} & \bd{34.0} & \bd{55.3} & \bd{36.4}\\
 \hline
  & \dt{+7.3} & \dt{+ 5.3} & \dt{+10.5} & \dt{+5.8} & \dt{+2.6} & \dt{+9.5}
-\end{tabular}}\hspace{5mm}
+\end{tabular}}\hspace{2mm}
 % subfloat e - mask representation
 \subfloat[\textbf{遮罩分支 } (ResNet-50-FPN): 全卷积网络（FCN）对比多层感知机（MLP，全连接的）用于遮罩预测。FCN改善了结果，因为它们利用了明确编码的空间布局的优势。\label{tab:ablation:maskhead}]{
 \tablestyle{4pt}{1.05}\begin{tabular}{c|c|x{22}x{22}x{22}}
@@ -390,5 +390,409 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
   & \bd{36.4} & \bd{32.0} & \bd{58.1} & \bd{34.8} & \bd{27.0} & \bd{49.1} & \bd{30.1} & \bd{40.9} & \bd{30.9} & \bd{24.1} & \bd{18.7} \\
 \end{tabular}
 \caption{在Cityscapes \texttt{val} (`AP [\texttt{val}]' 列) and \texttt{test} (其它列)数据集上的结果。我们的方法使用ResNet-50-FPN作为主干。}
+\label{tab:cityscapes}
+\end{table*}
+
+
+%===============================================================================
+
+
+\xjtuappendixchapter{外文文献原文}
+
+\begin{center}
+    \sihao\textbf{Mask R-CNN}
+\end{center}
+
+\textbf{ABSTRACT}: We present a conceptually simple, flexible, and general framework for object instance segmentation. Our approach efficiently detects objects in an image while simultaneously generating a high-quality segmentation mask for each instance. The method, called Mask R-CNN, extends Faster R-CNN by adding a branch for predicting an object mask in \emph{parallel} with the existing branch for bounding box recognition. Mask R-CNN is simple to train and adds only a small overhead to Faster R-CNN, running at 5 fps. Moreover, Mask R-CNN is easy to generalize to other tasks, e.g., allowing us to estimate human poses in the same framework. We show top results in all three tracks of the COCO suite of challenges, including instance segmentation, bounding-box object detection, and person keypoint detection. Without bells and whistles, Mask R-CNN outperforms all existing, single-model entries on every task, including the COCO 2016 challenge winners. We hope our simple and effective approach will serve as a solid baseline and help ease future research in instance-level recognition. Code has been made available at: \url{https://github.com/facebookresearch/Detectron}.
+
+\xjtuappendixsection{Introduction}
+
+The vision community has rapidly improved object detection and semantic segmentation results over a short period of time. In large part, these advances have been driven by powerful baseline systems, such as the Fast/Faster R-CNN and Fully Convolutional Network (FCN) frameworks for object detection and semantic segmentation, respectively. These methods are conceptually intuitive and offer flexibility and robustness, together with fast training and inference time. Our goal in this work is to develop a comparably enabling framework for \emph{instance segmentation}.
+
+\begin{figure}
+\begin{minipage}{0.35\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/mask_rcnn/teaser}\vspace{2mm}
+  \caption{The \textbf{Mask\hspace{0.1297em}R-CNN} framework for instance segmentation.}
+\label{fig:teaser}
+\end{minipage}\hspace{1.5em}
+\begin{minipage}{0.6\textwidth}
+  \begin{minipage}{0.365\linewidth}
+  \includegraphics[width=\textwidth,trim={0 0 7.5mm 0},clip]{figures/mask_rcnn/roialign}
+  \end{minipage}\hspace{0.5em}
+  \begin{minipage}{0.605\linewidth}
+  \caption{\footnotesize \textbf{RoIAlign:} The dashed grid represents a feature map, the solid lines an RoI (with 2$\times$2 bins in this example), and the dots the 4 sampling points in each bin. RoIAlign computes the value of each sampling point by bilinear interpolation from the nearby grid points on the feature map. No quantization is performed on any coordinates involved in the RoI, its bins, or the sampling points.}
+  \label{fig:roialign}
+  \end{minipage}
+\end{minipage}
+\end{figure}
+
+Instance segmentation is challenging because it requires the correct detection of all objects in an image while also precisely segmenting each instance. It therefore combines elements from the classical computer vision tasks of \emph{object detection}, where the goal is to classify individual objects and localize each using a bounding box, and \emph{semantic segmentation}, where the goal is to classify each pixel into a fixed set of categories without differentiating object instances.\footnote{Following common terminology, we use \emph{object detection} to denote detection via \emph{bounding boxes}, not masks, and \emph{semantic segmentation} to denote per-pixel classification without differentiating instances. Yet we note that \emph{instance segmentation} is both semantic and a form of detection.}~Given this, one might expect a complex method is required to achieve good results. However, we show that a surprisingly simple, flexible, and fast system can surpass prior state-of-the-art instance segmentation results.
+
+Our method, called \emph{Mask R-CNN}, extends Faster R-CNN by adding a branch for predicting segmentation masks on each Region of Interest (RoI), in \emph{parallel} with the existing branch for classification and bounding box regression (Figure~\ref{fig:teaser}). The mask branch is a small FCN applied to each RoI, predicting a segmentation mask in a pixel-to-pixel manner. Mask R-CNN is simple to implement and train given the Faster R-CNN framework, which facilitates a wide range of flexible architecture designs. Additionally, the mask branch only adds a small computational overhead, enabling a fast system and rapid experimentation.
+
+In principle Mask R-CNN is an intuitive extension of Faster R-CNN, yet constructing the mask branch properly is critical for good results. Most importantly, Faster R-CNN was not designed for pixel-to-pixel alignment between network inputs and outputs. This is most evident in how \emph{RoIPool}, the \emph{de facto} core operation for attending to instances, performs coarse spatial quantization for feature extraction. To fix the misalignment, we propose a simple, quantization-free layer, called \emph{RoIAlign}, that faithfully preserves exact spatial locations. Despite being a seemingly minor change, RoIAlign has a large impact: it improves mask accuracy by relative 10\% to 50\%, showing bigger gains under stricter localization metrics. Second, we found it essential to \emph{decouple} mask and class prediction: we predict a binary mask for each class independently, without competition among classes, and rely on the network's RoI classification branch to predict the category. In contrast, FCNs usually perform per-pixel multi-class categorization, which couples segmentation and classification, and based on our experiments works poorly for instance segmentation.
+
+Without bells and whistles, Mask R-CNN surpasses all previous state-of-the-art single-model results on the COCO instance segmentation task, including the heavily-engineered entries from the 2016 competition winner. As a by-product, our method also excels on the COCO object detection task. In ablation experiments, we evaluate multiple basic instantiations, which allows us to demonstrate its robustness and analyze the effects of core factors.
+
+Our models can run at about 200ms per frame on a GPU, and training on COCO takes one to two days on a single 8-GPU machine. We believe the fast train and test speeds, together with the framework's flexibility and accuracy, will benefit and ease future research on instance segmentation.
+
+Finally, we showcase the generality of our framework via the task of human pose estimation on the COCO keypoint dataset. By viewing each keypoint as a one-hot binary mask, with minimal modification Mask R-CNN can be applied to detect instance-specific poses. Mask R-CNN surpasses the winner of the 2016 COCO keypoint competition, and at the same time runs at 5 fps. Mask R-CNN, therefore, can be seen more broadly as a flexible framework for \emph{instance-level recognition} and can be readily extended to more complex tasks.
+
+We have released code to facilitate future research.
+
+\xjtuappendixsection{Related Work}
+
+\paragraph{R-CNN:} The Region-based CNN (R-CNN) approach to bounding-box object detection is to attend to a manageable number of candidate object regions and evaluate convolutional networks  independently on each RoI. R-CNN was extended to allow attending to RoIs on feature maps using RoIPool, leading to fast speed and better accuracy. Faster R-CNN advanced this stream by learning the attention mechanism with a Region Proposal Network (RPN). Faster R-CNN is flexible and robust to many follow-up improvements (e.g.,), and is the current leading framework in several benchmarks.
+
+\paragraph{Instance Segmentation:} Driven by the effectiveness of R-CNN, many approaches to instance segmentation are based on \emph{segment proposals}. Earlier methods resorted to bottom-up segments. DeepMask and following works learn to propose segment candidates, which are then classified by Fast R-CNN. In these methods, segmentation \emph{precedes} recognition, which is slow and less accurate. Likewise, Dai et al. proposed a complex multiple-stage cascade that predicts segment proposals from bounding-box proposals, followed by classification. Instead, our method is based on \emph{parallel} prediction of masks and class labels, which is simpler and more flexible.
+
+Most recently, Li et al. combined the segment proposal system in and object detection system in for ``fully convolutional instance segmentation'' (FCIS). The common idea in is to predict a set of position-sensitive output channels fully convolutionally. These channels simultaneously address object classes, boxes, and masks, making the system fast. But FCIS exhibits systematic errors on overlapping instances and creates spurious edges (Figure~\ref{fig:results_vs_fcis}), showing that it is challenged by the fundamental difficulties of segmenting instances.
+
+Another family of solutions to instance segmentation are driven by the success of semantic segmentation. Starting from per-pixel classification results (e.g., FCN outputs), these methods attempt to cut the pixels of the same category into different instances. In contrast to the \emph{segmentation-first} strategy of these methods, Mask R-CNN is based on an \emph{instance-first} strategy. We expect a deeper incorporation of both strategies will be studied in the future.
+
+\xjtuappendixsection{Mask R-CNN}\label{sec:maskrcnn}
+
+Mask R-CNN is conceptually simple: Faster R-CNN has two outputs for each candidate object, a class label and a bounding-box offset; to this we add a third branch that outputs the object mask. Mask R-CNN is thus a natural and intuitive idea. But the additional mask output is distinct from the class and box outputs, requiring extraction of much \emph{finer} spatial layout of an object. Next, we introduce the key elements of Mask R-CNN, including pixel-to-pixel alignment, which is the main missing piece of Fast/Faster R-CNN.
+
+\paragraph{Faster R-CNN:} We begin by briefly reviewing the Faster R-CNN detector. Faster R-CNN consists of two stages. The first stage, called a Region Proposal Network (RPN), proposes candidate object bounding boxes. The second stage, which is in essence Fast R-CNN, extracts features using RoIPool from each candidate box and performs classification and bounding-box regression. The features used by both stages can be shared for faster inference. We refer readers to for latest, comprehensive comparisons between Faster R-CNN and other frameworks.
+
+\paragraph{Mask R-CNN:} Mask R-CNN adopts the same two-stage procedure, with an identical first stage (which is RPN). In the second stage, \emph{in parallel} to predicting the class and box offset, Mask R-CNN also outputs a binary mask for each RoI. This is in contrast to most recent systems, where classification \emph{depends} on mask predictions (e.g.). Our approach follows the spirit of Fast R-CNN that applies bounding-box classification and regression in \emph{parallel} (which turned out to largely simplify the multi-stage pipeline of original R-CNN).
+
+Formally, during training, we define a multi-task loss on each sampled RoI as $L = L_{cls} + L_{box} + L_{mask}$. The classification loss $L_{cls}$ and bounding-box loss $L_{box}$ are identical as those defined in. The mask branch has a $Km^2$-dimensional output for each RoI, which encodes $K$ binary masks of resolution $m \times m$, one for each of the $K$ classes. To this we apply a per-pixel sigmoid, and define $L_{mask}$ as the average binary cross-entropy loss. For an RoI associated with ground-truth class $k$, $L_{mask}$ is only defined on the $k$-th mask (other mask outputs do not contribute to the loss).
+
+Our definition of $L_{mask}$ allows the network to generate masks for every class without competition among classes; we rely on the dedicated classification branch to predict the class label used to select the output mask. This \emph{decouples} mask and class prediction. This is different from common practice when applying FCNs to semantic segmentation, which typically uses a per-pixel \emph{softmax} and a \emph{multinomial} cross-entropy loss. In that case, masks across classes compete; in our case, with a per-pixel \emph{sigmoid} and a \emph{binary} loss, they do not. We show by experiments that this formulation is key for good instance segmentation results.
+
+\paragraph{Mask Representation:} A mask encodes an input object's \emph{spatial} layout. Thus, unlike class labels or box offsets that are inevitably collapsed into short output vectors by fully-connected (\emph{fc}) layers, extracting the spatial structure of masks can be addressed naturally by the pixel-to-pixel correspondence provided by convolutions.
+
+Specifically, we predict an $m \times m$ mask from each RoI using an FCN. This allows each layer in the mask branch to maintain the explicit $m \times m$ object spatial layout without collapsing it into a vector representation that lacks spatial dimensions. Unlike previous methods that resort to \emph{fc} layers for mask prediction, our fully convolutional representation requires fewer parameters, and is more accurate as demonstrated by experiments.
+
+This pixel-to-pixel behavior requires our RoI features, which themselves are small feature maps, to be well aligned to faithfully preserve the explicit per-pixel spatial correspondence. This motivated us to develop the following \emph{RoIAlign} layer that plays a key role in mask prediction.
+
+\paragraph{RoIAlign:} RoIPool is a standard operation for extracting a small feature map (e.g., 7$\times$7) from each RoI. RoIPool first \emph{quantizes} a floating-number RoI to the discrete granularity of the feature map, this quantized RoI is then subdivided into spatial bins which are themselves quantized, and finally feature values covered by each bin are aggregated (usually by max pooling). Quantization is performed, e.g., on a continuous coordinate $x$ by computing $[x/16]$, where 16 is a feature map stride and $[\cdot]$ is rounding; likewise, quantization is performed when dividing into bins (e.g., 7$\times$7). These quantizations introduce misalignments between the RoI and the extracted features. While this may not impact classification, which is robust to small translations, it has a large negative effect on predicting pixel-accurate masks.
+
+To address this, we propose an \emph{RoIAlign} layer that removes the harsh quantization of RoIPool, properly \emph{aligning} the extracted features with the input. Our proposed change is simple: we avoid any quantization of the RoI boundaries or bins (i.e., we use $x/16$ instead of $[x/16]$). We use bilinear interpolation to compute the exact values of the input features at four regularly sampled locations in each RoI bin, and aggregate the result (using max or average), see Figure~\ref{fig:roialign} for details. We note that the results are not sensitive to the exact sampling locations, or how many points are sampled, \emph{as long as} no quantization is performed.
+
+RoIAlign leads to large improvements as we show in \S\ref{sec:ablations}. We also compare to the RoIWarp operation proposed in.
+Unlike RoIAlign, RoIWarp overlooked the alignment issue and was implemented in as quantizing RoI just like RoIPool. So even though RoIWarp also adopts bilinear resampling motivated by, it performs on par with RoIPool as shown by experiments (more details in Table~\ref{tab:ablation:roialign}), demonstrating the crucial role of alignment.
+
+\paragraph{Network Architecture:} To demonstrate the generality of our approach, we instantiate Mask R-CNN with multiple architectures. For clarity, we differentiate between: (i) the convolutional \emph{backbone} architecture used for feature extraction over an entire image, and (ii) the network \emph{head} for bounding-box recognition (classification and regression) and mask prediction that is applied separately to each RoI.
+
+We denote the \emph{backbone} architecture using the nomenclature \emph{network-depth-features}. We evaluate ResNet and ResNeXt networks of depth 50 or 101 layers. The original implementation of Faster R-CNN with ResNets extracted features from the final convolutional layer of the 4-th stage, which we call C4. This backbone with ResNet-50, for example, is denoted by ResNet-50-C4. This is a common choice used in.
+
+We also explore another more effective backbone recently proposed by Lin et al., called a Feature Pyramid Network (FPN). FPN uses a top-down architecture with lateral connections to build an in-network feature pyramid from a single-scale input. Faster R-CNN with an FPN backbone extracts RoI features from different levels of the feature pyramid according to their scale, but otherwise the rest of the approach is similar to vanilla ResNet. Using a ResNet-FPN backbone for feature extraction with Mask R-CNN gives excellent gains in both accuracy and speed. For further details on FPN, we refer readers to.
+
+For the network \emph{head} we closely follow architectures presented in previous work to which we add a fully convolutional mask prediction branch. Specifically, we extend the Faster R-CNN box heads from the ResNet and FPN papers. Details are shown in Figure~\ref{fig:head}. The head on the ResNet-C4 backbone includes the 5-th stage of ResNet (namely, the 9-layer `res5'), which is compute-intensive. For FPN, the backbone already includes res5 and thus allows for a more efficient head that uses fewer filters.
+
+We note that our mask branches have a straightforward structure. More complex designs have the potential to improve performance but are not the focus of this work.
+
+\begin{figure}[t]
+\centering
+\begin{overpic}[width=1.0\linewidth]{figures/mask_rcnn/head}
+  \put(33,29){\tiny Faster R-CNN}
+  \put(33,27){\tiny w/ ResNet }
+  \put(84,29){\tiny Faster R-CNN}
+  \put(85,27){\tiny w/ FPN }
+\end{overpic}
+\caption{\textbf{Head Architecture}: We extend two existing Faster R-CNN heads. Left/Right panels show the heads for the ResNet C4 and FPN backbones, from and, respectively, to which a mask branch is added.
+Numbers denote spatial resolution and channels.
+Arrows denote either conv, deconv, or \emph{fc} layers as can be inferred from context (conv preserves spatial dimension while deconv increases it).
+All convs are 3$\x$3, except the output conv which is 1$\x$1, deconvs are 2$\x$2 with stride 2, and we use ReLU in hidden layers. \emph{Left}: `res5' denotes ResNet's fifth stage, which for simplicity we altered so that the first conv operates on a 7$\x$7 RoI with stride 1 (instead of 14$\x$14 / stride 2 as in). \emph{Right}: `$\x$4' denotes a stack of four consecutive convs.}
+\label{fig:head}
+\end{figure}
+
+\xjtuappendixsubsection{Implementation Details}\label{sec:impl}
+
+We set hyper-parameters following existing Fast/Faster R-CNN work. Although these decisions were made for object detection in original papers, we found our instance segmentation system is robust to them.
+
+\paragraph{Training:} As in Fast R-CNN, an RoI is considered positive if it has IoU with a ground-truth box of at least 0.5 and negative otherwise. The mask loss $L_{mask}$ is defined only on positive RoIs. The mask target is the intersection between an RoI and its associated ground-truth mask.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_more}
+\caption{More results of \textbf{Mask R-CNN} on COCO test images, using ResNet-101-FPN and running at 5 fps, with 35.7 mask AP (Table~\ref{tab:final_mask}).}
+\label{fig:results_more}
+\end{figure*}
+
+\begin{table*}[t]
+\tablestyle{3.5pt}{1.1}
+\begin{tabular}{l|l|x{22}x{22}x{22}|x{22}x{22}x{22}}
+  & backbone &  AP &  AP$_{50}$ & AP$_{75}$ & AP$_S$ &  AP$_M$ &  AP$_L$\\
+\shline
+  MNC  & ResNet-101-C4
+  & 24.6 & 44.3 & 24.8 & 4.7 & 25.9 & 43.6\\
+  FCIS  +OHEM & ResNet-101-C5-dilated
+  & 29.2 & 49.5 & - & 7.1 & 31.3 & 50.0\\
+  FCIS+++  +OHEM & ResNet-101-C5-dilated
+  & 33.6 & 54.5 & - & - & - & -\\
+\hline
+  \bd{Mask R-CNN} & ResNet-101-C4
+  & 33.1 & 54.9 & 34.8 & 12.1 & 35.6 & 51.1 \\
+  \bd{Mask R-CNN} & ResNet-101-FPN
+  & 35.7 & 58.0 & 37.8 & 15.5 & 38.1 & 52.4\\
+  \bd{Mask R-CNN} & ResNeXt-101-FPN
+  & \bd{37.1} & \bd{60.0} & \bd{39.4} & \bd{16.9} & \bd{39.9} & \bd{53.5}
+\end{tabular}
+\caption{\textbf{Instance segmentation} \emph{mask} AP on COCO \texttt{test-dev}. MNC and FCIS are the winners of the COCO 2015 and 2016 segmentation challenges, respectively. Without bells and whistles, Mask R-CNN outperforms the more complex FCIS+++, which includes multi-scale train/test, horizontal flip test, and OHEM. All entries are \emph{single-model} results.}
+\label{tab:final_mask}
+\end{table*}
+
+We adopt image-centric training. Images are resized such that their scale (shorter edge) is 800 pixels. Each mini-batch has 2 images per GPU and each image has $N$ sampled RoIs, with a ratio of 1:3 of positive to negatives. $N$ is 64 for the C4 backbone (as in) and 512 for FPN (as in).  We train on 8 GPUs (so effective mini-batch size is 16) for 160k iterations, with a learning rate of 0.02 which is decreased by 10 at the 120k iteration. We use a weight decay of 0.0001 and momentum of 0.9. With ResNeXt, we train with 1 image per GPU and the same number of iterations, with a starting learning rate of 0.01.
+
+The RPN anchors span 5 scales and 3 aspect ratios, following. For convenient ablation, RPN is trained separately and does not share features with Mask R-CNN, unless specified. For every entry in this paper, RPN and Mask R-CNN have the same backbones and so they are shareable.
+
+\paragraph{Inference:} At test time, the proposal number is 300 for the C4 backbone (as in) and 1000 for FPN (as in). We run the box prediction branch on these proposals, followed by non-maximum suppression. The mask branch is then applied to the highest scoring 100 detection boxes. Although this differs from the parallel computation used in training, it speeds up inference and improves accuracy (due to the use of fewer, more accurate RoIs). The mask branch can predict $K$ masks per RoI, but we only use the $k$-th mask, where $k$ is the predicted class by the classification branch. The $m \times m$ floating-number mask output is then resized to the RoI size, and binarized at a threshold of 0.5.
+
+Note that since we only compute masks on the top 100 detection boxes, Mask R-CNN adds a small overhead to its Faster R-CNN counterpart (e.g., \app20\% on typical models).
+
+\xjtuappendixsection{Experiments: Instance Segmentation}\label{sec:results}
+
+We perform a thorough comparison of Mask R-CNN to the state of the art along with comprehensive ablations on the COCO dataset. We report the standard COCO metrics including AP (averaged over IoU thresholds), AP$_{50}$, AP$_{75}$, and AP$_S$, AP$_M$, AP$_L$ (AP at different scales). Unless noted, AP is evaluating using \emph{mask} IoU. As in previous work, we train using the union of 80k train images and a 35k subset of val images (\texttt{trainval35k}), and report ablations on the remaining 5k val images (\texttt{minival}). We also report results on \texttt{test-dev}.
+
+\xjtuappendixsubsection{Main Results}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1\linewidth]{figures/mask_rcnn/results_main}
+\caption{\textbf{Mask R-CNN} results on the COCO test set. These results are based on ResNet-101, achieving a \emph{mask} AP of 35.7 and running at 5 fps. Masks are shown in color, and bounding box, category, and confidences are also shown.}
+\label{fig:results_main}\vspace{-2mm}
+\end{figure*}
+
+We compare Mask R-CNN to the state-of-the-art methods in instance segmentation in Table \ref{tab:final_mask}. All instantiations of our model outperform baseline variants of previous state-of-the-art models. This includes MNC and FCIS, the winners of the COCO 2015 and 2016 segmentation challenges, respectively. Without bells and whistles, Mask R-CNN with ResNet-101-FPN backbone outperforms FCIS+++, which includes multi-scale train/test, horizontal flip test, and online hard example mining (OHEM). While outside the scope of this work, we expect many such improvements to be applicable to ours.
+
+Mask R-CNN outputs are visualized in Figures \ref{fig:results_main} and \ref{fig:results_more}. Mask R-CNN achieves good results even under challenging conditions. In Figure \ref{fig:results_vs_fcis} we compare our Mask R-CNN baseline and FCIS+++. FCIS+++ exhibits systematic artifacts on overlapping instances, suggesting that it is challenged by the fundamental difficulty of instance segmentation. Mask R-CNN shows no such artifacts.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_vs_fcis}
+\caption{FCIS+++ (top) vs. Mask R-CNN (bottom, ResNet-101-FPN). FCIS exhibits systematic artifacts on overlapping objects.}
+\label{fig:results_vs_fcis}
+\end{figure*}
+
+\begin{table*}[t]
+% subfloat a - BackBone Architecture
+\subfloat[\textbf{Backbone Architecture}: Better backbones bring expected gains: deeper networks do better, FPN outperforms C4 features, and ResNeXt improves on ResNet.\label{tab:ablation:backbone}]{
+\tablestyle{2.5pt}{1.05}\begin{tabular}{c|x{22}x{22}x{22}}
+  \scriptsize \emph{net-depth-features} & AP & AP$_{50}$ & AP$_{75}$\\
+\shline
+  \scriptsize ResNet-50-C4 & 30.3 & 51.2 & 31.5\\
+  \scriptsize ResNet-101-C4 & 32.7 & 54.2 & 34.3\\\hline
+  \scriptsize ResNet-50-FPN & 33.6 & 55.2 & 35.3\\
+  \scriptsize ResNet-101-FPN & 35.4 & 57.3 & 37.5\\
+  \scriptsize ResNeXt-101-FPN & \bd{36.7} & \bd{59.5} & \bd{38.9}
+\end{tabular}}\hspace{1mm}
+% subfloat b - Multinomial vs Independent Masks
+\subfloat[\textbf{Multinomial vs. Independent Masks} (ResNet-50-C4): \emph{Decoupling} via per-class binary masks (sigmoid) gives large gains over multinomial masks (softmax).\label{tab:ablation:sigmoid}]{
+\tablestyle{4.8pt}{1.05}\begin{tabular}{c|x{22}x{22}x{22}}
+  & AP & AP$_{50}$ & AP$_{75}$\\
+\shline
+  \emph{softmax} & 24.8 & 44.1 & 25.1\\
+  \emph{sigmoid} & \bd{30.3} & \bd{51.2} & \bd{31.5}\\
+\hline
+  & \dt{+5.5} & \dt{+7.1} & \dt{+6.4}\\
+  \multicolumn{4}{c}{~}\\
+  \multicolumn{4}{c}{~}\\
+\end{tabular}}\hspace{1mm}
+% subfloat c - RoIAlign (ResNet-50-C4)
+\subfloat[\textbf{RoIAlign} (ResNet-50-C4): Mask results with various RoI layers. Our RoIAlign layer improves AP by $\app$3 points and AP$_{75}$ by $\app$5 points. Using proper alignment is the only factor that contributes to the large gap between RoI layers.\label{tab:ablation:roialign}]{
+\tablestyle{2.2pt}{1.05}\begin{tabular}{c|c|c|c|x{22}x{22}x{22}}
+  & \scriptsize\textbf{align?} & \scriptsize bilinear? & \scriptsize agg.
+  & AP & AP$_{50}$ & AP$_{75}$\\
+\shline
+  \emph{RoIPool}
+  & & & max & 26.9 & 48.8 & 26.4\\
+\hline
+  \multirow{2}{*}{\emph{RoIWarp} }
+  & & \checkmark & max & 27.2 & 49.2 & 27.1\\
+  & & \checkmark & ave & 27.1 & 48.9 & 27.1\\
+\hline
+  \multirow{2}{*}{\emph{RoIAlign}}
+  & \checkmark & \checkmark & max & \bd{30.2} & \bd{51.0} & \bd{31.8}\\
+  & \checkmark & \checkmark & ave & \bd{30.3} & \bd{51.2} & \bd{31.5}
+\end{tabular}}\\
+% subfloat d - RoIAlign (ResNet-50-C5)
+\subfloat[\textbf{RoIAlign} (ResNet-50-\bd{C5}, \emph{stride 32}): Mask-level and box-level AP using \emph{large-stride} features. Misalignments are more severe than with stride-16 features (Table \ref{tab:ablation:roialign}), resulting in big accuracy gaps.\label{tab:ablation:roialign32}]{
+\tablestyle{4pt}{1.05}\begin{tabular}{c|x{22}x{22}x{22}|x{22}x{22}x{22}}
+  & AP & AP$_{50}$ & AP$_{75}$
+  & AP$^\text{bb}$ & AP$^\text{bb}_{50}$ & AP$^\text{bb}_{75}$ \\[.1em]
+\shline
+  \emph{RoIPool} & 23.6 & 46.5 & 21.6 & 28.2 & 52.7 & 26.9\\
+  \emph{RoIAlign} & \bd{30.9} & \bd{51.8} & \bd{32.1} & \bd{34.0} & \bd{55.3} & \bd{36.4}\\
+\hline
+  & \dt{+7.3} & \dt{+ 5.3} & \dt{+10.5} & \dt{+5.8} & \dt{+2.6} & \dt{+9.5}
+\end{tabular}}\hspace{2mm}
+% subfloat e - mask representation
+\subfloat[\textbf{Mask Branch} (ResNet-50-FPN): Fully convolutional networks (FCN) vs. multi-layer perceptrons (MLP, fully-connected) for mask prediction. FCNs improve results as they take advantage of explicitly encoding spatial layout.\label{tab:ablation:maskhead}]{
+\tablestyle{4pt}{1.05}\begin{tabular}{c|c|x{22}x{22}x{22}}
+  & mask branch & AP & AP$_{50}$ & AP$_{75}$\\
+\shline
+  MLP & fc: 1024$\rightarrow$1024$\rightarrow$$80\ncdot28^2$  & 31.5 & 53.7 & 32.8\\
+  MLP & fc: 1024$\rightarrow$1024$\rightarrow$1024$\rightarrow$$80\ncdot28^2$ & 31.5 & 54.0 & 32.6\\
+\hline
+  \textbf{FCN} &  conv: 256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$80
+  & \bd{33.6} & \bd{55.2} & \bd{35.3}
+\end{tabular}}
+% main caption
+\caption{\textbf{Ablations}. We train on \texttt{trainval35k}, test on \texttt{minival}, and report \emph{mask} AP unless otherwise noted.}
+\label{tab:ablations}
+\end{table*}
+
+\xjtuappendixsubsection{Ablation Experiments}\label{sec:ablations}
+
+We run a number of ablations to analyze Mask R-CNN. Results are shown in Table \ref{tab:ablations} and discussed in detail next.
+
+\paragraph{Architecture:} Table \ref{tab:ablation:backbone} shows Mask R-CNN with various backbones. It benefits from deeper networks (50 vs.~101) and advanced designs  including FPN and ResNeXt. We note that \emph{not} all frameworks automatically benefit from deeper or advanced networks (see benchmarking in).
+
+\paragraph{Multinomial vs. Independent Masks:} Mask R-CNN \emph{decouples} mask and class prediction: as the existing box branch predicts the class label, we generate a mask for each class without competition among classes (by a per-pixel \emph{sigmoid} and a \emph{binary} loss). In Table \ref{tab:ablation:sigmoid}, we compare this to using a per-pixel \emph{softmax} and a \emph{multinomial} loss (as commonly used in FCN). This alternative \emph{couples} the tasks of mask and class prediction, and results in a severe loss in mask AP (5.5 points). This suggests that once the instance has been classified as a whole (by the box branch), it is sufficient to predict a binary mask without concern for the categories, which makes the model easier to train.
+
+\paragraph{Class-Specific vs. Class-Agnostic Masks:} Our default instantiation predicts class-specific masks, i.e., one $m \times m$ mask per class. Interestingly, Mask R-CNN with class-agnostic masks (i.e., predicting a single $m \times m$ output regardless of class) is nearly as effective: it has 29.7 mask AP vs. 30.3 for the class-specific counterpart on ResNet-50-C4. This further highlights the division of labor in our approach which largely decouples classification and segmentation.
+
+\begin{table*}[t]
+\tablestyle{3.5pt}{1.1}
+\begin{tabular}{l|l|x{22}x{22}x{22}|x{22}x{22}x{22}}
+  & backbone
+  & AP$^\text{bb}$ & AP$^\text{bb}_{50}$ & AP$^\text{bb}_{75}$
+  & AP$^\text{bb}_S$ & AP$^\text{bb}_M$ &  AP$^\text{bb}_L$\\ [.1em]
+\shline
+  Faster R-CNN+++  & ResNet-101-C4
+  & 34.9 & 55.7 & 37.4 & 15.6 & 38.7 & 50.9\\
+  Faster R-CNN w FPN  & ResNet-101-FPN
+  & 36.2 & 59.1 & 39.0 & 18.2 & 39.0 & 48.2\\
+  Faster R-CNN by G-RMI  & Inception-ResNet-v2
+  & 34.7 & 55.5 & 36.7 & 13.5 & 38.1 & 52.0\\
+  Faster R-CNN w TDM  & Inception-ResNet-v2-TDM
+  & 36.8 & 57.7 & 39.2 & 16.2 & 39.8 & \bd{52.1}\\
+\hline
+  Faster R-CNN, RoIAlign & ResNet-101-FPN
+  & 37.3 & 59.6 & 40.3 & 19.8 & 40.2 & 48.8\\
+  \bd{Mask R-CNN} & ResNet-101-FPN
+  & 38.2 & 60.3 & 41.7 & 20.1 & 41.1 & 50.2\\
+  \bd{Mask R-CNN} & ResNeXt-101-FPN
+  & \bd{39.8} & \bd{62.3} & \bd{43.4} & \bd{22.1} & \bd{43.2} & {51.2}
+\end{tabular}
+\caption{\textbf{Object detection} \emph{single-model} results (bounding box AP), vs. state-of-the-art on \texttt{test-dev}. Mask R-CNN using ResNet-101-FPN outperforms the base variants of all previous state-of-the-art models (the mask output is ignored in these experiments). The gains of Mask R-CNN over come from using RoIAlign (+1.1 AP$^\text{bb}$), multitask training (+0.9 AP$^\text{bb}$), and ResNeXt-101 (+1.6 AP$^\text{bb}$).}
+\label{tab:final_bbox}
+\end{table*}
+
+\paragraph{RoIAlign:} An evaluation of our proposed \emph{RoIAlign} layer is shown in Table~\ref{tab:ablation:roialign}. For this experiment we use the ResNet-50-C4 backbone, which has stride 16. RoIAlign improves AP by about 3 points over RoIPool, with much of the gain coming at high IoU (AP$_{75}$). RoIAlign is insensitive to max/average pool; we use average in the rest of the paper.
+
+Additionally, we compare with \emph{RoIWarp} proposed in MNC that also adopt bilinear sampling. As discussed in \S\ref{sec:maskrcnn}, RoIWarp still quantizes the RoI, losing alignment with the input. As can be seen in Table \ref{tab:ablation:roialign}, RoIWarp performs on par with RoIPool and much worse than RoIAlign. This highlights that proper alignment is key.
+
+We also evaluate RoIAlign with a \emph{ResNet-50-C5} backbone, which has an even larger stride of 32 pixels. We use the same head as in Figure \ref{fig:head} (right), as the res5 head is not applicable. Table \ref{tab:ablation:roialign32} shows that RoIAlign improves mask AP by a massive 7.3 points, and mask AP$_{75}$ by 10.5 points (\emph{50\% relative improvement}). Moreover, we note that with RoIAlign, using \emph{stride-32} C5 features (30.9 AP) is more accurate than using stride-16 C4 features (30.3 AP, Table~\ref{tab:ablation:roialign}). RoIAlign largely resolves the long-standing challenge of using large-stride features for detection and segmentation.
+
+Finally, RoIAlign shows a gain of 1.5 mask AP and 0.5 box AP when used with FPN, which has finer multi-level strides. For keypoint detection that requires finer alignment, RoIAlign shows large gains even with FPN (Table~\ref{tab:roialign_keypoint}).
+
+\paragraph{Mask Branch:} Segmentation is a pixel-to-pixel task and we exploit the spatial layout of masks by using an FCN. In Table \ref{tab:ablation:maskhead}, we compare multi-layer perceptrons (MLP) and FCNs, using a ResNet-50-FPN backbone. Using FCNs gives a 2.1 mask AP gain over MLPs. We note that we choose this backbone so that the conv layers of the FCN head are not pre-trained, for a fair comparison with MLP.
+
+\xjtuappendixsubsection{Bounding Box Detection Results}
+
+We compare Mask R-CNN to the state-of-the-art COCO \emph{bounding-box} object detection in Table~\ref{tab:final_bbox}. For this result, even though the full Mask R-CNN model is trained, only the classification and box outputs are used at inference (the mask output is ignored). Mask R-CNN using ResNet-101-FPN outperforms the base variants of all previous state-of-the-art models, including the single-model variant of G-RMI, the winner of the COCO 2016 Detection Challenge. Using ResNeXt-101-FPN, Mask R-CNN further improves results, with a margin of 3.0 points box AP over the best previous single model entry from (which used Inception-ResNet-v2-TDM).
+
+As a further comparison, we trained a version of Mask R-CNN but \emph{without} the mask branch, denoted by ``Faster R-CNN, RoIAlign'' in Table \ref{tab:final_bbox}. This model performs better than the model presented in due to RoIAlign. On the other hand, it is 0.9 points box AP lower than Mask R-CNN. This gap of Mask R-CNN on box detection is therefore due solely to the benefits of multi-task training.
+
+Lastly, we note that Mask R-CNN attains a small gap between its mask and box AP: e.g., 2.7 points between 37.1 (mask, Table~\ref{tab:final_mask}) and 39.8 (box, Table~\ref{tab:final_bbox}). This indicates that our approach largely closes the gap between object detection and the more challenging instance segmentation task.
+
+\xjtuappendixsubsection{Timing}
+
+\paragraph{Inference:} We train a ResNet-101-FPN model that shares features between the RPN and Mask R-CNN stages, following the 4-step training of Faster R-CNN. This model runs at 195ms per image on an Nvidia Tesla M40 GPU (plus 15ms CPU time resizing the outputs to the original resolution), and achieves statistically the same mask AP as the unshared one. We also report that the ResNet-101-C4 variant takes $\app$400ms as it has a heavier box head (Figure \ref{fig:head}), so we do not recommend using the C4 variant in practice.
+
+Although Mask R-CNN is fast, we note that our design is not optimized for speed, and better speed/accuracy trade-offs could be achieved, e.g., by varying image sizes and proposal numbers, which is beyond the scope of this paper.
+
+\paragraph{Training:} Mask R-CNN is also fast to train. Training with ResNet-50-FPN on COCO \texttt{trainval35k} takes 32 hours in our synchronized 8-GPU implementation (0.72s per 16-image mini-batch), and 44 hours with ResNet-101-FPN. In fact, fast prototyping can be completed in \emph{less than one day} when training on the \texttt{train} set. We hope such rapid training will remove a major hurdle in this area and encourage more people to perform research on this challenging topic.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_keypoints}
+\caption{Keypoint detection results on COCO \texttt{test} using Mask R-CNN (ResNet-50-FPN), with person segmentation masks predicted from the same model. This model has a keypoint AP of 63.1 and runs at 5 fps.}
+\label{fig:results_keypoints}
+\end{figure*}
+
+\xjtuappendixsection{Mask R-CNN for Human Pose Estimation}\label{sec:keypoints}
+
+Our framework can easily be extended to human pose estimation. We model a keypoint's location as a one-hot mask, and adopt Mask R-CNN to predict $K$ masks, one for each of $K$ keypoint types (e.g., left shoulder, right elbow). This task helps demonstrate the flexibility of Mask R-CNN.
+
+We note that \emph{minimal} domain knowledge for human pose is exploited by our system, as the experiments are mainly to demonstrate the generality of the Mask R-CNN framework. We expect that domain knowledge (e.g., modeling structures) will be complementary to our simple approach.
+
+\paragraph{Implementation Details:} We make minor modifications to the segmentation system when adapting it for keypoints. For each of the $K$ keypoints of an instance, the training target is a one-hot $m \times m$ binary mask where only a \emph{single} pixel is labeled as foreground. During training, for each visible ground-truth keypoint, we minimize the cross-entropy loss over an $m^2$-way softmax output (which encourages a single point to be detected). We note that as in instance segmentation, the $K$ keypoints are still treated independently.
+
+We adopt the ResNet-FPN variant, and the keypoint head architecture is similar to that in Figure \ref{fig:head} (right). The keypoint head consists of a stack of eight 3$\times$3 512-d conv layers, followed by a deconv layer and 2$\times$ bilinear upscaling, producing an output resolution of 56$\times$56. We found that a relatively high resolution output (compared to masks) is required for keypoint-level localization accuracy.
+
+Models are trained on all COCO \texttt{trainval35k} images that contain annotated keypoints. To reduce overfitting, as this training set is smaller, we train using image scales randomly sampled from [640, 800] pixels; inference is on a single scale of 800 pixels. We train for 90k iterations, starting from a learning rate of 0.02 and reducing it by 10 at 60k and 80k iterations. We use bounding-box NMS with a threshold of 0.5. Other details are identical as in \S\ref{sec:impl}.
+
+\begin{table}[t]
+\tablestyle{1.8pt}{1.2}
+\begin{tabular}{l|x{22}x{22}x{22}|x{22}x{22}}
+  & AP$^\text{kp}$ & AP$^\text{kp}_{50}$ & AP$^\text{kp}_{75}$
+  & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
+\shline
+CMU-Pose+++  & 61.8 & 84.9 & 67.5 & 57.1 & 68.2 \\
+G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
+\hline
+  \bd{Mask R-CNN}, \footnotesize keypoint-only & 62.7 & 87.0 & 68.4 & 57.4 & 71.1 \\
+  \bd{Mask R-CNN}, \footnotesize keypoint \& mask & \bd{63.1} & \bd{87.3} & \bd{68.7} & {57.8} & \bd{71.4} \\
+\end{tabular}
+\caption{\textbf{Keypoint detection} AP on COCO \texttt{test-dev}. Ours is a single model (ResNet-50-FPN) that runs at 5 fps. CMU-Pose+++ is the 2016 competition winner that uses multi-scale testing, post-processing with CPM, and filtering with an object detector, adding a cumulative $\app$5 points (clarified in personal communication). $^\dagger$: G-RMI was trained on COCO \emph{plus} MPII (25k images), using two models (Inception-ResNet-v2 for bounding box detection and ResNet-101 for keypoints).}
+\label{tab:final_keypoint}
+\end{table}
+
+\paragraph{Main Results and Ablations:} We evaluate the person keypoint AP (AP$^\text{kp}$) and experiment with a ResNet-50-FPN backbone; more backbones will be studied in the appendix. Table~\ref{tab:final_keypoint} shows that our result (62.7 AP$^\text{kp}$) is 0.9 points higher than the COCO 2016 keypoint detection winner that uses a multi-stage processing pipeline (see caption of Table~\ref{tab:final_keypoint}). Our method is considerably simpler and faster.
+
+\begin{table}[t]
+\begin{minipage}{0.55\textwidth}
+  \tablestyle{7pt}{1.1}
+  \begin{tabular}{l|x{22}x{22}x{22}}
+  & AP$^\text{bb}_\text{\emph{person}}$ & AP$^\text{mask}_\text{\emph{person}}$
+  & AP$^\text{kp}$ \\ [.1em]
+  \shline
+  Faster R-CNN & 52.5 & - & - \\
+  Mask R-CNN, mask-only & \bd{53.6} & \bd{45.8} & - \\
+  Mask R-CNN, keypoint-only & 50.7 & - & 64.2 \\
+  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \bd{64.7} \\
+  \end{tabular}
+  \caption{\textbf{Multi-task learning} of box, mask, and keypoint about the \emph{person} category, evaluated on \texttt{minival}. All entries are trained on the same data for fair comparisons. The backbone is ResNet-50-FPN. The entries with 64.2 and 64.7 AP on \texttt{minival} have \texttt{test-dev} AP of 62.7 and 63.1, respectively (see Table~\ref{tab:final_keypoint}).}
+  \label{tab:multitask_keypoint}
+\end{minipage}\hspace{3mm}
+\begin{minipage}{0.4\textwidth}
+  \tablestyle{2pt}{1.1}
+  \begin{tabular}{l|x{22}x{22}x{22}|x{22}x{22}}
+    & AP$^\text{kp}$ & AP$^\text{kp}_{50}$ & AP$^\text{kp}_{75}$
+    & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
+  \shline
+    \emph{RoIPool} & 59.8 & 86.2 & 66.7 & 55.1 & 67.4 \\
+    \emph{RoIAlign}~~~~ & \bd{64.2} & \bd{86.6} & \bd{69.7} & \bd{58.7} & \bd{73.0} \\
+  \end{tabular}
+  \caption{\textbf{RoIAlign vs. RoIPool} for keypoint detection on \texttt{minival}. The backbone is ResNet-50-FPN.}
+  \label{tab:roialign_keypoint}
+\end{minipage}
+\end{table}
+
+More importantly, we have \emph{a unified model that can simultaneously predict boxes, segments, and keypoints} while running at 5 fps. Adding a segment branch (for the person category) improves the AP$^\text{kp}$ to 63.1 (Table~\ref{tab:final_keypoint}) on \texttt{test-dev}. More ablations of multi-task learning on \texttt{minival} are in Table~\ref{tab:multitask_keypoint}. Adding the \emph{mask} branch to the box-only (i.e., Faster R-CNN) or keypoint-only versions consistently improves these tasks. However, adding the keypoint branch reduces the box/mask AP slightly, suggesting that while keypoint detection benefits from multitask training, it does not in turn help the other tasks. Nevertheless, learning all three tasks jointly enables a unified system to efficiently predict all outputs simultaneously (Figure~\ref{fig:results_keypoints}).
+
+We also investigate the effect of \emph{RoIAlign} on keypoint detection (Table~\ref{tab:roialign_keypoint}).  Though this ResNet-50-FPN backbone has finer strides (e.g., 4 pixels on the finest level), RoIAlign still shows significant improvement over RoIPool and increases AP$^\text{kp}$ by 4.4 points. This is because keypoint detections are more sensitive to localization accuracy. This again indicates that alignment is essential for pixel-level localization, including masks and keypoints.
+
+Given the effectiveness of Mask R-CNN for extracting object bounding boxes, masks, and keypoints, we expect it be an effective framework for other instance-level tasks.
+
+\begin{table*}[t]
+\tablestyle{4pt}{1.05}
+\begin{tabular}{l|l|x{32}|x{22}x{22}|x{22}x{22}x{22}x{22}x{22}x{22}x{22}x{22}}
+  & \multicolumn{1}{c|}{training data} & AP [\texttt{val}] & AP & AP$_{50}$
+  & person & rider & car & truck & bus & train & mcycle & bicycle\\[.1em]
+\shline
+  InstanceCut  & \texttt{fine} + \texttt{coarse}
+  & 15.8 & 13.0 & 27.9 & 10.0 & 8.0 & 23.7 & 14.0 & 19.5 & 15.2 & 9.3 & 4.7 \\
+  DWT  & \texttt{fine}
+  & 19.8 & 15.6 & 30.0 & 15.1 & 11.7 & 32.9 & 17.1 & 20.4 & 15.0 & 7.9 & 4.9 \\
+  SAIS  & \texttt{fine}
+  & - & 17.4 & 36.7 & 14.6 & 12.9 & 35.7 & 16.0 & 23.2 & 19.0 & 10.3 & 7.8 \\
+  DIN  & \texttt{fine} + \texttt{coarse}
+  & - & 20.0 & 38.8 & 16.5 & 16.7 & 25.7 & 20.6 & 30.0 & 23.4 & 17.1 & 10.1 \\
+  SGN  & \texttt{fine} + \texttt{coarse} & 29.2 & 25.0 & 44.9 & 21.8 &	20.1 &	39.4 &	24.8 &	33.2 &	30.8 &	17.7 &	12.4 \\
+\hline
+  Mask R-CNN & \texttt{fine}
+  & 31.5 & 26.2 & 49.9 & 30.5 & 23.7 & 46.9 & 22.8 & 32.2 & 18.6 & 19.1 & 16.0 \\
+  Mask R-CNN & \texttt{fine} + COCO
+  & \bd{36.4} & \bd{32.0} & \bd{58.1} & \bd{34.8} & \bd{27.0} & \bd{49.1} & \bd{30.1} & \bd{40.9} & \bd{30.9} & \bd{24.1} & \bd{18.7} \\
+\end{tabular}
+\caption{Results on Cityscapes \texttt{val} (`AP [\texttt{val}]' column) and \texttt{test} (remaining columns) sets. Our method uses ResNet-50-FPN.}
 \label{tab:cityscapes}
 \end{table*}
