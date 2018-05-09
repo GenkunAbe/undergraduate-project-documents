@@ -7,6 +7,7 @@
 *.log
 *.xml
 *.blg
-*.pdf
+thesis.pdf
+midpre.pdf
 *.bcf
 .vscode
