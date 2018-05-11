@@ -1,3 +1,15 @@
+\newcommand{\app}{\raise.17ex\hbox{$\scriptstyle\sim$}}
+\newcommand{\ncdot}{{\mkern 0mu\cdot\mkern 0mu}}
+\def\x{\times}
+
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1pt}}
+\newcommand{\dt}[1]{\fontsize{8pt}{.1em}\selectfont \emph{#1}}
+\newlength\savewidth\newcommand\shline{\noalign{\global\savewidth\arrayrulewidth
+  \global\arrayrulewidth 1pt}\hline\noalign{\global\arrayrulewidth\savewidth}}
+\newcommand{\tablestyle}[2]{\setlength{\tabcolsep}{#1}\renewcommand{\arraystretch}{#2}\centering\footnotesize}
+\makeatletter\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+  {.5em \@plus1ex \@minus.2ex}{-.5em}{\normalfont\normalsize\bfseries}}\makeatother
+
 \xjtuappendixchapter{外文文献翻译}
 
 \begin{center}
@@ -88,10 +100,10 @@ Mask R-CNN 在概念上很简洁：Faster R-CNN对于每个候选的目标会有
 \begin{figure}[t]
 \centering
 \begin{overpic}[width=1.0\linewidth]{figures/mask_rcnn/head}
- \put(33,29){\tiny Faster R-CNN}
- \put(33,27){\tiny w/ ResNet }
- \put(84,29){\tiny Faster R-CNN}
- \put(85,27){\tiny w/ FPN }
+ \put(33,29){Faster R-CNN}
+ \put(33,26){w/ ResNet }
+ \put(84,29){Faster R-CNN}
+ \put(84,26){w/ FPN }
 \end{overpic}
 \caption{\textbf{前部体系结构}： 我们扩展了两个现有的Faster R-CNN的前部。 左图和右图分别显示ResNet C4和FPN主干的前部，其都添加了遮罩分支。数字表示空间分辨率和通道数。箭头表示可以从上下文中推断出的卷积层、反卷积层或者全连接层（卷积层会保留空间维度，而反卷积层会增加空间维度）。除了输出卷积层的尺寸为$1\times1$，所有的卷积核的尺寸都是$3\times3$。反卷积核尺寸为$2\times2$且步长为2，同时我们在隐藏层中使用了ReLU。 \emph{左}：`res5'表示ResNet的第五阶段，为了简单起见，我们进行了更改，使得第一个卷积核以步长1在尺寸为$7\times7$的RoI上操作，（而不是以步长2在尺寸为$14\times14$RoI上）。\emph{右}：$\times4$表示一连串的四次转换。}
 \label{fig:head}
@@ -122,12 +134,12 @@ Mask R-CNN 在概念上很简洁：Faster R-CNN对于每个候选的目标会有
  FCIS+++  +OHEM & ResNet-101-C5-dilated
   & 33.6 & 54.5 & - & - & - & -\\
 \hline
- \bd{Mask R-CNN} & ResNet-101-C4
+ \textbf{Mask R-CNN} & ResNet-101-C4
   & 33.1 & 54.9 & 34.8 & 12.1 & 35.6 & 51.1 \\
- \bd{Mask R-CNN} & ResNet-101-FPN
+ \textbf{Mask R-CNN} & ResNet-101-FPN
   & 35.7 & 58.0 & 37.8 & 15.5 & 38.1 & 52.4\\
- \bd{Mask R-CNN} & ResNeXt-101-FPN
-  & \bd{37.1} & \bd{60.0} & \bd{39.4} & \bd{16.9} & \bd{39.9} & \bd{53.5}
+ \textbf{Mask R-CNN} & ResNeXt-101-FPN
+  & \textbf{37.1} & \textbf{60.0} & \textbf{39.4} & \textbf{16.9} & \textbf{39.9} & \textbf{53.5}
 \end{tabular}
 \caption{\textbf{实例分割} 在COCO\texttt{test-dev}数据集上的\emph{遮罩}平均精度. MNC和FCIS分别是2015年和2016年COCO实例分割挑战的获胜者。在没有任何调参技巧的情况下，Mask R-CNN的表现超过了更复杂的FCIS+++模型，该模型包括了多尺度训练、测试，水平平移测试，以及OHEM。所有的图片都是\emph{单一模型}下的结果。}
 \label{tab:final_mask}
@@ -175,7 +187,7 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  \scriptsize ResNet-101-C4 & 32.7 & 54.2 & 34.3\\\hline
  \scriptsize ResNet-50-FPN & 33.6 & 55.2 & 35.3\\
  \scriptsize ResNet-101-FPN & 35.4 & 57.3 & 37.5\\
- \scriptsize ResNeXt-101-FPN & \bd{36.7} & \bd{59.5} & \bd{38.9}
+ \scriptsize ResNeXt-101-FPN & \textbf{36.7} & \textbf{59.5} & \textbf{38.9}
 \end{tabular}}\hspace{1mm}
 % subfloat b - Multinomial vs Independent Masks
 \subfloat[\textbf{耦合的对比解耦的遮罩分支} (ResNet-50-C4): 通过每个类别的二元遮罩\emph{解耦}相比于耦合的遮罩预测有了很大提升。\label{tab:ablation:sigmoid}]{
@@ -183,7 +195,7 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  & AP & AP$_{50}$ & AP$_{75}$\\
 \shline
  \emph{softmax} & 24.8 & 44.1 & 25.1\\
- \emph{sigmoid} & \bd{30.3} & \bd{51.2} & \bd{31.5}\\
+ \emph{sigmoid} & \textbf{30.3} & \textbf{51.2} & \textbf{31.5}\\
 \hline
  & \dt{+5.5} & \dt{+7.1} & \dt{+6.4}\\
  \multicolumn{4}{c}{~}\\
@@ -203,17 +215,17 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
   & & \checkmark & ave & 27.1 & 48.9 & 27.1\\
 \hline
  \multirow{2}{*}{\emph{RoIAlign}}
-  & \checkmark & \checkmark & max & \bd{30.2} & \bd{51.0} & \bd{31.8}\\
-  & \checkmark & \checkmark & ave & \bd{30.3} & \bd{51.2} & \bd{31.5}
+  & \checkmark & \checkmark & max & \textbf{30.2} & \textbf{51.0} & \textbf{31.8}\\
+  & \checkmark & \checkmark & ave & \textbf{30.3} & \textbf{51.2} & \textbf{31.5}
 \end{tabular}}\\
 % subfloat d - RoIAlign (ResNet-50-C5)
-\subfloat[\textbf{RoIAlign} (ResNet-50-\bd{C5}, \emph{stride 32}): 使用大步长特征的遮罩任务和边界框任务的平均精度。错位比步长为16的特征更严重（表\ref{tab:ablation:roialign}），导致较大的精度差距。\label{tab:ablation:roialign32}]{
+\subfloat[\textbf{RoIAlign} (ResNet-50-\textbf{C5}, \emph{stride 32}): 使用大步长特征的遮罩任务和边界框任务的平均精度。错位比步长为16的特征更严重（表\ref{tab:ablation:roialign}），导致较大的精度差距。\label{tab:ablation:roialign32}]{
 \tablestyle{4pt}{1.05}\begin{tabular}{c|x{22}x{22}x{22}|x{22}x{22}x{22}}
  & AP & AP$_{50}$ & AP$_{75}$
  & AP$^\text{bb}$ & AP$^\text{bb}_{50}$ & AP$^\text{bb}_{75}$ \\[.1em]
 \shline
  \emph{RoIPool} & 23.6 & 46.5 & 21.6 & 28.2 & 52.7 & 26.9\\
- \emph{RoIAlign} & \bd{30.9} & \bd{51.8} & \bd{32.1} & \bd{34.0} & \bd{55.3} & \bd{36.4}\\
+ \emph{RoIAlign} & \textbf{30.9} & \textbf{51.8} & \textbf{32.1} & \textbf{34.0} & \textbf{55.3} & \textbf{36.4}\\
 \hline
  & \dt{+7.3} & \dt{+ 5.3} & \dt{+10.5} & \dt{+5.8} & \dt{+2.6} & \dt{+9.5}
 \end{tabular}}\hspace{2mm}
@@ -226,7 +238,7 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  MLP & fc: 1024$\rightarrow$1024$\rightarrow$1024$\rightarrow$$80\ncdot28^2$ & 31.5 & 54.0 & 32.6\\
 \hline
  \textbf{FCN} &  conv: 256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$80
- & \bd{33.6} & \bd{55.2} & \bd{35.3}
+ & \textbf{33.6} & \textbf{55.2} & \textbf{35.3}
 \end{tabular}}
 % main caption
 \caption{\textbf{对比试验}。我们在\texttt{trainval35k}上训练，在\texttt{minival}上测试。除非特别说明，以上都是\emph{遮罩}平均精度指标。}
@@ -257,14 +269,14 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  Faster R-CNN by G-RMI  & Inception-ResNet-v2
   & 34.7 & 55.5 & 36.7 & 13.5 & 38.1 & 52.0\\
  Faster R-CNN w TDM  & Inception-ResNet-v2-TDM
-  & 36.8 & 57.7 & 39.2 & 16.2 & 39.8 & \bd{52.1}\\
+  & 36.8 & 57.7 & 39.2 & 16.2 & 39.8 & \textbf{52.1}\\
 \hline
   Faster R-CNN, RoIAlign & ResNet-101-FPN
   & 37.3 & 59.6 & 40.3 & 19.8 & 40.2 & 48.8\\
- \bd{Mask R-CNN} & ResNet-101-FPN
+ \textbf{Mask R-CNN} & ResNet-101-FPN
   & 38.2 & 60.3 & 41.7 & 20.1 & 41.1 & 50.2\\
- \bd{Mask R-CNN} & ResNeXt-101-FPN
-  & \bd{39.8} & \bd{62.3} & \bd{43.4} & \bd{22.1} & \bd{43.2} & {51.2}
+ \textbf{Mask R-CNN} & ResNeXt-101-FPN
+  & \textbf{39.8} & \textbf{62.3} & \textbf{43.4} & \textbf{22.1} & \textbf{43.2} & {51.2}
 \end{tabular}
 \caption{\textbf{目标检测} \emph{单一模型} 的结果 (边界框均值精度), 对比该领域最先进的方法，在\texttt{test-dev}测试集上. 使用ResNet-101-FPN作为主干模型的Mask R-CNN的表现超过了所有先前该领最先进的模型的基础变种（在这个任务中，遮罩预测输出会被直接忽略）。Mask R-CNN相对于Faster R-CNN的提升主要来自于使用了RoIAlign（+1.1 $AP^\text{bb}$）、多任务训练（+0.9 AP$^\text{bb}$）以及ResNeXt-101（+1.6 AP$^\text{bb}$）。}
 \label{tab:final_bbox}
@@ -322,10 +334,10 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
  & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
 \shline
 CMU-Pose+++  & 61.8 & 84.9 & 67.5 & 57.1 & 68.2 \\
-G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
+G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 \hline
- \bd{Mask R-CNN}, \footnotesize keypoint-only & 62.7 & 87.0 & 68.4 & 57.4 & 71.1 \\
- \bd{Mask R-CNN}, \footnotesize keypoint \& mask & \bd{63.1} & \bd{87.3} & \bd{68.7} & {57.8} & \bd{71.4} \\
+ \textbf{Mask R-CNN}, \footnotesize keypoint-only & 62.7 & 87.0 & 68.4 & 57.4 & 71.1 \\
+ \textbf{Mask R-CNN}, \footnotesize keypoint \& mask & \textbf{63.1} & \textbf{87.3} & \textbf{68.7} & {57.8} & \textbf{71.4} \\
 \end{tabular}
 \caption{\textbf{关键点检测} 在COCO \texttt{test-dev}数据集上的均值精度. 我们的模型是一个单一模型（ResNet-50-FPN），运行的速度为每秒5张图片。CMU-Pose+++ is 2016挑战的获胜者，其使用了多尺度测试，使用CPM进行后续处理，并且使用目标检测器进行过滤。我们的方法相比它提升了大约5个百分点（在个人通讯中声明）。$^\dagger$：G-RMI在COCO数据集\emph{以及}MPII数据集(2.5万张图片)上训练，使用两个模型（Inception-ResNet-v2用于边界框检测，ResNet-101用于关键点检测）。}
 \label{tab:final_keypoint}
@@ -341,9 +353,9 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
   & AP$^\text{kp}$ \\ [.1em]
   \shline
   Faster R-CNN & 52.5 & - & - \\
-  Mask R-CNN, mask-only & \bd{53.6} & \bd{45.8} & - \\
+  Mask R-CNN, mask-only & \textbf{53.6} & \textbf{45.8} & - \\
   Mask R-CNN, keypoint-only & 50.7 & - & 64.2 \\
-  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \bd{64.7} \\
+  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \textbf{64.7} \\
   \end{tabular}
   \caption{对于\emph{人类}领域的边界框、遮罩以及关键点的\textbf{多任务学习}，在\texttt{minival}数据集上的评估结果。所有的对比模型都使用相同的数据进行公平比较。主干模型是ResNet-50-FPN。在\texttt{minival}数据集上的均值精度为64.2和64.7模型在\texttt{test-dev}数据集上的均值精度分别为62.7和63.1（见表\ref{tab:final_keypoint}）。}
   \label{tab:multitask_keypoint}
@@ -355,7 +367,7 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
    & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
   \shline
    \emph{RoIPool} & 59.8 & 86.2 & 66.7 & 55.1 & 67.4 \\
-   \emph{RoIAlign}~~~~ & \bd{64.2} & \bd{86.6} & \bd{69.7} & \bd{58.7} & \bd{73.0} \\
+   \emph{RoIAlign}~~~~ & \textbf{64.2} & \textbf{86.6} & \textbf{69.7} & \textbf{58.7} & \textbf{73.0} \\
   \end{tabular}
   \caption{\textbf{RoIAlign 对比 RoIPool}用于关键点检测，在\texttt{minival}数据集上，主干模型为ResNet-50-FPN。}
   \label{tab:roialign_keypoint}
@@ -387,7 +399,7 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
  Mask R-CNN & \texttt{fine}
   & 31.5 & 26.2 & 49.9 & 30.5 & 23.7 & 46.9 & 22.8 & 32.2 & 18.6 & 19.1 & 16.0 \\
  Mask R-CNN & \texttt{fine} + COCO
-  & \bd{36.4} & \bd{32.0} & \bd{58.1} & \bd{34.8} & \bd{27.0} & \bd{49.1} & \bd{30.1} & \bd{40.9} & \bd{30.9} & \bd{24.1} & \bd{18.7} \\
+  & \textbf{36.4} & \textbf{32.0} & \textbf{58.1} & \textbf{34.8} & \textbf{27.0} & \textbf{49.1} & \textbf{30.1} & \textbf{40.9} & \textbf{30.9} & \textbf{24.1} & \textbf{18.7} \\
 \end{tabular}
 \caption{在Cityscapes \texttt{val} (`AP [\texttt{val}]' 列) and \texttt{test} (其它列)数据集上的结果。我们的方法使用ResNet-50-FPN作为主干。}
 \label{tab:cityscapes}
@@ -489,10 +501,10 @@ We note that our mask branches have a straightforward structure. More complex de
 \begin{figure}[t]
 \centering
 \begin{overpic}[width=1.0\linewidth]{figures/mask_rcnn/head}
-  \put(33,29){\tiny Faster R-CNN}
-  \put(33,27){\tiny w/ ResNet }
-  \put(84,29){\tiny Faster R-CNN}
-  \put(85,27){\tiny w/ FPN }
+  \put(33,29){Faster R-CNN}
+  \put(33,26){w/ ResNet }
+  \put(84,29){Faster R-CNN}
+  \put(84,26){w/ FPN }
 \end{overpic}
 \caption{\textbf{Head Architecture}: We extend two existing Faster R-CNN heads. Left/Right panels show the heads for the ResNet C4 and FPN backbones, from and, respectively, to which a mask branch is added.
 Numbers denote spatial resolution and channels.
@@ -526,12 +538,12 @@ We set hyper-parameters following existing Fast/Faster R-CNN work. Although thes
   FCIS+++  +OHEM & ResNet-101-C5-dilated
   & 33.6 & 54.5 & - & - & - & -\\
 \hline
-  \bd{Mask R-CNN} & ResNet-101-C4
+  \textbf{Mask R-CNN} & ResNet-101-C4
   & 33.1 & 54.9 & 34.8 & 12.1 & 35.6 & 51.1 \\
-  \bd{Mask R-CNN} & ResNet-101-FPN
+  \textbf{Mask R-CNN} & ResNet-101-FPN
   & 35.7 & 58.0 & 37.8 & 15.5 & 38.1 & 52.4\\
-  \bd{Mask R-CNN} & ResNeXt-101-FPN
-  & \bd{37.1} & \bd{60.0} & \bd{39.4} & \bd{16.9} & \bd{39.9} & \bd{53.5}
+  \textbf{Mask R-CNN} & ResNeXt-101-FPN
+  & \textbf{37.1} & \textbf{60.0} & \textbf{39.4} & \textbf{16.9} & \textbf{39.9} & \textbf{53.5}
 \end{tabular}
 \caption{\textbf{Instance segmentation} \emph{mask} AP on COCO \texttt{test-dev}. MNC and FCIS are the winners of the COCO 2015 and 2016 segmentation challenges, respectively. Without bells and whistles, Mask R-CNN outperforms the more complex FCIS+++, which includes multi-scale train/test, horizontal flip test, and OHEM. All entries are \emph{single-model} results.}
 \label{tab:final_mask}
@@ -579,7 +591,7 @@ Mask R-CNN outputs are visualized in Figures \ref{fig:results_main} and \ref{fig
   \scriptsize ResNet-101-C4 & 32.7 & 54.2 & 34.3\\\hline
   \scriptsize ResNet-50-FPN & 33.6 & 55.2 & 35.3\\
   \scriptsize ResNet-101-FPN & 35.4 & 57.3 & 37.5\\
-  \scriptsize ResNeXt-101-FPN & \bd{36.7} & \bd{59.5} & \bd{38.9}
+  \scriptsize ResNeXt-101-FPN & \textbf{36.7} & \textbf{59.5} & \textbf{38.9}
 \end{tabular}}\hspace{1mm}
 % subfloat b - Multinomial vs Independent Masks
 \subfloat[\textbf{Multinomial vs. Independent Masks} (ResNet-50-C4): \emph{Decoupling} via per-class binary masks (sigmoid) gives large gains over multinomial masks (softmax).\label{tab:ablation:sigmoid}]{
@@ -587,7 +599,7 @@ Mask R-CNN outputs are visualized in Figures \ref{fig:results_main} and \ref{fig
   & AP & AP$_{50}$ & AP$_{75}$\\
 \shline
   \emph{softmax} & 24.8 & 44.1 & 25.1\\
-  \emph{sigmoid} & \bd{30.3} & \bd{51.2} & \bd{31.5}\\
+  \emph{sigmoid} & \textbf{30.3} & \textbf{51.2} & \textbf{31.5}\\
 \hline
   & \dt{+5.5} & \dt{+7.1} & \dt{+6.4}\\
   \multicolumn{4}{c}{~}\\
@@ -607,17 +619,17 @@ Mask R-CNN outputs are visualized in Figures \ref{fig:results_main} and \ref{fig
   & & \checkmark & ave & 27.1 & 48.9 & 27.1\\
 \hline
   \multirow{2}{*}{\emph{RoIAlign}}
-  & \checkmark & \checkmark & max & \bd{30.2} & \bd{51.0} & \bd{31.8}\\
-  & \checkmark & \checkmark & ave & \bd{30.3} & \bd{51.2} & \bd{31.5}
+  & \checkmark & \checkmark & max & \textbf{30.2} & \textbf{51.0} & \textbf{31.8}\\
+  & \checkmark & \checkmark & ave & \textbf{30.3} & \textbf{51.2} & \textbf{31.5}
 \end{tabular}}\\
 % subfloat d - RoIAlign (ResNet-50-C5)
-\subfloat[\textbf{RoIAlign} (ResNet-50-\bd{C5}, \emph{stride 32}): Mask-level and box-level AP using \emph{large-stride} features. Misalignments are more severe than with stride-16 features (Table \ref{tab:ablation:roialign}), resulting in big accuracy gaps.\label{tab:ablation:roialign32}]{
+\subfloat[\textbf{RoIAlign} (ResNet-50-\textbf{C5}, \emph{stride 32}): Mask-level and box-level AP using \emph{large-stride} features. Misalignments are more severe than with stride-16 features (Table \ref{tab:ablation:roialign}), resulting in big accuracy gaps.\label{tab:ablation:roialign32}]{
 \tablestyle{4pt}{1.05}\begin{tabular}{c|x{22}x{22}x{22}|x{22}x{22}x{22}}
   & AP & AP$_{50}$ & AP$_{75}$
   & AP$^\text{bb}$ & AP$^\text{bb}_{50}$ & AP$^\text{bb}_{75}$ \\[.1em]
 \shline
   \emph{RoIPool} & 23.6 & 46.5 & 21.6 & 28.2 & 52.7 & 26.9\\
-  \emph{RoIAlign} & \bd{30.9} & \bd{51.8} & \bd{32.1} & \bd{34.0} & \bd{55.3} & \bd{36.4}\\
+  \emph{RoIAlign} & \textbf{30.9} & \textbf{51.8} & \textbf{32.1} & \textbf{34.0} & \textbf{55.3} & \textbf{36.4}\\
 \hline
   & \dt{+7.3} & \dt{+ 5.3} & \dt{+10.5} & \dt{+5.8} & \dt{+2.6} & \dt{+9.5}
 \end{tabular}}\hspace{2mm}
@@ -630,7 +642,7 @@ Mask R-CNN outputs are visualized in Figures \ref{fig:results_main} and \ref{fig
   MLP & fc: 1024$\rightarrow$1024$\rightarrow$1024$\rightarrow$$80\ncdot28^2$ & 31.5 & 54.0 & 32.6\\
 \hline
   \textbf{FCN} &  conv: 256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$256$\rightarrow$80
-  & \bd{33.6} & \bd{55.2} & \bd{35.3}
+  & \textbf{33.6} & \textbf{55.2} & \textbf{35.3}
 \end{tabular}}
 % main caption
 \caption{\textbf{Ablations}. We train on \texttt{trainval35k}, test on \texttt{minival}, and report \emph{mask} AP unless otherwise noted.}
@@ -661,14 +673,14 @@ We run a number of ablations to analyze Mask R-CNN. Results are shown in Table \
   Faster R-CNN by G-RMI  & Inception-ResNet-v2
   & 34.7 & 55.5 & 36.7 & 13.5 & 38.1 & 52.0\\
   Faster R-CNN w TDM  & Inception-ResNet-v2-TDM
-  & 36.8 & 57.7 & 39.2 & 16.2 & 39.8 & \bd{52.1}\\
+  & 36.8 & 57.7 & 39.2 & 16.2 & 39.8 & \textbf{52.1}\\
 \hline
   Faster R-CNN, RoIAlign & ResNet-101-FPN
   & 37.3 & 59.6 & 40.3 & 19.8 & 40.2 & 48.8\\
-  \bd{Mask R-CNN} & ResNet-101-FPN
+  \textbf{Mask R-CNN} & ResNet-101-FPN
   & 38.2 & 60.3 & 41.7 & 20.1 & 41.1 & 50.2\\
-  \bd{Mask R-CNN} & ResNeXt-101-FPN
-  & \bd{39.8} & \bd{62.3} & \bd{43.4} & \bd{22.1} & \bd{43.2} & {51.2}
+  \textbf{Mask R-CNN} & ResNeXt-101-FPN
+  & \textbf{39.8} & \textbf{62.3} & \textbf{43.4} & \textbf{22.1} & \textbf{43.2} & {51.2}
 \end{tabular}
 \caption{\textbf{Object detection} \emph{single-model} results (bounding box AP), vs. state-of-the-art on \texttt{test-dev}. Mask R-CNN using ResNet-101-FPN outperforms the base variants of all previous state-of-the-art models (the mask output is ignored in these experiments). The gains of Mask R-CNN over come from using RoIAlign (+1.1 AP$^\text{bb}$), multitask training (+0.9 AP$^\text{bb}$), and ResNeXt-101 (+1.6 AP$^\text{bb}$).}
 \label{tab:final_bbox}
@@ -726,10 +738,10 @@ Models are trained on all COCO \texttt{trainval35k} images that contain annotate
   & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
 \shline
 CMU-Pose+++  & 61.8 & 84.9 & 67.5 & 57.1 & 68.2 \\
-G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
+G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 \hline
-  \bd{Mask R-CNN}, \footnotesize keypoint-only & 62.7 & 87.0 & 68.4 & 57.4 & 71.1 \\
-  \bd{Mask R-CNN}, \footnotesize keypoint \& mask & \bd{63.1} & \bd{87.3} & \bd{68.7} & {57.8} & \bd{71.4} \\
+  \textbf{Mask R-CNN}, \footnotesize keypoint-only & 62.7 & 87.0 & 68.4 & 57.4 & 71.1 \\
+  \textbf{Mask R-CNN}, \footnotesize keypoint \& mask & \textbf{63.1} & \textbf{87.3} & \textbf{68.7} & {57.8} & \textbf{71.4} \\
 \end{tabular}
 \caption{\textbf{Keypoint detection} AP on COCO \texttt{test-dev}. Ours is a single model (ResNet-50-FPN) that runs at 5 fps. CMU-Pose+++ is the 2016 competition winner that uses multi-scale testing, post-processing with CPM, and filtering with an object detector, adding a cumulative $\app$5 points (clarified in personal communication). $^\dagger$: G-RMI was trained on COCO \emph{plus} MPII (25k images), using two models (Inception-ResNet-v2 for bounding box detection and ResNet-101 for keypoints).}
 \label{tab:final_keypoint}
@@ -745,9 +757,9 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
   & AP$^\text{kp}$ \\ [.1em]
   \shline
   Faster R-CNN & 52.5 & - & - \\
-  Mask R-CNN, mask-only & \bd{53.6} & \bd{45.8} & - \\
+  Mask R-CNN, mask-only & \textbf{53.6} & \textbf{45.8} & - \\
   Mask R-CNN, keypoint-only & 50.7 & - & 64.2 \\
-  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \bd{64.7} \\
+  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \textbf{64.7} \\
   \end{tabular}
   \caption{\textbf{Multi-task learning} of box, mask, and keypoint about the \emph{person} category, evaluated on \texttt{minival}. All entries are trained on the same data for fair comparisons. The backbone is ResNet-50-FPN. The entries with 64.2 and 64.7 AP on \texttt{minival} have \texttt{test-dev} AP of 62.7 and 63.1, respectively (see Table~\ref{tab:final_keypoint}).}
   \label{tab:multitask_keypoint}
@@ -759,7 +771,7 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \bd{59.1} & 68.1 \\
     & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
   \shline
     \emph{RoIPool} & 59.8 & 86.2 & 66.7 & 55.1 & 67.4 \\
-    \emph{RoIAlign}~~~~ & \bd{64.2} & \bd{86.6} & \bd{69.7} & \bd{58.7} & \bd{73.0} \\
+    \emph{RoIAlign}~~~~ & \textbf{64.2} & \textbf{86.6} & \textbf{69.7} & \textbf{58.7} & \textbf{73.0} \\
   \end{tabular}
   \caption{\textbf{RoIAlign vs. RoIPool} for keypoint detection on \texttt{minival}. The backbone is ResNet-50-FPN.}
   \label{tab:roialign_keypoint}
@@ -791,7 +803,7 @@ Given the effectiveness of Mask R-CNN for extracting object bounding boxes, mask
   Mask R-CNN & \texttt{fine}
   & 31.5 & 26.2 & 49.9 & 30.5 & 23.7 & 46.9 & 22.8 & 32.2 & 18.6 & 19.1 & 16.0 \\
   Mask R-CNN & \texttt{fine} + COCO
-  & \bd{36.4} & \bd{32.0} & \bd{58.1} & \bd{34.8} & \bd{27.0} & \bd{49.1} & \bd{30.1} & \bd{40.9} & \bd{30.9} & \bd{24.1} & \bd{18.7} \\
+  & \textbf{36.4} & \textbf{32.0} & \textbf{58.1} & \textbf{34.8} & \textbf{27.0} & \textbf{49.1} & \textbf{30.1} & \textbf{40.9} & \textbf{30.9} & \textbf{24.1} & \textbf{18.7} \\
 \end{tabular}
 \caption{Results on Cityscapes \texttt{val} (`AP [\texttt{val}]' column) and \texttt{test} (remaining columns) sets. Our method uses ResNet-50-FPN.}
 \label{tab:cityscapes}

@@ -10,37 +10,9 @@
 
 \graphicspath{{figures/}}
 
-% mask_rcnn
-\usepackage{overpic}
-\newcommand{\km}[1]{{\color{red}[km: #1]}}
-\newcommand{\rbg}[1]{{\color{blue}[rbg: #1]}}
-\newcommand{\ppd}[1]{{\color{green}[ppd: #1]}}
-\newcommand{\bd}[1]{\textbf{#1}}
-\newcommand{\app}{\raise.17ex\hbox{$\scriptstyle\sim$}}
-\newcommand{\ncdot}{{\mkern 0mu\cdot\mkern 0mu}}
-\def\x{\times}
-\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1pt}}
-\newcommand{\dt}[1]{\fontsize{8pt}{.1em}\selectfont \emph{#1}}
-\newlength\savewidth\newcommand\shline{\noalign{\global\savewidth\arrayrulewidth
-  \global\arrayrulewidth 1pt}\hline\noalign{\global\arrayrulewidth\savewidth}}
-\newcommand{\tablestyle}[2]{\setlength{\tabcolsep}{#1}\renewcommand{\arraystretch}{#2}\centering\footnotesize}
-\makeatletter\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
-  {.5em \@plus1ex \@minus.2ex}{-.5em}{\normalfont\normalsize\bfseries}}\makeatother
-
-\renewcommand{\dbltopfraction}{1}
-\renewcommand{\bottomfraction}{0}
-\renewcommand{\textfraction}{0}
-\renewcommand{\dblfloatpagefraction}{0.95}
-
-\usepackage{multirow}
-\usepackage{titlesec}
-\usepackage{wrapfig}
-\usepackage{ifthen}
-\usepackage{graphicx}
-% \usepackage{caption}
-
-% 算法框图
-\usepackage{algorithm}
+\usepackage{wrapfig} % 多张图片
+\usepackage{overpic} % mask_rcnn
+\usepackage{algorithm} % 算法框图
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 \floatname{algorithm}{算法}
@@ -102,4 +74,3 @@
     \xjtuendappendix
 
 \end{document}
-
