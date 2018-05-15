@@ -40,7 +40,8 @@
 \newif\ifxjtu@doctor    \xjtu@doctorfalse
 \newif\ifxjtu@bigskip   \xjtu@bigskipfalse
 \newif\ifxjtu@nofont    \xjtu@nofontfalse
-\newif\ifxjtu@propfont  \xjtu@propfontfalse
+\newif\ifxjtu@truefont  \xjtu@truefontfalse
+\newif\ifxjtu@sourcefont \xjtu@sourcefontfalse
 \newif\ifxjtu@pdflinks  \xjtu@pdflinksfalse
 \newif\ifxjtu@colorlinks\xjtu@colorlinksfalse
 \newif\ifxjtu@compact   \xjtu@compactfalse
@@ -51,7 +52,8 @@
 \DeclareOption{doctor}      {\xjtu@doctortrue}
 \DeclareOption{bigskip}     {\xjtu@bigskiptrue} % bachelor only
 \DeclareOption{nofont}      {\xjtu@nofonttrue}
-\DeclareOption{propfont}    {\xjtu@propfonttrue}
+\DeclareOption{truefont}    {\xjtu@truefonttrue}
+\DeclareOption{sourcefont}  {\xjtu@sourcefonttrue}
 \DeclareOption{pdflinks}    {\xjtu@pdflinkstrue}
 \DeclareOption{colorlinks}  {\xjtu@colorlinkstrue}
 \DeclareOption{compact}     {\xjtu@compacttrue}
@@ -229,26 +231,34 @@
 
 % Font-family
 \ifxjtu@nofont\else
-  \ifxjtu@propfont
+    \ifxjtu@truefont
     \setmainfont[Ligatures=TeX]{Times New Roman}
     \setCJKmainfont{SimSun}
     \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{SimSun}
         \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
         \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
     \setCJKfamilyfont{hei}{SimHei}
-  \else
-    \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
-    \setCJKmainfont[BoldFont={思源宋体 Bold}, ItalicFont={AR PL UKai CN}]{Source Han Serif SC}
-    \setCJKsansfont[BoldFont={思源黑体 Bold}]{思源黑体 Regular}
-    \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{Source Han Serif SC}
-        \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
-        \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
-    \setCJKfamilyfont{hei}{思源黑体 Regular}
-  \fi
-  \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
-  \newcommand{\fangsong}{\CJKfamily{fangsong}}
-  \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
-  \newcommand{\hwzs}{\CJKfamily{hwzs}}
+    \else
+        \ifxjtu@sourcefont
+            \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
+            \setCJKmainfont[BoldFont={思源宋体 Bold}, ItalicFont={AR PL UKai CN}]{Source Han Serif SC}
+            \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{Source Han Serif SC}
+                \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
+                \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
+            \setCJKfamilyfont{hei}{思源黑体 Regular}
+        \else
+            \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
+            \setCJKmainfont[ItalicFont = FandolKai]{FandolSong}
+            \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{FandolSong}
+                \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
+                \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
+            \setCJKfamilyfont{hei}{FandolHei}
+        \fi
+    \fi
+    \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
+    \newcommand{\fangsong}{\CJKfamily{fangsong}}
+    \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
+    \newcommand{\hwzs}{\CJKfamily{hwzs}}
 \fi
 
 \def\thu@define@term#1{
