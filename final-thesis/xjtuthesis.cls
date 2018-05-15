@@ -233,7 +233,7 @@
 \ifxjtu@nofont\else
     \ifxjtu@truefont
     \setmainfont[Ligatures=TeX]{Times New Roman}
-    \setCJKmainfont{SimSun}
+    \setCJKmainfont[BoldFont={STZhongsong}, ItalicFont={KaiTi}]{SimSun}
     \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{SimSun}
         \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
         \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
@@ -248,17 +248,17 @@
             \setCJKfamilyfont{hei}{思源黑体 Regular}
         \else
             \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
-            \setCJKmainfont[ItalicFont = FandolKai]{FandolSong}
+            \setCJKmainfont[AutoFakeBold = false, ItalicFont = FandolKai]{FandolSong}
             \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{FandolSong}
                 \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
                 \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
             \setCJKfamilyfont{hei}{FandolHei}
         \fi
     \fi
-    \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
-    \newcommand{\fangsong}{\CJKfamily{fangsong}}
-    \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
-    \newcommand{\hwzs}{\CJKfamily{hwzs}}
+    % \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
+    % \newcommand{\fangsong}{\CJKfamily{fangsong}}
+    % \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
+    % \newcommand{\hwzs}{\CJKfamily{hwzs}}
 \fi
 
 \def\thu@define@term#1{
@@ -598,10 +598,11 @@
             \vspace*{-4pt}
             \includegraphics[width=11422590sp]{logo_red}\\
             \vspace{\baselineskip}
-            \vspace{4pt}
-            {\renewcommand{\CJKglue}{\hskip 3.55pt}\fangsong\xiaochu\textcolor{red}{\textbf{毕业设计（论文）}}}\\
+            \vspace{-2pt}
+            \hspace{3pt}\includegraphics[]{figures/head}
+            % {\renewcommand{\CJKglue}{\hskip 3.55pt}\xiaochu\textcolor{red}{\textbf{毕业设计（论文）}}}\\
             \vspace{2\baselineskip}
-            \vspace{1pt}
+            \vspace{14pt}
             \sanhao\textbf{
                 \begin{tabular}{ @{}p{146.6mm} }
                 \makebox[3em]{题\hspace{\fill}目}\ezcoverboxul{\textwidth-3em}{\xjtu@covertitlefirst}\\[8pt]
@@ -636,7 +637,7 @@
                 \begin{tabular}{p{23.2em}l}
                     \\[3pt]
                     & \makebox[6em]{系\hspace{\fill}(\hspace{\fill}专\hspace{\fill}业\hspace{\fill})}~\eztaskboxul{5.5em}{\hfill}\\
-                    \multicolumn{1}{c}{\multirow{2}{*}{\sanhao\hwzs\textbf{西~~安~~交~~通~~大~~学}}}
+                    \multicolumn{1}{c}{\multirow{2}{*}{\sanhao\textbf{西~~安~~交~~通~~大~~学}}}
                     & \makebox[6em]{系(专业)主任}~\eztaskboxul{5.5em}{\hfill}\\
                     & \makebox[6em]{批\hspace{\fill}准\hspace{\fill}日\hspace{\fill}期}~\eztaskboxul{5.5em}{\hfill}\\
                 \end{tabular}
