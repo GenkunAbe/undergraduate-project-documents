@@ -241,24 +241,20 @@
     \else
         \ifxjtu@sourcefont
             \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
-            \setCJKmainfont[BoldFont={思源宋体 Bold}, ItalicFont={AR PL UKai CN}]{Source Han Serif SC}
+            \setCJKmainfont[BoldFont=思源宋体 Bold, ItalicFont=FandolKai]{Source Han Serif SC}
             \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{Source Han Serif SC}
                 \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
                 \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
             \setCJKfamilyfont{hei}{思源黑体 Regular}
         \else
             \setmainfont[Ligatures=TeX]{Nimbus Roman No9 L}
-            \setCJKmainfont[AutoFakeBold = false, ItalicFont = FandolKai]{FandolSong}
+            \setCJKmainfont[AutoFakeBold=false, ItalicFont=FandolKai]{FandolSong}
             \setCJKfamilyfont{vert}[RawFeature={script=hani:language=CHN:vertical:+valt}]{FandolSong}
                 \def\CJKmovesymbol#1{\raise.35em\hbox{#1}}
                 \def\CJKmove{\let\CJKsymbol\CJKmovesymbol \let\CJKpunctsymbol\CJKsymbol}
             \setCJKfamilyfont{hei}{FandolHei}
         \fi
     \fi
-    % \setCJKfamilyfont{fangsong}{仿宋_GB2312} % 仿宋_GB2312
-    % \newcommand{\fangsong}{\CJKfamily{fangsong}}
-    % \setCJKfamilyfont{hwzs}{STZhongsong}    % 华文中宋  hwzs
-    % \newcommand{\hwzs}{\CJKfamily{hwzs}}
 \fi
 
 \def\thu@define@term#1{
@@ -433,8 +429,10 @@
 
 \let\oldtable=\table
 \renewcommand\table[1][]{
+    \vskip0.5\baselineskip
     \oldtable[#1]
     \wuhao
+    \renewcommand{\arraystretch}{1.5}
 }
 
 \newcommand{\monthname}[1]{%

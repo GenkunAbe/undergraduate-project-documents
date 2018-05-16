@@ -21,6 +21,12 @@
 \xjtuappendixsection{引言}
 在过去很短的时间内，计算机视觉社区快速地提高了目标检测和语义分割的结果。在很大的程度上，一些强大的基础模型驱动了这些结果，例如用于目标检测任务的Fast/Faster R-CNN 框架以及用于语义分割的全卷积网络（FCN）框架。这些方法的概念很新颖，在提供了灵活性和稳健性的同时，也提供了快速的训练和检测。我们本次工作的目标是开发一个同等有效的\emph{实例分割}框架。
 
+实例分割非常具有挑战性，因为它需要在正确地检测出一张图片中所有目标的同时，精确地划分每一个实例物体。因此实例分割问题包含了传统计算机视觉领域中的\emph{目标检测}和\emph{语义分割}任务。其中目标检测的任务是对于图片中的每一个目标进行分类，并使用边界框定位目标。而语义分割的目标是将图片中的每一个像素分类为一些固定的类别，而不区分每一个目标实例。\footnote{我们使用术语\emph{目标检测}表示检测目标的边界框，而不是遮罩；使用术语\emph{语义分割}表示将每一个像素分类而不区分目标实例，与通用的术语一致。同时我们使用术语\emph{实例分割}来表示既包含语义分割也包含目标检测的任务。} 对于实例分割任务，有人可能会认为需要一个复杂的方法才能得到好的结果。然而我们展示了一个极其简单、灵活以及快速的系统，能够超越先前在实例分割领域最先进的成果。
+
+我们这个称为\emph{Mask R-CNN}的方法是Faster R-CNN的扩展，增加了一个用于预测每一个感兴趣区域（Region of Interest，RoI）的分割遮罩的分支，该分支与现有的用于分类及边界框回归的分支\emph{并行}（图~\ref{fig:teaser}）。该遮罩分支是一个应用于每一个感兴趣区域的全连接卷积网络，用于像素到像素级别的分割遮罩预测。Faster R-CNN框架便于用很多种灵活的架构设计实现，对于一个特定的Faster R-CNN网络，基于此的Mask R-CNN模型很也容易实现和训练。不仅如此，遮罩分支仅增加了少量的计算量，使得一个快速的系统和实验成为可能。
+
+Mask R-CNN的原则是作为Faster R-CNN的一个直观的扩展框架，然而正确地构造遮罩分支是取得好结果的关键。更重要的是，Faster R-CNN不是为在输入和输出之间像素到像素对齐而设计的。这种设计在\emph{RoIPool}运用粗粒度的空间量化进行特征提取时最为明显。其中RoIPool是\emph{事实上的}处理实例的核心操作。为了解决不对齐的问题，我们提出了简单、免量化的层，称为\emph{RoIAlign}，其完整地保留了额外的空间位置。尽管这看上去是一个很小的改变，然而具有很大的影响：它将遮罩预测的准确率相对提升了10\%到50\%，并且在更严格的评估方式下提升更明显。我们的第二个发现是，有必要将遮罩预测与分类预测\emph{解耦}：我们独立地对每个类别进行二元遮罩预测，取消了不同类别之间的竞争，同时利用网络中RoI分类分支进行类别预测。与之相反的，全卷积网络通常用于对每个像素进行多分类操作，该操作将分割与分类耦合起来，这样的传统方法在我们的实验的实例分割任务中表现不佳。
+
 \begin{figure}
 \begin{minipage}{0.35\textwidth}
   \centering
@@ -38,12 +44,6 @@
   \end{minipage}
 \end{minipage}
 \end{figure}
-
-实例分割非常具有挑战性，因为它需要在正确地检测出一张图片中所有目标的同时，精确地划分每一个实例物体。因此实例分割问题包含了传统计算机视觉领域中的\emph{目标检测}和\emph{语义分割}任务。其中目标检测的任务是对于图片中的每一个目标进行分类，并使用边界框定位目标。而语义分割的目标是将图片中的每一个像素分类为一些固定的类别，而不区分每一个目标实例。\footnote{我们使用术语\emph{目标检测}表示检测目标的边界框，而不是遮罩；使用术语\emph{语义分割}表示将每一个像素分类而不区分目标实例，与通用的术语一致。同时我们使用术语\emph{实例分割}来表示既包含语义分割也包含目标检测的任务。} 对于实例分割任务，有人可能会认为需要一个复杂的方法才能得到好的结果。然而我们展示了一个极其简单、灵活以及快速的系统，能够超越先前在实例分割领域最先进的成果。
-
-我们这个称为\emph{Mask R-CNN}的方法是Faster R-CNN的扩展，增加了一个用于预测每一个感兴趣区域（Region of Interest，RoI）的分割遮罩的分支，该分支与现有的用于分类及边界框回归的分支\emph{并行}（图~\ref{fig:teaser}）。该遮罩分支是一个应用于每一个感兴趣区域的全连接卷积网络，用于像素到像素级别的分割遮罩预测。Faster R-CNN框架便于用很多种灵活的架构设计实现，对于一个特定的Faster R-CNN网络，基于此的Mask R-CNN模型很也容易实现和训练。不仅如此，遮罩分支仅增加了少量的计算量，使得一个快速的系统和实验成为可能。
-
-Mask R-CNN的原则是作为Faster R-CNN的一个直观的扩展框架，然而正确地构造遮罩分支是取得好结果的关键。更重要的是，Faster R-CNN不是为在输入和输出之间像素到像素对齐而设计的。这种设计在\emph{RoIPool}运用粗粒度的空间量化进行特征提取时最为明显。其中RoIPool是\emph{事实上的}处理实例的核心操作。为了解决不对齐的问题，我们提出了简单、免量化的层，称为\emph{RoIAlign}，其完整地保留了额外的空间位置。尽管这看上去是一个很小的改变，然而具有很大的影响：它将遮罩预测的准确率相对提升了10\%到50\%，并且在更严格的评估方式下提升更明显。我们的第二个发现是，有必要将遮罩预测与分类预测\emph{解耦}：我们独立地对每个类别进行二元遮罩预测，取消了不同类别之间的竞争，同时利用网络中RoI分类分支进行类别预测。与之相反的，全卷积网络通常用于对每个像素进行多分类操作，该操作将分割与分类耦合起来，这样的传统方法在我们的实验的实例分割任务中表现不佳。
 
 在没有使用任何调参技巧的情况下，Mask R-CNN的表现超过了所有先前在COCO实例分割任务中最优秀的单模型的结果，包括依靠高度工程化技巧赢得2016年挑战的冠军。作为一个附带的结果，我们的方法在COCO目标检测任务中依然表现出色。在控制变量分析对比实验中，我们评估了模型中多个基本的组成部分，这让我们能够评估模型的稳健性以及分析核心元素的影响。
 
@@ -421,6 +421,12 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 
 The vision community has rapidly improved object detection and semantic segmentation results over a short period of time. In large part, these advances have been driven by powerful baseline systems, such as the Fast/Faster R-CNN and Fully Convolutional Network (FCN) frameworks for object detection and semantic segmentation, respectively. These methods are conceptually intuitive and offer flexibility and robustness, together with fast training and inference time. Our goal in this work is to develop a comparably enabling framework for \emph{instance segmentation}.
 
+Instance segmentation is challenging because it requires the correct detection of all objects in an image while also precisely segmenting each instance. It therefore combines elements from the classical computer vision tasks of \emph{object detection}, where the goal is to classify individual objects and localize each using a bounding box, and \emph{semantic segmentation}, where the goal is to classify each pixel into a fixed set of categories without differentiating object instances.\footnote{Following common terminology, we use \emph{object detection} to denote detection via \emph{bounding boxes}, not masks, and \emph{semantic segmentation} to denote per-pixel classification without differentiating instances. Yet we note that \emph{instance segmentation} is both semantic and a form of detection.}~Given this, one might expect a complex method is required to achieve good results. However, we show that a surprisingly simple, flexible, and fast system can surpass prior state-of-the-art instance segmentation results.
+
+Our method, called \emph{Mask R-CNN}, extends Faster R-CNN by adding a branch for predicting segmentation masks on each Region of Interest (RoI), in \emph{parallel} with the existing branch for classification and bounding box regression (Figure~\ref{fig:teaser}). The mask branch is a small FCN applied to each RoI, predicting a segmentation mask in a pixel-to-pixel manner. Mask R-CNN is simple to implement and train given the Faster R-CNN framework, which facilitates a wide range of flexible architecture designs. Additionally, the mask branch only adds a small computational overhead, enabling a fast system and rapid experimentation.
+
+In principle Mask R-CNN is an intuitive extension of Faster R-CNN, yet constructing the mask branch properly is critical for good results. Most importantly, Faster R-CNN was not designed for pixel-to-pixel alignment between network inputs and outputs. This is most evident in how \emph{RoIPool}, the \emph{de facto} core operation for attending to instances, performs coarse spatial quantization for feature extraction. To fix the misalignment, we propose a simple, quantization-free layer, called \emph{RoIAlign}, that faithfully preserves exact spatial locations. Despite being a seemingly minor change, RoIAlign has a large impact: it improves mask accuracy by relative 10\% to 50\%, showing bigger gains under stricter localization metrics. Second, we found it essential to \emph{decouple} mask and class prediction: we predict a binary mask for each class independently, without competition among classes, and rely on the network's RoI classification branch to predict the category. In contrast, FCNs usually perform per-pixel multi-class categorization, which couples segmentation and classification, and based on our experiments works poorly for instance segmentation.
+
 \begin{figure}
 \begin{minipage}{0.35\textwidth}
   \centering
@@ -438,12 +444,6 @@ The vision community has rapidly improved object detection and semantic segmenta
   \end{minipage}
 \end{minipage}
 \end{figure}
-
-Instance segmentation is challenging because it requires the correct detection of all objects in an image while also precisely segmenting each instance. It therefore combines elements from the classical computer vision tasks of \emph{object detection}, where the goal is to classify individual objects and localize each using a bounding box, and \emph{semantic segmentation}, where the goal is to classify each pixel into a fixed set of categories without differentiating object instances.\footnote{Following common terminology, we use \emph{object detection} to denote detection via \emph{bounding boxes}, not masks, and \emph{semantic segmentation} to denote per-pixel classification without differentiating instances. Yet we note that \emph{instance segmentation} is both semantic and a form of detection.}~Given this, one might expect a complex method is required to achieve good results. However, we show that a surprisingly simple, flexible, and fast system can surpass prior state-of-the-art instance segmentation results.
-
-Our method, called \emph{Mask R-CNN}, extends Faster R-CNN by adding a branch for predicting segmentation masks on each Region of Interest (RoI), in \emph{parallel} with the existing branch for classification and bounding box regression (Figure~\ref{fig:teaser}). The mask branch is a small FCN applied to each RoI, predicting a segmentation mask in a pixel-to-pixel manner. Mask R-CNN is simple to implement and train given the Faster R-CNN framework, which facilitates a wide range of flexible architecture designs. Additionally, the mask branch only adds a small computational overhead, enabling a fast system and rapid experimentation.
-
-In principle Mask R-CNN is an intuitive extension of Faster R-CNN, yet constructing the mask branch properly is critical for good results. Most importantly, Faster R-CNN was not designed for pixel-to-pixel alignment between network inputs and outputs. This is most evident in how \emph{RoIPool}, the \emph{de facto} core operation for attending to instances, performs coarse spatial quantization for feature extraction. To fix the misalignment, we propose a simple, quantization-free layer, called \emph{RoIAlign}, that faithfully preserves exact spatial locations. Despite being a seemingly minor change, RoIAlign has a large impact: it improves mask accuracy by relative 10\% to 50\%, showing bigger gains under stricter localization metrics. Second, we found it essential to \emph{decouple} mask and class prediction: we predict a binary mask for each class independently, without competition among classes, and rely on the network's RoI classification branch to predict the category. In contrast, FCNs usually perform per-pixel multi-class categorization, which couples segmentation and classification, and based on our experiments works poorly for instance segmentation.
 
 Without bells and whistles, Mask R-CNN surpasses all previous state-of-the-art single-model results on the COCO instance segmentation task, including the heavily-engineered entries from the 2016 competition winner. As a by-product, our method also excels on the COCO object detection task. In ablation experiments, we evaluate multiple basic instantiations, which allows us to demonstrate its robustness and analyze the effects of core factors.
 
