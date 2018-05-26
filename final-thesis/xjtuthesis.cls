@@ -544,7 +544,7 @@
     \ifxjtu@bigskip
       \linespread{1.5} \selectfont
     \else
-      \linespread{1.2} \selectfont
+      \linespread{1.25} \selectfont
     \fi
 
     \newcommand{\coverul}[3]{%
@@ -593,6 +593,7 @@
         \newgeometry{headheight=5.5mm,textheight=257mm,voffset=2cm,headsep=4.5mm,textwidth=146.6mm,left=31.7mm,right=31.7mm}
         \topmargin=-1in
         \begin{center}
+            \linespread{1.2}
             \vspace*{-4pt}
             \includegraphics[width=11422590sp]{logo_red}\\
             \vspace{\baselineskip}
