@@ -2,6 +2,28 @@
 
 \section{自采集数据呈现}
 
+\begin{table}[!htb]
+\centering
+\caption{行人重识别领域常见数据库情况统计}
+\label{tab:reiddataset}
+\begin{threeparttable}
+\begin{tabularx}{\textwidth}{ccccccc}
+    \toprule
+    数据集名称         & 公布时间 & 行人数量 & 摄像头数量 & 图片数量  & Multi-shot~\tnote{a} & Tracking~\tnote{b} \\ \midrule
+VIPeR         & 2007 & 632  & 2     & 1264  & 否          & 否                  \\
+CUHK01        & 2012 & 971  & 2     & 3884  & 否          & 否                  \\
+CUHK03        & 2014 & 1467 & 10    & 13164 & 是          & 否                  \\
+Market1501    & 2015 & 1501 & 6     & 32217 & 是          & 否                  \\
+DukeMTMC4reID & 2017 & 1812 & 8     & 36441 & 是          & 否                  \\ \bottomrule
+\end{tabularx}
+\begin{tablenotes}
+    \footnotesize
+    \item[a] 同一行人是否有超过 2 张图片。
+    \item[b] 是否持续追踪同一行人。
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
 \subsection{摄像头分布与分组}
 
 表\ref{tab:cameraslayout}展示了16个摄像头的拍摄画面和分组情况。在本次采集的数据集中一共有5个场景，分别为楼外停车场、一楼庭院、二楼走廊、三楼电梯出口、三楼走廊。这5个地点分布在一条连续路线上，每个地点存在2$\sim$4个摄像头，是十分适合用于研究行人追踪的场景。
@@ -131,9 +153,9 @@
 
 单机CPU训练：5821 s/epoch
 
-单机GPU训练：
+单机GPU训练：326 s/epoch
 
-2节点多CPU训练：
+2节点多CPU训练：3016 s/epoch
 
 5节点多CPU训练：
 
