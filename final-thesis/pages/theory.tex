@@ -65,6 +65,7 @@ p_i=\frac{1}{H\times W}\sum_{j=1}^{H\times W}P(p_i\,\vert\,f_j)\times f_j
 
 多目标跟踪准确度（Multiple Object Tracking Accuracy，$\mathit{MOTA}$）是衡量多目标追踪效果的常见指标。对于一段视频，其画面帧的总数为$T$，那么该段视频的多目标追踪准确度（$\mathit{MOTA}$）的定义为：
 \begin{equation}
+\label{eq:mota}
 \mathit{MOTA}=1-\frac{\mathit{FP}+\mathit{FN}+\Phi}{T}
 \end{equation}
 其中$\mathit{FN}$是视频所有帧中将负样本预测为正的总数，$\mathit{FP}$是视频所有帧中将正样本预测为负的总数，$\Phi$是预测序列中标签跳变的次数。$\mathit{MOTA}$指标的值域为$(-\infty,1]$，越接近1代表跟踪的效果越好。
