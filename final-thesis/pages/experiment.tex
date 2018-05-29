@@ -27,7 +27,7 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
     \item[b] 是否持续追踪同一行人。
     \item[c] 未来会公布数据库，时间待定。
     \item[d] 该数字只包含完整走完全程的演员，还有大量无标签的路人未计入。
-    \item[e] 尚未数字具体统计，但预计会远大于100k。
+    \item[e] 数字具体尚未统计，但预计会远大于100k。
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -103,13 +103,13 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
     \caption{Market1501数据集测试结果}
     \label{tab:test}
     \begin{threeparttable}
-    \begin{tabularx}{\textwidth}{XXXX}
+    \begin{tabularx}{\textwidth}{p{0.28\textwidth}p{0.2\textwidth}<{\centering}p{0.2\textwidth}<{\centering}p{0.2\textwidth}<{\centering}}
     \toprule
-                            & mAP   & Rank1 & Rank10 \\ \midrule
-    PCB(paper)~\tnote{a}    & 77.40  & 92.30  & 98.20   \\
-    PCB+RPP(paper)~\tnote{a}& 81.60  & 93.80  & 98.50   \\
-    PCB                     & 73.10  & 87.20  & 93.40   \\
-    PCB+RPP                 & 74.03  & 89.43  & 94.40   \\ \bottomrule
+                            & mAP~(\%)   & Rank1~(\%) & Rank10~(\%) \\ \midrule
+    PCB~(paper)~\tnote{a}    & 77.40  & 92.30  & 98.20   \\
+    PCB+RPP~(paper)~\tnote{a}& 81.60  & 93.80  & 98.50   \\
+    PCB                      & 73.10  & 87.20  & 93.40   \\
+    PCB+RPP                  & 74.03  & 89.43  & 94.40   \\ \bottomrule
     \end{tabularx}
     \begin{tablenotes}
         \footnotesize
@@ -134,26 +134,26 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
 
 \subsection{学习后选择的部署方案}
 
-表\ref{tab:rlresult}为经过强化学习训练后的智能体在应对各种状态时，最有可能采取的行动统计。其中方案(1, 2, 7, 10, 14)表示摄像头ID分别为1, 2, 7, 10, 14的部署方案，其它方案的表示可以此类推。表中第二列表示该方案作为其它方案的最优转移方案的频次，第三列表示该方案最优频次占方案总数的比例。
+表\ref{tab:rlresult}为经过强化学习训练后的智能体在应对各种状态时，最有可能采取的行动统计。其中方案~(1, 2, 7, 10, 14)~表示摄像头ID分别为1, 2, 7, 10, 14的部署方案，其它方案的表示可以此类推。表中第二列表示该方案作为其它方案的最优转移方案的频次，第三列表示该方案最优频次占方案总数的比例。
 
-智能体经过强化学习训练，对当前环境有了了解之后，假设采用贪心的策略，即无论当前处于什么状态，都采取使得长期价值最高的动作。基于此假设，表\ref{tab:rlresult}显示，在所有可能的状态中，智能体处于其中的约$2/3$的状态下时都会一次性地转入之前讨论的(1, 2, 7, 10, 14)这个最优状态。处于其余约$1/3$的状态下时会转入(1, 2, 7, 10, 13)这个次优状态，可以看出，此方案与最优方案之间的区别，仅仅在于最后一组的摄像头的选择，而经过检查，该摄像头的成像质量也比较优秀。与此同时，当智能体处于该次优方案的状态时，长期价值最高的动作是转入最优方案状态。同时剩余的三种状态也会马上转入最优方案状态。因此可以得出结论：无论智能体当前处于什么状态，至多经过两步，即可到达最优状态。
+智能体经过强化学习训练，对当前环境有了了解之后，假设采用贪心的策略，即无论当前处于什么状态，都采取使得长期价值最高的动作。基于此假设，表\ref{tab:rlresult}显示，在所有可能的状态中，智能体处于其中的约$2/3$的状态下时都会一次性地转入~(1, 2, 7, 10, 14)~状态，因此该状态可以认为是智能体所选择的最优状态，该状态的可视化结果见图\ref{fig:rlresult}。处于其余约$1/3$的状态下时会转入~(1, 2, 7, 10, 13)~这个次优状态，可以看出，此方案与最优方案之间的区别，仅仅在于最后一组的摄像头的选择，而经过检查，该摄像头的成像质量也比较优秀。与此同时，当智能体处于该次优方案的状态时，长期价值最高的动作是转入最优方案状态。同时剩余的三种状态也会马上转入最优方案状态。因此可以得出结论：无论智能体当前处于什么状态，至多经过两步，即可到达最优状态。
 
 \begin{table}[h!]
     \centering
     \caption{学习后选择的部署方案}
     \label{tab:rlresult}
-    \begin{tabularx}{\textwidth}{XXX}
+    \begin{tabularx}{\textwidth}{p{0.4\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
     \toprule
-    方案               & 频次  & 占比      \\ \midrule
-    (1, 2, 7, 10, 14) & 190 & 65.97\% \\
-    (1, 2, 7, 10, 13) & 78  & 27.08\% \\
-    (1, 2, 7, 9, 14)  & 18  & 6.15\%  \\
-    (1, 3, 7, 10, 14) & 1   & 0.35\%  \\
-    (0, 2, 7, 10, 14) & 1   & 0.35\%  \\ \bottomrule
+    方案               & 频次  & 占比~(\%)  \\ \midrule
+    (1, 2, 7, 10, 14) & 190 & 65.97 \\
+    (1, 2, 7, 10, 13) & 78  & 27.08 \\
+    (1, 2, 7, 9, 14)  & 18  & 6.15  \\
+    (1, 3, 7, 10, 14) & 1   & 0.35  \\
+    (0, 2, 7, 10, 14) & 1   & 0.35  \\ \bottomrule
     \end{tabularx}
 \end{table}
 
-图\ref{fig:rlresult}是监控方案(1, 2, 7, 10, 14)的可视化结果。图中的每一张图片代表从一组摄像头中选取的一个摄像头所拍摄的场景。从图中可以看到，选取的摄像头光线充足、画面清晰、角度端正、视野范围宽阔，因此这是一个理想的摄像头部署方案。
+图\ref{fig:rlresult}是监控方案(1, 2, 7, 10, 14)的可视化结果。图中的每一张图片代表从一组摄像头中选取的一个摄像头所拍摄的场景。从图中可以看到，选取的摄像头光线充足、画面清晰、角度端正、视野范围宽阔，是一个理想的摄像头部署方案。
 
 \begin{figure}[!ht]
     \centering
@@ -168,22 +168,72 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
 
 \section{分布式CPU训练}
 
-\subsection{与单机的比较}
+天河二号拥有约 17920 个计算节点，每个通用节点配备两颗 Xeon E5 系列 12 核心的中央处理器、三个 XeonPhi 57 核心的协处理器（运算加速卡），总内存容量约 1.4PB，全局存储总容量约 12.4PB\cite{tianhe2018config}。2017 年 9 月，天河二号启动升级工程，二期系统天河二号 A 采用国产加速器 Matrix 2000，替换原有的 Xeon Phi 57 加速器，升级后系统峰值运算速度将达到 94.97Pflops\cite{tianhe2017summary}。天河二号各分区的详细配置如表 \ref{tab:tianheconfig}。天河二号的节点分别属于三个分区：CPU 分区、GPU 分区和胖节点分区。本项目使用了天河二号的 GPU 分区，与其它分区最大的不同在于 GPU 分区每个节点都配备了 2 块 NVIDIA Tesla K80 显示卡，显示内存 VRAM 为 24GB，单精度浮点数运算速度为 8.74 TFLOPS，双精度浮点数的运算速度为 2.91 TFLOPS。每个节点同时具备高性能的 CPU 和 GPU 运算能力，方便进行深度神经网络模型训练的对比测试。与此同时，各节点之间通过千兆网络进行连接，可用于搭建多节点分布式计算网络。
 
-\textbf{草稿：}
+天河二号的节点分为登陆节点和计算节点。登陆节点主要用于代码编译、数据解压、环境配置等工作。计算节点配备了高性能的 CPU 和 GPU，主要用于大数据计算，以及大规模的编译任务。登陆节点和计算节点的操作系统均为 CentOS 7，系统使用 slurm 作业管理系统管理作业队列，使用 module 管理各种可选的软件包、运行库。
 
-在天河二号上
+\begin{table}[!ht]
+\centering
+\caption{天河二号各分区配置表}
+\label{tab:tianheconfig}
+\begin{tabularx}{\textwidth}{p{0.08\textwidth}<{\centering}p{0.08\textwidth}<{\centering}p{0.35\textwidth}<{\centering}p{0.10\textwidth}<{\centering}p{0.25\textwidth}<{\centering}}
+\toprule
+\multicolumn{2}{c}{节点 / 分区}  & CPU                          & 内存    & GPU                  \\ \midrule
+\multicolumn{2}{c}{CPU 分区}  & 2 $\times$ 12 Intel Xeon E5-2692 v2 & 64GB  & -                    \\
+\multicolumn{2}{c}{GPU 分区}  & 2 $\times$ 10 Intel Xeon E5-2660 v3 & 256GB & 2 $\times$ NVIDIA Tesla K80 \\
+\multirow{3}{*}{胖节点} & 128GB & 2 $\times$ 12 Intel Xeon E5-2692 v2 & 128GB & -                    \\
+                        & 3TB   & 4 $\times$ 14 Intel Xeon E7-4850 v3 & 3TB   & -                    \\
+                        & 6TB   & 8 $\times$ 16 Intel Xeon E7-8867 v3 & 6TB   & -                    \\ \bottomrule
+\end{tabularx}
+\end{table}
 
-单机CPU训练：5821 s/epoch
+\subsection{多CPU集群分布式训练与单机的比较}
 
-单机GPU训练：326 s/epoch
+表\ref{tab:comp1}展示了深度行人重识别模型分别在单机及多CPU集群上训练的时间性能。第二行代表模型完整训练一个数据批次（epoch）所需的时间。从表中可以看出，采用多CPU集群取得的时间收益，与CPU节点个数近似地成线性比例关系，仅仅增加了一些节点之间通信的开销。同时，随着节点数目的增加，节点之间的通信开销也没有快速增长的趋势，说明了分布式训练的正确性和有效性。
 
-2节点多CPU训练：3016 s/epoch
+\begin{table}[!ht]
+    \centering
+    \caption{多CPU集群分布式训练与单机的比较}
+    \label{tab:comp1}
+    \begin{threeparttable}
+    \begin{tabularx}{\textwidth}{X<{\centering}X<{\centering}X<{\centering}}
+    \toprule
+    集群节点个数 & 时间~(~s/epoch~) & 分布式开销~(~s~)~\tnote{a} \\ \midrule
+    1 & 5821 & 0   \\
+    2 & 3016 & 211 \\
+    4 & 1536 & 323 \\
+    5 & 1219 & 274 \\ \bottomrule
+    \end{tabularx}
+    \begin{tablenotes}
+        \footnotesize
+        \item[a] 分布式开销$=$分布式训练所用时间$\times$节点个数$-$单机训练时间
+    \end{tablenotes}
+    \end{threeparttable}
+\end{table}
 
-4节点多CPU训练：1536 s/epoch
+\subsection{多CPU集群分布式训练与GPU的比较}
 
-5节点多CPU训练：1219 s/epoch
+本文还将多CPU集群与单机GPU训练深度行人重识别模型进行比较，不出意外的是，单机GPU以326 s/epoch的速度将单机CPU远远甩开，按照表\ref{tab:comp1}的结果估计，大约需要包含20个节点的CPU集群才能追平GPU的速度。由此可见在运算速度上，多CPU集群不占优势。而多CPU集群相对于GPU的优势在于，其可能很轻松地拥有海量的内存，且十分容易扩展，因此可以实现同时大批量数据的运算，增大训练中的 Batch Size，使得模型参数的梯度计算更加准确，从而可以使用更大的学习率。与此同时，根据Smith等人\cite{smith2017don}的研究，在训练过程中动态地增加Batch Size，可以代替动态地衰减学习率。使用大的学习率，可以加速模型参数的收敛，因此训练模型可以经历更少的Epoch，达到加速训练的目的。
 
-\subsection{与GPU的比较}
+表\ref{tab:comp2}是多CPU集群（包含5个CPU节点）与GPU在训练深度行人重识别模型时，不同的Batch Size、学习率、Epoch数以及准确率的比较。
 
-batch size、学习率、epoch数、准确率
+\begin{table}[h!]
+    \centering
+    \caption{多CPU集群分布式训练与GPU的比较}
+    \label{tab:comp2}
+    \begin{threeparttable}
+    \begin{tabularx}{\textwidth}{X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}}
+    \toprule
+    模型    & Batch Size & 学习率~\tnote{a} & Epoch数 & 训练时间~(s) & Rank1~(\%)  \\ \midrule
+    GPU     & 48 & 0.1 & 60 & - & 89.43 \\
+    CPU集群1 & 128 & 0.5 & 40 & - & - \\
+    CPU集群2 & 256 & 1.0 & 30 & - & - \\
+    CPU集群3 & 512 & 2.0 & 20 & - & - \\
+    CPU集群4 & 768 & 3.0 & 10 & - & - \\ \bottomrule
+    \end{tabularx}
+    \begin{tablenotes}
+        \footnotesize
+        \item[a] 初始的基准学习率
+    \end{tablenotes}
+    \end{threeparttable}
+\end{table}
