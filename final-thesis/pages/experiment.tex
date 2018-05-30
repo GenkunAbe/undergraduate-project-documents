@@ -215,25 +215,25 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
 
 本文还将多CPU集群与单机GPU训练深度行人重识别模型进行比较，不出意外的是，单机GPU以326 s/epoch的速度将单机CPU远远甩开，按照表\ref{tab:comp1}的结果估计，大约需要包含20个节点的CPU集群才能追平GPU的速度。由此可见在运算速度上，多CPU集群不占优势。而多CPU集群相对于GPU的优势在于，其可能很轻松地拥有海量的内存，且十分容易扩展，因此可以实现同时大批量数据的运算，增大训练中的 Batch Size，使得模型参数的梯度计算更加准确，从而可以使用更大的学习率。与此同时，根据Smith等人\cite{smith2017don}的研究，在训练过程中动态地增加Batch Size，可以代替动态地衰减学习率。使用大的学习率，可以加速模型参数的收敛，因此训练模型可以经历更少的Epoch，达到加速训练的目的。
 
-表\ref{tab:comp2}是多CPU集群（包含5个CPU节点）与GPU在训练深度行人重识别模型时，不同的Batch Size、学习率、Epoch数以及准确率的比较。
+% 表\ref{tab:comp2}是多CPU集群（包含5个CPU节点）与GPU在训练深度行人重识别模型时，不同的Batch Size、学习率、Epoch数以及准确率的比较。
 
-\begin{table}[h!]
-    \centering
-    \caption{多CPU集群分布式训练与GPU的比较}
-    \label{tab:comp2}
-    \begin{threeparttable}
-    \begin{tabularx}{\textwidth}{X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}}
-    \toprule
-    模型    & Batch Size & 学习率~\tnote{a} & Epoch数 & 训练时间~(s) & Rank1~(\%)  \\ \midrule
-    GPU     & 48 & 0.1 & 60 & - & 89.43 \\
-    CPU集群1 & 128 & 0.5 & 40 & - & - \\
-    CPU集群2 & 256 & 1.0 & 30 & - & - \\
-    CPU集群3 & 512 & 2.0 & 20 & - & - \\
-    CPU集群4 & 768 & 3.0 & 10 & - & - \\ \bottomrule
-    \end{tabularx}
-    \begin{tablenotes}
-        \footnotesize
-        \item[a] 初始的基准学习率
-    \end{tablenotes}
-    \end{threeparttable}
-\end{table}
+% \begin{table}[h!]
+%     \centering
+%     \caption{多CPU集群分布式训练与GPU的比较}
+%     \label{tab:comp2}
+%     \begin{threeparttable}
+%     \begin{tabularx}{\textwidth}{X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}X<{\centering}}
+%     \toprule
+%     模型    & Batch Size & 学习率~\tnote{a} & Epoch数 & 训练时间~(s) & Rank1~(\%)  \\ \midrule
+%     GPU     & 48 & 0.1 & 60 & - & 89.43 \\
+%     CPU集群1 & 128 & 0.5 & 40 & - & - \\
+%     CPU集群2 & 256 & 1.0 & 30 & - & - \\
+%     CPU集群3 & 512 & 2.0 & 20 & - & - \\
+%     CPU集群4 & 768 & 3.0 & 10 & - & - \\ \bottomrule
+%     \end{tabularx}
+%     \begin{tablenotes}
+%         \footnotesize
+%         \item[a] 初始的基准学习率
+%     \end{tablenotes}
+%     \end{threeparttable}
+% \end{table}
