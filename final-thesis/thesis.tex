@@ -11,6 +11,10 @@
 
 \graphicspath{{figures/}}
 
+\usepackage{tikz}
+\usepackage{etoolbox}
+\input{figures/tikzfig.tex}
+
 \usepackage{wrapfig} % 多张图片
 \usepackage{overpic} % mask_rcnn
 \usepackage{algorithm} % 算法框图
@@ -70,8 +74,8 @@
     \xjtubib{bibliography}
 
     % 附录
-    % \xjtuappendix
-    %     \input{pages/appendice.tex}
-    % \xjtuendappendix
+    \xjtuappendix
+        \input{pages/appendice.tex}
+    \xjtuendappendix
 
 \end{document}

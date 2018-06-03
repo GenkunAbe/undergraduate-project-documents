@@ -292,6 +292,13 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
 
 \paragraph{遮罩预测分支：} 分割是像素到像素的任务，我们通过使用FCN来利用遮罩的空间布局。在表\ref{tab:ablation:maskhead}中，我们比较了多层感知机（MLP）和使用了ResNet-50-FPN作为主干模型的FCN。使用FCN相对于MLP在遮罩均值精度上提升了2.1个百分点。我们注意到，我们选择这个骨干，以便FCN前部的卷积层没有预先训练，以公平地与MLP比较。
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_keypoints}
+\caption{在COCO \texttt{test}数据集上使用Mask R-CNN（ResNet-50-FPN）进行关键点检测，包括从相同模型中预测出的人物分割遮罩。此模型的关键点均值精度为63.1，速度为每秒5张图片。}
+\label{fig:results_keypoints}
+\end{figure*}
+
 \xjtuappendixsubsection{边界框检测结果}
 
 我们将Mask R-CNN与表\ref{tab:final_bbox}中的最新 COCO \emph{边界框}目标检测进行了比较。对于这个结果，即使完整的Mask R-CNN模型被训练，只有分类和边界框输出用于预测（遮罩输出被忽略）。 使用ResNet-101-FPN的Mask R-CNN优于所有先前最先进的模型的基础变种，包括G-RMI的单一模型，其为COCO 2016目标检测挑战赛的获胜者。通过使用ResNeXt-101-FPN，Mask R-CNN 进一步提高了结果，与之前使用 Inception-ResNet-v2-TDM的最佳单一模型相比，边界框均值精度提升了3.0个百分点。
@@ -308,18 +315,40 @@ Mask R-CNN的输出可视化为图\ref{fig:results_main}和图\ref{fig:results_m
 
 \paragraph{训练：} Mask R-CNN 的训练也很快。 在COCO\texttt{trainval35k}数据集上使用ResNet-50-FPN进行训练需要32小时的时间。我们同步使用8个GPU（每个最小批量有16张图像，耗时0.72秒）。若是训练ResNet-101-FPN则需要44个小时。 实际上，在\texttt{train}数据集上训练时，可以在\emph{一天之内}完成快速原型。我们希望这种快速训练能够消除该领域的一个主要障碍，并鼓励更多的人对这个具有挑战性的话题进行研究。
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_keypoints}
-\caption{在COCO \texttt{test}数据集上使用Mask R-CNN（ResNet-50-FPN）进行关键点检测，包括从相同模型中预测出的人物分割遮罩。此模型的关键点均值精度为63.1，速度为每秒5张图片。}
-\label{fig:results_keypoints}
-\end{figure*}
-
 \xjtuappendixsection{Mask R-CNN用于人体姿势估计}\label{sec:keypoints}
 
 我们的框架可以很容易地扩展到人体姿态估计。我们将一个关键点的位置建模为二元遮罩，并采用Mask R-CNN来预测$K$个遮罩，每个遮罩用于表示$K$个关键点类型（例如，左肩，右肘）中的一个。这项任务有助于展示Mask R-CNN的灵活性。
 
 我们注意到，我们的系统利用了人类姿态的\emph{最小}领域知识，因为实验主要是为了展示Mask R-CNN框架的通用性。我们期望领域知识（例如建模结构）会与我们简单的方法相辅相成。
+
+\begin{table}[t]
+\begin{minipage}{0.55\textwidth}
+  \tablestyle{7pt}{1.1}
+  \begin{tabular}{l|x{22}x{22}x{22}}
+  & AP$^\text{bb}_\text{\emph{person}}$ & AP$^\text{mask}_\text{\emph{person}}$
+  & AP$^\text{kp}$ \\ [.1em]
+  \shline
+  Faster R-CNN & 52.5 & - & - \\
+  Mask R-CNN, mask-only & \textbf{53.6} & \textbf{45.8} & - \\
+  Mask R-CNN, keypoint-only & 50.7 & - & 64.2 \\
+  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \textbf{64.7} \\
+  \end{tabular}
+  \caption{对于\emph{人类}领域的边界框、遮罩以及关键点的\textbf{多任务学习}，在\texttt{minival}数据集上的评估结果。所有的对比模型都使用相同的数据进行公平比较。主干模型是ResNet-50-FPN。在\texttt{minival}数据集上的均值精度为64.2和64.7模型在\texttt{test-dev}数据集上的均值精度分别为62.7和63.1（见表\ref{tab:final_keypoint}）。}
+  \label{tab:multitask_keypoint}
+\end{minipage}\hspace{3mm}
+\begin{minipage}{0.4\textwidth}
+  \tablestyle{2pt}{1.1}
+  \begin{tabular}{l|x{22}x{22}x{22}|x{22}x{22}}
+    & AP$^\text{kp}$ & AP$^\text{kp}_{50}$ & AP$^\text{kp}_{75}$
+    & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
+  \shline
+    \emph{RoIPool} & 59.8 & 86.2 & 66.7 & 55.1 & 67.4 \\
+    \emph{RoIAlign}~~~~ & \textbf{64.2} & \textbf{86.6} & \textbf{69.7} & \textbf{58.7} & \textbf{73.0} \\
+  \end{tabular}
+  \caption{\textbf{RoIAlign 对比 RoIPool}用于关键点检测，在\texttt{minival}数据集上，主干模型为ResNet-50-FPN。}
+  \label{tab:roialign_keypoint}
+\end{minipage}
+\end{table}
 
 \paragraph{实现细节：} 我们在将模型应用到对关键点预测时对分割系统进行了细微的修改。对于实例的$K$个关键点中的每个关键点，训练目标是二元$m\times m$的二进制遮罩，其中只有\emph{一个}像素被标记为前景。在训练期间，对于每个可见的真实关键点，我们将$m^2$路通过softmax输出（它鼓励单个点被检测到），并使用交叉熵损失进行最小化优化。我们注意到，与实例分割一样，$K$个关键点仍然是独立处理的。
 
@@ -345,65 +374,36 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 
 \paragraph{主要结果以及控制变量分析：}我们评估人体关键点的均值精度AP（AP$^\text{kp}$）并在实验中ResNet-50-FPN作为主干；附录中将研究更多主干模型。表\ref{tab:final_keypoint}显示我们的结果（62.7 AP$^\text{kp}$）比使用多级处理流水线的 COCO 2016关键点检测获胜者高0.9个百分点（请参阅表\ref{tab:final_keypoint}的标题）。我们的方法相当简单快捷。
 
-\begin{table}[t]
-\begin{minipage}{0.55\textwidth}
-  \tablestyle{7pt}{1.1}
-  \begin{tabular}{l|x{22}x{22}x{22}}
-  & AP$^\text{bb}_\text{\emph{person}}$ & AP$^\text{mask}_\text{\emph{person}}$
-  & AP$^\text{kp}$ \\ [.1em]
-  \shline
-  Faster R-CNN & 52.5 & - & - \\
-  Mask R-CNN, mask-only & \textbf{53.6} & \textbf{45.8} & - \\
-  Mask R-CNN, keypoint-only & 50.7 & - & 64.2 \\
-  Mask R-CNN, keypoint \& mask & 52.0 & 45.1 & \textbf{64.7} \\
-  \end{tabular}
-  \caption{对于\emph{人类}领域的边界框、遮罩以及关键点的\textbf{多任务学习}，在\texttt{minival}数据集上的评估结果。所有的对比模型都使用相同的数据进行公平比较。主干模型是ResNet-50-FPN。在\texttt{minival}数据集上的均值精度为64.2和64.7模型在\texttt{test-dev}数据集上的均值精度分别为62.7和63.1（见表\ref{tab:final_keypoint}）。}
-  \label{tab:multitask_keypoint}
-\end{minipage}\hspace{3mm}
-\begin{minipage}{0.4\textwidth}
-  \tablestyle{2pt}{1.1}
-  \begin{tabular}{l|x{22}x{22}x{22}|x{22}x{22}}
-   & AP$^\text{kp}$ & AP$^\text{kp}_{50}$ & AP$^\text{kp}_{75}$
-   & AP$^\text{kp}_M$ &  AP$^\text{kp}_L$\\ [.1em]
-  \shline
-   \emph{RoIPool} & 59.8 & 86.2 & 66.7 & 55.1 & 67.4 \\
-   \emph{RoIAlign}~~~~ & \textbf{64.2} & \textbf{86.6} & \textbf{69.7} & \textbf{58.7} & \textbf{73.0} \\
-  \end{tabular}
-  \caption{\textbf{RoIAlign 对比 RoIPool}用于关键点检测，在\texttt{minival}数据集上，主干模型为ResNet-50-FPN。}
-  \label{tab:roialign_keypoint}
-\end{minipage}
-\end{table}
+\begin{table*}[t]
+\tablestyle{4pt}{1.05}
+\begin{tabular}{l|l|x{32}|x{22}x{22}|x{22}x{22}x{22}x{22}x{22}x{22}x{22}x{22}}
+  & \multicolumn{1}{c|}{training data} & AP [\texttt{val}] & AP & AP$_{50}$
+  & person & rider & car & truck & bus & train & mcycle & bicycle\\[.1em]
+\shline
+  InstanceCut  & \texttt{fine} + \texttt{coarse}
+  & 15.8 & 13.0 & 27.9 & 10.0 & 8.0 & 23.7 & 14.0 & 19.5 & 15.2 & 9.3 & 4.7 \\
+  DWT  & \texttt{fine}
+  & 19.8 & 15.6 & 30.0 & 15.1 & 11.7 & 32.9 & 17.1 & 20.4 & 15.0 & 7.9 & 4.9 \\
+  SAIS  & \texttt{fine}
+  & - & 17.4 & 36.7 & 14.6 & 12.9 & 35.7 & 16.0 & 23.2 & 19.0 & 10.3 & 7.8 \\
+  DIN  & \texttt{fine} + \texttt{coarse}
+  & - & 20.0 & 38.8 & 16.5 & 16.7 & 25.7 & 20.6 & 30.0 & 23.4 & 17.1 & 10.1 \\
+  SGN  & \texttt{fine} + \texttt{coarse} & 29.2 & 25.0 & 44.9 & 21.8 &	20.1 &	39.4 &	24.8 &	33.2 &	30.8 &	17.7 &	12.4 \\
+\hline
+  Mask R-CNN & \texttt{fine}
+  & 31.5 & 26.2 & 49.9 & 30.5 & 23.7 & 46.9 & 22.8 & 32.2 & 18.6 & 19.1 & 16.0 \\
+  Mask R-CNN & \texttt{fine} + COCO
+  & \textbf{36.4} & \textbf{32.0} & \textbf{58.1} & \textbf{34.8} & \textbf{27.0} & \textbf{49.1} & \textbf{30.1} & \textbf{40.9} & \textbf{30.9} & \textbf{24.1} & \textbf{18.7} \\
+\end{tabular}
+\caption{在Cityscapes \texttt{val} (`AP [\texttt{val}]' 列) and \texttt{test} (其它列)数据集上的结果。我们的方法使用ResNet-50-FPN作为主干。}
+\label{tab:cityscapes}
+\end{table*}
 
 更重要的是，我们实现了\emph{一个可以同时预测边界框，遮罩和关键点的统一模型}，而且可以以5 fps的速度运行。添加遮罩分支（针对人员类别）在\texttt{test-dev}数据集上将AP$^\text{kp}$提升了为63.1（表\ref{tab:final_keypoint}）。表\ref{tab:multitask_keypoint}中更详细地讨论了\texttt{minival}上的多任务学习。将\emph{遮罩}分支添加到只有边界框的模型中（例如Faster R-CNN）或只有关键点的版本中可以持续改进这些任务。但是，添加关键点分支会略微减少边界框或遮罩任务的均值精度，这表明虽然关键点检测可从多任务训练中受益，但它不会帮助其它任务。不过，共同学习所有三项任务可以使统一系统同时有效地预测所有输出（图\ref{fig:results_keypoints}）。
 
 我们还调研了\emph{RoIAlign}对关键点检测（表\ref{tab:roialign_keypoint}）的影响。尽管此ResNet-50-FPN主干具有更好的步长（例如最好的水平上有4个像素），但RoIAlign仍然比RoIPool有显着的提升，并将AP$^\text{kp}$提高了4.4个百分点。这是因为关键点检测对定位精度更敏感。这再次表明，对齐对像素级定位至关重要，包括遮罩和关键点。
 
 鉴于Mask R-CNN在提取目标边界框、遮罩和关键点的有效性，我们预计它将成为其他实例级任务的有效框架。
-
-\begin{table*}[t]
-\tablestyle{4pt}{1.05}
-\begin{tabular}{l|l|x{32}|x{22}x{22}|x{22}x{22}x{22}x{22}x{22}x{22}x{22}x{22}}
- & \multicolumn{1}{c|}{training data} & AP [\texttt{val}] & AP & AP$_{50}$
- & person & rider & car & truck & bus & train & mcycle & bicycle\\[.1em]
-\shline
- InstanceCut  & \texttt{fine} + \texttt{coarse}
-  & 15.8 & 13.0 & 27.9 & 10.0 & 8.0 & 23.7 & 14.0 & 19.5 & 15.2 & 9.3 & 4.7 \\
- DWT  & \texttt{fine}
-  & 19.8 & 15.6 & 30.0 & 15.1 & 11.7 & 32.9 & 17.1 & 20.4 & 15.0 & 7.9 & 4.9 \\
- SAIS  & \texttt{fine}
-  & - & 17.4 & 36.7 & 14.6 & 12.9 & 35.7 & 16.0 & 23.2 & 19.0 & 10.3 & 7.8 \\
- DIN  & \texttt{fine} + \texttt{coarse}
-  & - & 20.0 & 38.8 & 16.5 & 16.7 & 25.7 & 20.6 & 30.0 & 23.4 & 17.1 & 10.1 \\
- SGN  & \texttt{fine} + \texttt{coarse} & 29.2 & 25.0 & 44.9 & 21.8 &	20.1 &	39.4 &	24.8 &	33.2 &	30.8 &	17.7 &	12.4 \\
-\hline
- Mask R-CNN & \texttt{fine}
-  & 31.5 & 26.2 & 49.9 & 30.5 & 23.7 & 46.9 & 22.8 & 32.2 & 18.6 & 19.1 & 16.0 \\
- Mask R-CNN & \texttt{fine} + COCO
-  & \textbf{36.4} & \textbf{32.0} & \textbf{58.1} & \textbf{34.8} & \textbf{27.0} & \textbf{49.1} & \textbf{30.1} & \textbf{40.9} & \textbf{30.9} & \textbf{24.1} & \textbf{18.7} \\
-\end{tabular}
-\caption{在Cityscapes \texttt{val} (`AP [\texttt{val}]' 列) and \texttt{test} (其它列)数据集上的结果。我们的方法使用ResNet-50-FPN作为主干。}
-\label{tab:cityscapes}
-\end{table*}
 
 
 %===============================================================================
@@ -700,6 +700,13 @@ Finally, RoIAlign shows a gain of 1.5 mask AP and 0.5 box AP when used with FPN,
 
 We compare Mask R-CNN to the state-of-the-art COCO \emph{bounding-box} object detection in Table~\ref{tab:final_bbox}. For this result, even though the full Mask R-CNN model is trained, only the classification and box outputs are used at inference (the mask output is ignored). Mask R-CNN using ResNet-101-FPN outperforms the base variants of all previous state-of-the-art models, including the single-model variant of G-RMI, the winner of the COCO 2016 Detection Challenge. Using ResNeXt-101-FPN, Mask R-CNN further improves results, with a margin of 3.0 points box AP over the best previous single model entry from (which used Inception-ResNet-v2-TDM).
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_keypoints}
+\caption{Keypoint detection results on COCO \texttt{test} using Mask R-CNN (ResNet-50-FPN), with person segmentation masks predicted from the same model. This model has a keypoint AP of 63.1 and runs at 5 fps.}
+\label{fig:results_keypoints}
+\end{figure*}
+
 As a further comparison, we trained a version of Mask R-CNN but \emph{without} the mask branch, denoted by ``Faster R-CNN, RoIAlign'' in Table \ref{tab:final_bbox}. This model performs better than the model presented in due to RoIAlign. On the other hand, it is 0.9 points box AP lower than Mask R-CNN. This gap of Mask R-CNN on box detection is therefore due solely to the benefits of multi-task training.
 
 Lastly, we note that Mask R-CNN attains a small gap between its mask and box AP: e.g., 2.7 points between 37.1 (mask, Table~\ref{tab:final_mask}) and 39.8 (box, Table~\ref{tab:final_bbox}). This indicates that our approach largely closes the gap between object detection and the more challenging instance segmentation task.
@@ -712,13 +719,6 @@ Although Mask R-CNN is fast, we note that our design is not optimized for speed,
 
 \paragraph{Training:} Mask R-CNN is also fast to train. Training with ResNet-50-FPN on COCO \texttt{trainval35k} takes 32 hours in our synchronized 8-GPU implementation (0.72s per 16-image mini-batch), and 44 hours with ResNet-101-FPN. In fact, fast prototyping can be completed in \emph{less than one day} when training on the \texttt{train} set. We hope such rapid training will remove a major hurdle in this area and encourage more people to perform research on this challenging topic.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{figures/mask_rcnn/results_keypoints}
-\caption{Keypoint detection results on COCO \texttt{test} using Mask R-CNN (ResNet-50-FPN), with person segmentation masks predicted from the same model. This model has a keypoint AP of 63.1 and runs at 5 fps.}
-\label{fig:results_keypoints}
-\end{figure*}
-
 \xjtuappendixsection{Mask R-CNN for Human Pose Estimation}\label{sec:keypoints}
 
 Our framework can easily be extended to human pose estimation. We model a keypoint's location as a one-hot mask, and adopt Mask R-CNN to predict $K$ masks, one for each of $K$ keypoint types (e.g., left shoulder, right elbow). This task helps demonstrate the flexibility of Mask R-CNN.
@@ -726,10 +726,6 @@ Our framework can easily be extended to human pose estimation. We model a keypoi
 We note that \emph{minimal} domain knowledge for human pose is exploited by our system, as the experiments are mainly to demonstrate the generality of the Mask R-CNN framework. We expect that domain knowledge (e.g., modeling structures) will be complementary to our simple approach.
 
 \paragraph{Implementation Details:} We make minor modifications to the segmentation system when adapting it for keypoints. For each of the $K$ keypoints of an instance, the training target is a one-hot $m \times m$ binary mask where only a \emph{single} pixel is labeled as foreground. During training, for each visible ground-truth keypoint, we minimize the cross-entropy loss over an $m^2$-way softmax output (which encourages a single point to be detected). We note that as in instance segmentation, the $K$ keypoints are still treated independently.
-
-We adopt the ResNet-FPN variant, and the keypoint head architecture is similar to that in Figure \ref{fig:head} (right). The keypoint head consists of a stack of eight 3$\times$3 512-d conv layers, followed by a deconv layer and 2$\times$ bilinear upscaling, producing an output resolution of 56$\times$56. We found that a relatively high resolution output (compared to masks) is required for keypoint-level localization accuracy.
-
-Models are trained on all COCO \texttt{trainval35k} images that contain annotated keypoints. To reduce overfitting, as this training set is smaller, we train using image scales randomly sampled from [640, 800] pixels; inference is on a single scale of 800 pixels. We train for 90k iterations, starting from a learning rate of 0.02 and reducing it by 10 at 60k and 80k iterations. We use bounding-box NMS with a threshold of 0.5. Other details are identical as in \S\ref{sec:impl}.
 
 \begin{table}[t]
 \tablestyle{1.8pt}{1.2}
@@ -746,6 +742,10 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 \caption{\textbf{Keypoint detection} AP on COCO \texttt{test-dev}. Ours is a single model (ResNet-50-FPN) that runs at 5 fps. CMU-Pose+++ is the 2016 competition winner that uses multi-scale testing, post-processing with CPM, and filtering with an object detector, adding a cumulative $\app$5 points (clarified in personal communication). $^\dagger$: G-RMI was trained on COCO \emph{plus} MPII (25k images), using two models (Inception-ResNet-v2 for bounding box detection and ResNet-101 for keypoints).}
 \label{tab:final_keypoint}
 \end{table}
+
+We adopt the ResNet-FPN variant, and the keypoint head architecture is similar to that in Figure \ref{fig:head} (right). The keypoint head consists of a stack of eight 3$\times$3 512-d conv layers, followed by a deconv layer and 2$\times$ bilinear upscaling, producing an output resolution of 56$\times$56. We found that a relatively high resolution output (compared to masks) is required for keypoint-level localization accuracy.
+
+Models are trained on all COCO \texttt{trainval35k} images that contain annotated keypoints. To reduce overfitting, as this training set is smaller, we train using image scales randomly sampled from [640, 800] pixels; inference is on a single scale of 800 pixels. We train for 90k iterations, starting from a learning rate of 0.02 and reducing it by 10 at 60k and 80k iterations. We use bounding-box NMS with a threshold of 0.5. Other details are identical as in \S\ref{sec:impl}.
 
 \paragraph{Main Results and Ablations:} We evaluate the person keypoint AP (AP$^\text{kp}$) and experiment with a ResNet-50-FPN backbone; more backbones will be studied in the appendix. Table~\ref{tab:final_keypoint} shows that our result (62.7 AP$^\text{kp}$) is 0.9 points higher than the COCO 2016 keypoint detection winner that uses a multi-stage processing pipeline (see caption of Table~\ref{tab:final_keypoint}). Our method is considerably simpler and faster.
 
@@ -778,12 +778,6 @@ G-RMI $^\dagger$ & 62.4 & 84.0 & 68.5 & \textbf{59.1} & 68.1 \\
 \end{minipage}
 \end{table}
 
-More importantly, we have \emph{a unified model that can simultaneously predict boxes, segments, and keypoints} while running at 5 fps. Adding a segment branch (for the person category) improves the AP$^\text{kp}$ to 63.1 (Table~\ref{tab:final_keypoint}) on \texttt{test-dev}. More ablations of multi-task learning on \texttt{minival} are in Table~\ref{tab:multitask_keypoint}. Adding the \emph{mask} branch to the box-only (i.e., Faster R-CNN) or keypoint-only versions consistently improves these tasks. However, adding the keypoint branch reduces the box/mask AP slightly, suggesting that while keypoint detection benefits from multitask training, it does not in turn help the other tasks. Nevertheless, learning all three tasks jointly enables a unified system to efficiently predict all outputs simultaneously (Figure~\ref{fig:results_keypoints}).
-
-We also investigate the effect of \emph{RoIAlign} on keypoint detection (Table~\ref{tab:roialign_keypoint}).  Though this ResNet-50-FPN backbone has finer strides (e.g., 4 pixels on the finest level), RoIAlign still shows significant improvement over RoIPool and increases AP$^\text{kp}$ by 4.4 points. This is because keypoint detections are more sensitive to localization accuracy. This again indicates that alignment is essential for pixel-level localization, including masks and keypoints.
-
-Given the effectiveness of Mask R-CNN for extracting object bounding boxes, masks, and keypoints, we expect it be an effective framework for other instance-level tasks.
-
 \begin{table*}[t]
 \tablestyle{4pt}{1.05}
 \begin{tabular}{l|l|x{32}|x{22}x{22}|x{22}x{22}x{22}x{22}x{22}x{22}x{22}x{22}}
@@ -808,3 +802,9 @@ Given the effectiveness of Mask R-CNN for extracting object bounding boxes, mask
 \caption{Results on Cityscapes \texttt{val} (`AP [\texttt{val}]' column) and \texttt{test} (remaining columns) sets. Our method uses ResNet-50-FPN.}
 \label{tab:cityscapes}
 \end{table*}
+
+More importantly, we have \emph{a unified model that can simultaneously predict boxes, segments, and keypoints} while running at 5 fps. Adding a segment branch (for the person category) improves the AP$^\text{kp}$ to 63.1 (Table~\ref{tab:final_keypoint}) on \texttt{test-dev}. More ablations of multi-task learning on \texttt{minival} are in Table~\ref{tab:multitask_keypoint}. Adding the \emph{mask} branch to the box-only (i.e., Faster R-CNN) or keypoint-only versions consistently improves these tasks. However, adding the keypoint branch reduces the box/mask AP slightly, suggesting that while keypoint detection benefits from multitask training, it does not in turn help the other tasks. Nevertheless, learning all three tasks jointly enables a unified system to efficiently predict all outputs simultaneously (Figure~\ref{fig:results_keypoints}).
+
+We also investigate the effect of \emph{RoIAlign} on keypoint detection (Table~\ref{tab:roialign_keypoint}).  Though this ResNet-50-FPN backbone has finer strides (e.g., 4 pixels on the finest level), RoIAlign still shows significant improvement over RoIPool and increases AP$^\text{kp}$ by 4.4 points. This is because keypoint detections are more sensitive to localization accuracy. This again indicates that alignment is essential for pixel-level localization, including masks and keypoints.
+
+Given the effectiveness of Mask R-CNN for extracting object bounding boxes, masks, and keypoints, we expect it be an effective framework for other instance-level tasks.

@@ -570,6 +570,12 @@
     \newcommand{\eztaskfillul}[1]{
         \eztaskul{\hspace{\fill}#1\hspace{\fill}}
     }
+    \newcommand\blankpage{%
+        \null
+        \thispagestyle{empty}%
+        \addtocounter{page}{-1}%
+        \newpage
+    }
 
     \renewcommand\footnoterule{\vspace*{-3pt}% eggache!
         \hrule width 0.25\textwidth height 0.4pt
@@ -625,6 +631,7 @@
         \end{center}
 
         \restoregeometry
+        \blankpage
     }
 
     \newcommand\ctaskdescription{
@@ -779,7 +786,7 @@
             \xjtu@ekeywords
         }
 
-        \clearpage
+        \cleardoublepage
     }
 
     % booktabs parameters
@@ -812,7 +819,7 @@
         \addcontentsline{toc}{chapter}{参考文献}
         \defbibheading{xjtubibhead}[]{\chapter*{参考文献}\vspace{2\baselineskip}\wuhao}
         \printbibliography[heading=xjtubibhead]
-        \clearpage
+        \cleardoublepage
     } }
 
    \let\oldfootnote\footnote
