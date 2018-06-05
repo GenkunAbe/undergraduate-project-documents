@@ -157,14 +157,25 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.3\textwidth]{1-2}
-    \includegraphics[width=0.3\textwidth]{1-4}\\
-    \includegraphics[width=0.3\textwidth]{2-3}
-    \includegraphics[width=0.3\textwidth]{3-2}
-    \includegraphics[width=0.3\textwidth]{3-6}
-    \caption{最优部署方案}
+    \subfloat[楼外停车场，ID为1]{\centering\includegraphics[width=0.3\textwidth]{1-2}}\quad
+    \subfloat[一楼庭院，ID为2]{\centering\includegraphics[width=0.3\textwidth]{1-4}}\\
+    \subfloat[二楼走廊，ID为7]{\centering\includegraphics[width=0.3\textwidth]{2-3}}\quad
+    \subfloat[三楼电梯，ID为10]{\centering\includegraphics[width=0.3\textwidth]{3-2}}\quad
+    \subfloat[三楼走廊，ID为14]{\centering\includegraphics[width=0.3\textwidth]{3-6}}
+    \caption{经强化学习训练后选择的最优部署方案可视化}
     \label{fig:rlresult}
 \end{figure}
+
+% \begin{figure}[!ht]
+%     \centering
+%     \includegraphics[width=0.3\textwidth]{1-2}
+%     \includegraphics[width=0.3\textwidth]{1-4}\\
+%     \includegraphics[width=0.3\textwidth]{2-3}
+%     \includegraphics[width=0.3\textwidth]{3-2}
+%     \includegraphics[width=0.3\textwidth]{3-6}
+%     \caption{最优部署方案}
+%     \label{fig:rlresult}
+% \end{figure}
 
 \section{分布式CPU训练}
 
