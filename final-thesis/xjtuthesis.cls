@@ -97,7 +97,7 @@
 \RequirePackage{longtable}
 \RequirePackage{booktabs}
 \RequirePackage{subfig}
-\RequirePackage[style=gb7714-2015]{biblatex}
+\RequirePackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015,gbnamefmt=lowercase]{biblatex}
 \RequirePackage{setspace}
 \RequirePackage[shortlabels]{enumitem}
 \setenumerate[1]{1),fullwidth,itemindent=\parindent,listparindent=\parindent,itemsep=0.05\baselineskip,partopsep=0pt,parsep=0ex,topsep=0.1\baselineskip}
