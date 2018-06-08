@@ -1,0 +1,72 @@
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemeXJTUstyle}[2015/12/27 v0.0.1 The XJTUstyle Beamer Theme]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theme options and definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%theme options
+\DeclareOptionBeamer{xjtured}{\def\beamer@xjtucolor{xjtured}}%缺省默认
+\DeclareOptionBeamer{xjtublue}{\def\beamer@xjtucolor{xjtublue}}
+\DeclareOptionBeamer{sidebar}{\def\beamer@xjtusidebar{true}}%缺省无
+\ProcessOptionsBeamer
+
+\def\beamer@xjtucolorblue{xjtublue}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%beamer specific options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>%refers to the first four modes (beamer,handout,second and trans). That is, to all modes except the article mode
+{
+
+\definecolor{beamer@xjtublue}{RGB}{0,65,130}% xjtublue
+% 冷色系辅助色
+\definecolor{beamer@DarkGrayishBlue}{RGB}{136,150,163}%
+\definecolor{beamer@ModerateBlue}{RGB}{79,121,180}%
+\definecolor{beamer@MostlyDesaturatedDarkBlue}{RGB}{89,93,146}%
+\definecolor{beamer@VeryDarkBlue}{RGB}{38,81,107}%
+
+\definecolor{beamer@xjtured}{RGB}{175,33,37}% xjtured
+% 暖色系辅助色
+\definecolor{beamer@SoftOrange}{RGB}{239,155,73}%
+\definecolor{beamer@ModerateRed}{RGB}{180,76,76}%
+\definecolor{beamer@DarkModerateOrange}{RGB}{167,130,75}%
+\definecolor{beamer@VeryDarkDesaturatedOrange}{RGB}{78,53,44}%
+\ifx\beamer@xjtucolor\beamer@xjtucolorblue%
+    \definecolor{beamer@barcolor}{RGB}{38,81,107}% 冷色系辅助色
+    \definecolor{beamer@headercolor}{RGB}{1,107,191}% xjtublue
+    \definecolor{beamer@normaltextcolor}{RGB}{0,0,0}% black
+
+    \setbeamercolor*{structure}{fg=beamer@headercolor}
+    \setbeamercolor*{normal text}{fg=beamer@normaltextcolor,bg=white}
+    \setbeamercolor*{frametitle}{fg=white,bg=beamer@headercolor}
+
+    \setbeamercolor*{section in head/foot}{use=structure,fg=white,bg=beamer@xjtublue!80!black}
+    \setbeamercolor*{subsection in head/foot}{use=structure,fg=white,bg=beamer@xjtublue!100!black}
+    \setbeamercolor*{author in head/foot}{use=structure,fg=white,bg=structure.fg}
+    \setbeamercolor*{institute in head/foot}{use=structure,fg=white,bg=structure.fg}
+    \setbeamercolor*{title in head/foot}{use=structure,fg=white,bg=beamer@xjtublue!100!black}
+    \setbeamercolor*{frame number}{use=structure,fg=white,bg=beamer@xjtublue!100!black}
+    \setbeamercolor*{framesubtitle}{use=structure,fg=red,bg=gray!10!white}
+    \setbeamercolor*{caption name}{fg=black}
+  \else%
+    \definecolor{beamer@barcolor}{RGB}{180,76,76}% 暖色系辅助色
+    \definecolor{beamer@headercolor}{RGB}{175,33,37}% xjtured
+    \definecolor{beamer@normaltextcolor}{RGB}{0,0,0}% black
+
+    \setbeamercolor*{structure}{fg=beamer@headercolor}
+    \setbeamercolor*{normal text}{fg=beamer@normaltextcolor,bg=white}
+    \setbeamercolor*{frametitle}{fg=white,bg=beamer@headercolor}
+
+    \setbeamercolor*{section in head/foot}{use=structure,fg=white,bg=beamer@xjtured!60!black}
+    \setbeamercolor*{subsection in head/foot}{use=structure,fg=white,bg=beamer@xjtured!80!black}
+    \setbeamercolor*{author in head/foot}{use=structure,fg=white,bg=structure.fg}
+    \setbeamercolor*{institute in head/foot}{use=structure,fg=white,bg=structure.fg}
+    \setbeamercolor*{title in head/foot}{use=structure,fg=white,bg=beamer@xjtured!80!black}
+    \setbeamercolor*{frame number}{use=structure,fg=white,bg=beamer@xjtured!80!black}
+    \setbeamercolor*{framesubtitle}{use=structure,fg=red,bg=gray!10!white}
+    \setbeamercolor*{caption name}{fg=black}
+  \fi%
+
+}%end of beamer specific options
+
+\mode<all>
