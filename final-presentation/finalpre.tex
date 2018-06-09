@@ -18,6 +18,8 @@ xjtublue, % 不选会默认红色调，选上会将主题设置为蓝色调
 
 \usepackage{array}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
 
 \AtBeginDocument{%
     \title{面向多CPU集群的\\深度行人重识别研究}
@@ -44,10 +46,11 @@ xjtublue, % 不选会默认红色调，选上会将主题设置为蓝色调
   }
 
 \input{pages/sec01-intro}
-\input{pages/sec02-relative}
+% \input{pages/sec02-relative}
 \input{pages/sec03-theory}
 \input{pages/sec04-experiment}
 \input{pages/sec05-contribution}
+\input{pages/sec06-qaa}
 
 %\xdbg%末页致谢
 \frame[plain, noframenumbering]{\finalpage{{\huge 谢谢！}}}
