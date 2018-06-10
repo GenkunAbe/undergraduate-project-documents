@@ -98,6 +98,8 @@
 \RequirePackage{booktabs}
 \RequirePackage{subfig}
 \RequirePackage[backend=biber,bibstyle=gb7714-2015,citestyle=gb7714-2015,gbnamefmt=lowercase]{biblatex}
+% \DeclareFieldFormat*{title}{#1}
+% \DeclareListFormat{}{\underline{#1}}
 \RequirePackage{setspace}
 \RequirePackage[shortlabels]{enumitem}
 \setenumerate[1]{1),fullwidth,itemindent=\parindent,listparindent=\parindent,itemsep=0.05\baselineskip,partopsep=0pt,parsep=0ex,topsep=0.1\baselineskip}
@@ -339,20 +341,64 @@
     }%
 }
 
-%本科任务书
-\thu@define@term{fromyear}
-\thu@define@term{frommonth}
-\thu@define@term{fromday}
-\thu@define@term{toyear}
-\thu@define@term{tomonth}
-\thu@define@term{todayy}
-\thu@define@term{place}
-\thu@define@term{cbackground}
-\thu@define@term{rawmaterial}
-\thu@define@term{maintask}
-\thu@define@term{requirement}
-\thu@define@term{finalmaterial}
-\thu@define@term{othertaskreference}
+% 本科任务书
+\thu@define@term{taskmajor}
+\thu@define@term{taskpresident}
+\thu@define@term{taskapprovaldate}
+\thu@define@term{taskschool}
+\thu@define@term{taskclass}
+\thu@define@term{taskauthor}
+\thu@define@term{tasktitle}
+\thu@define@term{taskfromyear}
+\thu@define@term{taskfrommonth}
+\thu@define@term{taskfromday}
+\thu@define@term{tasktoyear}
+\thu@define@term{tasktomonth}
+\thu@define@term{tasktoday}
+\thu@define@term{taskplace}
+\thu@define@term{taskbackground}
+\thu@define@term{taskrawmaterial}
+\thu@define@term{taskmaintask}
+\thu@define@term{taskrequirement}
+\thu@define@term{taskfinalmaterial}
+\thu@define@term{taskothertaskreference}
+% 本科考核评议书
+\thu@define@term{reviewschool}
+\thu@define@term{reviewmajor}
+\thu@define@term{reviewclass}
+\thu@define@term{reviewauthor}
+\thu@define@term{reviewtitle}
+\thu@define@term{reviewteachercomment}
+\thu@define@term{reviewteachergrade}
+\thu@define@term{reviewteachername}
+\thu@define@term{reviewteacheryear}
+\thu@define@term{reviewteachermonth}
+\thu@define@term{reviewteacherday}
+% 本科评审意见书
+\thu@define@term{reviewercomment}
+\thu@define@term{reviewergrade}
+\thu@define@term{reviewername}
+\thu@define@term{reviewertitle}
+\thu@define@term{revieweryear}
+\thu@define@term{reviewermonth}
+\thu@define@term{reviewerday}
+% 本科答辩结果
+\thu@define@term{resultschool}
+\thu@define@term{resultmajor}
+\thu@define@term{resultauthor}
+\thu@define@term{resulttitle}
+\thu@define@term{resultcomment}
+\thu@define@term{resultgrade}
+\thu@define@term{resultprincipal}
+\thu@define@term{resultmenberaname}
+\thu@define@term{resultmenberatitle}
+\thu@define@term{resultmenberbname}
+\thu@define@term{resultmenberbtitle}
+\thu@define@term{resultmenbercname}
+\thu@define@term{resultmenberctitle}
+\thu@define@term{resultyear}
+\thu@define@term{resultmonth}
+\thu@define@term{resultday}
 % Interfaces, or terms
 \thu@define@term{cauthor}
 \thu@define@term{stuid}
@@ -561,14 +607,17 @@
     \newcommand{\ezcoverboxul}[2]{
         \ezcoverul{\makebox[#1]{\hfill{#2}\hfill}}
     }
-    \newcommand{\eztaskul}[1]{
+    \newcommand{\ezul}[1]{
         \coverul{2pt}{0.8pt}{#1}
     }
-    \newcommand{\eztaskboxul}[2]{
-        \eztaskul{\makebox[#1]{\hfill{#2}\hfill}}
+    \newcommand{\ezboxul}[2]{
+        \ezul{\makebox[#1]{\hfill{#2}\hfill}}
     }
-    \newcommand{\eztaskfillul}[1]{
-        \eztaskul{\hspace{\fill}#1\hspace{\fill}}
+    \newcommand{\ezfillul}[1]{
+        \ezul{\hspace{\fill}#1\hspace{\fill}}
+    }
+    \newcommand\blankul{
+        \ezul{\,\hspace{\fill}}
     }
     \newcommand\blankpage{%
         \null
@@ -638,102 +687,177 @@
         \newrefsection
         \setcounter{page}{1}
         \chaptermark{毕业设计（论文）任务书}
-        \xiaosi{
+        \wuhao{
+            \vspace*{-0.3em}
+            \begin{tabularx}{\textwidth}{p{7.5cm}r}
+                \\[3pt]
+                & \makebox[6em]{系\hspace{\fill}(\hspace{\fill}专\hspace{\fill}业\hspace{\fill})}~\ezboxul{11em}{\hfill\xjtu@taskmajor\hfill}\\
+                \multicolumn{1}{c}{\multirow{2}{*}{\sanhao\textbf{西~~安~~交~~通~~大~~学}}}
+                & \makebox[6em]{系(专业)主任}~\ezboxul{11em}{\hfill\xjtu@taskpresident\hfill}\\
+                & \makebox[6em]{批\hspace{\fill}准\hspace{\fill}日\hspace{\fill}期}~\ezboxul{11em}{\hfill\xjtu@taskapprovaldate\hfill}\\
+            \end{tabularx}
+            \vskip 2\baselineskip
             \begin{center}
-                \begin{tabular}{p{23.2em}l}
-                    \\[3pt]
-                    & \makebox[6em]{系\hspace{\fill}(\hspace{\fill}专\hspace{\fill}业\hspace{\fill})}~\eztaskboxul{5.5em}{\hfill}\\
-                    \multicolumn{1}{c}{\multirow{2}{*}{\sanhao\textbf{西~~安~~交~~通~~大~~学}}}
-                    & \makebox[6em]{系(专业)主任}~\eztaskboxul{5.5em}{\hfill}\\
-                    & \makebox[6em]{批\hspace{\fill}准\hspace{\fill}日\hspace{\fill}期}~\eztaskboxul{5.5em}{\hfill}\\
-                \end{tabular}
-                \vskip 2\baselineskip
-                {\erhao 毕业设计(论文)任务书}\\
-                \vspace{20pt}
+                {\erhao\bf 毕业设计(论文)任务书}
             \end{center}
-            \eztaskul{~\xjtu@cschool~}学院~
-            \eztaskul{~\xjtu@cmajor~}系(专业)~
-            \eztaskul{~\xjtu@cclass~}班~\hspace{\fill}
-            学生~\eztaskul{\xjtu@cauthor}\\\vspace{-10pt}\\
-            毕业设计(论文)课题~\eztaskfillul{\xjtu@ctitle}\\\vspace{-10pt}\\
-            毕业设计(论文)工作自~\eztaskfillul{\xjtu@fromyear}~年~\eztaskfillul{\xjtu@frommonth}~月~\eztaskfillul{\xjtu@fromday}~日起至~\eztaskfillul{\xjtu@toyear}~年~\eztaskfillul{\xjtu@tomonth}~月~\eztaskfillul{\xjtu@todayy}~日止\\\vspace{-10pt}\\
-            毕业设计(论文)进行地点：\eztaskfillul{\xjtu@place}
+            \vspace*{20pt}
+            \ezul{\quad\xjtu@taskschool\quad}学院~
+            \ezul{\quad\xjtu@taskmajor\quad}系(专业)~
+            \ezul{\quad\xjtu@taskclass\quad}班~\hspace{\fill}
+            学生~\ezul{\quad\xjtu@taskauthor\quad}\\\vspace{-10pt}\\
+            毕业设计(论文)课题~\ezfillul{\xjtu@tasktitle}\\\vspace{-10pt}\\
+            毕业设计(论文)工作自~\ezfillul{\xjtu@taskfromyear}~年~\ezfillul{\xjtu@taskfrommonth}~月~\ezfillul{\xjtu@taskfromday}~日起至~\ezfillul{\xjtu@tasktoyear}~年~\ezfillul{\xjtu@tasktomonth}~月~\ezfillul{\xjtu@tasktoday}~日止\\\vspace{-10pt}\\
+            毕业设计(论文)进行地点：\ezfillul{\xjtu@taskplace}
 
             \vskip 10pt
             {\noindent 课题的背景、意义及培养目标}\vspace{-15pt}\\
 
-            \xjtu@cbackground
+            \xjtu@taskbackground
 
             \vskip 10pt
             {\noindent 设计(论文)的原始数据与资料}\vspace{-15pt}\\
 
-            \xjtu@rawmaterial
+            \xjtu@taskrawmaterial
 
             \vskip 10pt
             {\noindent 课题的主要任务}\vspace{-15pt}\\
 
-            \xjtu@maintask
+            \xjtu@taskmaintask
 
             \vskip 10pt
             {\noindent 课题的基本要求(工程设计类题应有技术经济分析要求)}\vspace{-15pt}\\
 
-            \xjtu@requirement
+            \xjtu@taskrequirement
 
             \vskip 10pt
             {\noindent 完成任务后提交的书面材料要求(图纸规格、数量，论文字数，外文翻译字数等)}\vspace{-15pt}\\
 
-            \xjtu@finalmaterial
+            \xjtu@taskfinalmaterial
 
             \vskip 10pt
             {\noindent 主要参考文献}\vspace{-15pt}\\
 
-            \defbibheading{taskbib}[]{}
+            \AtNextBibliography{\wuhao}
+            \defbibheading{taskbib}[]{\vspace{-10pt}}
             \printbibliography[heading=taskbib]
-            \xjtu@othertaskreference
+            \xjtu@taskothertaskreference
 
             \vspace{\fill}
 
             \begin{flushright}
-                指导教师\eztaskboxul{15em}{\hfil}\\[14pt]
-                接受设计（论文）任务日期\eztaskboxul{7em}{\hfil}\\[14pt]
-                （注：由指导教师填写）\hspace{\fill}学生签名：\eztaskboxul{7em}{\hfil}\\
+                指导教师：\ezboxul{12em}{\hfil}\\[14pt]
+                接受设计（论文）任务日期：\ezboxul{12em}{\hfil}\\[14pt]
+                （注：由指导教师填写）\hspace{\fill}学生签名：\ezboxul{12em}{\hfil}\\
             \end{flushright}
         }
         \cleardoublepage
     }
 
     \newcommand\creviewopinion{
+
         \chaptermark{毕业设计(论文)考核评议书}
-        \backgroundsetup{
-            position={80mm,-105mm},
-            scale=1,
-            color=black,
-            opacity=1,
-            angle=0,
-            contents={\includegraphics[width=\paperwidth]{page3}}
-        }
-        \BgThispage
-        \textcolor{white}{\_}
+        \begin{center}
+            \vspace*{0.2em}
+            \sanhao\bf{西\quad 安\quad 交\quad 通\quad 大\quad 学}\\
+            \vspace{0.3em}
+            \erhao\bf{毕业设计(论文)考核评议书}
+        \end{center}
+        \xiaosi
+        \vspace*{1em}
+        \ezfillul{\xjtu@reviewschool}学院\ezfillul{\xjtu@reviewmajor}系(专业)\ezfillul{\xjtu@reviewclass}班级\\
+        \vspace*{0.9em}
+
+        \let\oldbaselineskip\baselineskip
+        \setlength{\baselineskip}{21.9pt}
+        指导教师对学生\ezboxul{9.5em}{\xjtu@reviewauthor}所完成的课题为\ezfillul{\quad\xjtu@reviewtitle\quad}\\
+        的毕业设计(论文)进行的情况，完成的质量及评分的意见：\ezfillul{\quad\xjtu@reviewteachercomment\quad}\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        指导教师建议成绩：\ezul{\quad\xjtu@reviewteachergrade\quad}\\
+        \vskip 0.1em
+        \hspace*{\fill}指导教师\ezboxul{11em}{\xjtu@reviewteachername}\\
+        \hspace*{\fill}\quad\xjtu@reviewteacheryear\quad 年\quad\xjtu@reviewteachermonth\quad 月\quad\xjtu@reviewteacherday\quad 日\quad\,\\
+        \vskip 1em
+        \begin{center}
+            \erhao\bf{毕业设计(论文)评审意见书}
+        \end{center}
+        \xiaosi
+        \vspace{0.5\baselineskip}
+        \setlength{\baselineskip}{22.2pt}
+
+        评审意见：\ezfillul{\quad\xjtu@reviewercomment}\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        评阅人建议成绩：\ezul{\quad\xjtu@reviewergrade\quad}\\
+        \hspace*{\fill}评阅人\ezboxul{8em}{\xjtu@reviewername}职称\ezboxul{5.5em}{\xjtu@reviewertitle}\\
+        \hspace*{\fill}\quad\xjtu@revieweryear\quad 年\quad\xjtu@reviewermonth\quad 月\quad\xjtu@reviewerday\quad 日\quad\quad\,\\
+
+        % \backgroundsetup{
+        %     position={80mm,-105mm},
+        %     scale=1,
+        %     color=black,
+        %     opacity=1,
+        %     angle=0,
+        %     contents={\includegraphics[width=\paperwidth]{page3}}
+        % }
+        % \BgThispage
+        % \textcolor{white}{\_}
         \clearpage
     }
 
     \newcommand\cfinalresult{
         \chaptermark{毕业设计(论文)答辩结果}
-        \backgroundsetup{
-            position={80mm,-105mm},
-            scale=1,
-            color=black,
-            opacity=1,
-            angle=0,
-            contents={\includegraphics[width=\paperwidth]{page4}}
-        }
-        \BgThispage
-        \textcolor{white}{\_}
+        \vspace*{\baselineskip}
+        \begin{center}
+            \erhao\bf{毕业设计(论文)答辩结果}\\
+        \end{center}
+        \vspace{0.7\baselineskip}
+        \hspace*{5cm}{\sanhao\bf{\ezboxul{8em}{\xjtu@resultschool}院}}\\
+        \vspace{\baselineskip}
+        \hspace*{5cm}{\sanhao\bf{\ezboxul{8em}{\xjtu@resultmajor}系(专业)}}\\
+        \vspace{-0.5\baselineskip}
+
+        \xiaosi
+        \setlength{\baselineskip}{22.2pt}
+        毕业设计(论文)答辩组对学生\ezboxul{9.5em}{\xjtu@resultauthor}所完成的课题为\\
+        \ezfillul{\quad\xjtu@resulttitle\quad}\\
+        \blankul\\
+        \blankul\\
+        的毕业设计(论文)经过答辩，其意见为\ezfillul{\quad\xjtu@resultcomment\quad}\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        \blankul\\
+        \blankul\\\,\\
+        并确定成绩为\ezul{\qquad\quad\xjtu@resultgrade\hspace{\fill}}\\
+        \vspace{2.5\baselineskip}\\
+        \hspace*{\fill}毕业设计(论文)答辩组负责人\ezboxul{8em}{\xjtu@resultprincipal}\\
+        \hspace*{\fill}答辩组成员\ezboxul{7.25em}{\xjtu@resultmenberaname}\quad\ezboxul{7em}{\xjtu@resultmenberatitle}\\
+        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenberbname}\quad\ezboxul{7em}{\xjtu@resultmenberbtitle}\\
+        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenbercname}\quad\ezboxul{7em}{\xjtu@resultmenberctitle}\\
+        \hspace*{\fill}\quad\xjtu@resultyear\quad 年\quad\xjtu@resultmonth\quad 月\quad\xjtu@resultday\quad 日\quad\,\\
+
+        % \backgroundsetup{
+        %     position={80mm,-105mm},
+        %     scale=1,
+        %     color=black,
+        %     opacity=1,
+        %     angle=0,
+        %     contents={\includegraphics[width=\paperwidth]{page4}}
+        % }
+        % \BgThispage
+        % \textcolor{white}{\_}
         \clearpage
+        \let\baselineskip\oldbaselineskip
     }
 
     \renewcommand\xjtucinfopage{
         \chaptermark{摘\quad 要}
+        \xiaosi
         \noindent {\bf
         论文题目： \xjtu@ctitle\\
         学生姓名： \xjtu@cauthor\\
@@ -817,6 +941,7 @@
     \newcommand{\xjtubib}[1]{ {
         \phantomsection
         \addcontentsline{toc}{chapter}{参考文献}
+        \chaptermark{参考文献}
         \defbibheading{xjtubibhead}[]{\chapter*{参考文献}\vspace{2\baselineskip}\wuhao}
         \printbibliography[heading=xjtubibhead]
         \cleardoublepage
