@@ -762,29 +762,26 @@
             \vspace{0.3em}
             \erhao\bf{毕业设计(论文)考核评议书}
         \end{center}
-        \xiaosi
+        \wuhao
         \vspace*{1em}
         \ezfillul{\xjtu@reviewschool}学院\ezfillul{\xjtu@reviewmajor}系(专业)\ezfillul{\xjtu@reviewclass}班级\\
-        \vspace*{0.9em}
-
         \let\oldbaselineskip\baselineskip
-        \setlength{\baselineskip}{21.9pt}
+        \setlength{\baselineskip}{20pt}
+
         指导教师对学生\ezboxul{9.5em}{\xjtu@reviewauthor}所完成的课题为\ezfillul{\quad\xjtu@reviewtitle\quad}\\
-        的毕业设计(论文)进行的情况，完成的质量及评分的意见：\ezfillul{\quad\xjtu@reviewteachercomment\quad}\\
-        \blankul\\
-        \blankul\\
-        \blankul\\
+        的毕业设计(论文)进行的情况，完成的质量及评分的意见：\ezfillul{\xjtu@reviewteachercomment}\\
+        % \blankul\\
+        % \blankul\\
+        % \blankul\\
         指导教师建议成绩：\ezul{\quad\xjtu@reviewteachergrade\quad}\\
-        \vskip 0.1em
         \hspace*{\fill}指导教师\ezboxul{11em}{\xjtu@reviewteachername}\\
         \hspace*{\fill}\quad\xjtu@reviewteacheryear\quad 年\quad\xjtu@reviewteachermonth\quad 月\quad\xjtu@reviewteacherday\quad 日\quad\,\\
-        \vskip 1em
         \begin{center}
             \erhao\bf{毕业设计(论文)评审意见书}
         \end{center}
-        \xiaosi
-        \vspace{0.5\baselineskip}
-        \setlength{\baselineskip}{22.2pt}
+        \wuhao
+        \vspace*{1em}
+        \setlength{\baselineskip}{20pt}
 
         评审意见：\ezfillul{\quad\xjtu@reviewercomment}\\
         \blankul\\
