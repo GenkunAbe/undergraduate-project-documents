@@ -31,12 +31,14 @@
 
 \begin{document}
 
-    % 主要信息
-    \input{pages/meta}
+    % 封面信息
+    \input{pages/ch00.0-cover}
     % 任务书信息
-    \input{pages/task}
+    \input{pages/ch00.1-task}
     % 评审意见信息
-    \input{pages/review}
+    \input{pages/ch00.2-review}
+    % 摘要信息
+    \input{pages/ch00.3-abstract}
 
     % 封面
     \xjtuchead
@@ -54,32 +56,32 @@
     \xjtutoc
 
     % 主要符号表，可以没有
-    \input{pages/denotation.tex}
+    \input{pages/ch00.4-denotation}
 
     % 正文
     \xjtucontent
     \newrefsection
         % 绪论
-        \input{pages/introduction.tex}
+        \input{pages/ch01-introduction}
         % 理论框架
-        \input{pages/theory.tex}
+        \input{pages/ch02-theory}
         % 算法实现
-        \input{pages/algorithm.tex}
+        \input{pages/ch03-algorithm}
         % 实验结果
-        \input{pages/experiment.tex}
+        \input{pages/ch04-experiment}
         % 结论与展望
-        \input{pages/conclusion.tex}
+        \input{pages/ch05-conclusion}
     \xjtuendcontent
 
     % 致谢
-    \input{pages/acknowledgements.tex}
+    \input{pages/ch06-acknowledgements}
 
     % 参考文献
     \xjtubib{bibliography}
 
     % 附录
     \xjtuappendix
-        \input{pages/appendice.tex}
+        \input{pages/ch07-appendice}
     \xjtuendappendix
 
 \end{document}
