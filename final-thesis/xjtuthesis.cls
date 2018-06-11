@@ -362,6 +362,9 @@
 \thu@define@term{taskrequirement}
 \thu@define@term{taskfinalmaterial}
 \thu@define@term{taskothertaskreference}
+\thu@define@term{taskteachername}
+\thu@define@term{taskteacherdate}
+\thu@define@term{taskauthorname}
 % 本科考核评议书
 \thu@define@term{reviewschool}
 \thu@define@term{reviewmajor}
@@ -745,9 +748,9 @@
             \vspace{\fill}
 
             \begin{flushright}
-                指导教师：\ezboxul{12em}{\hfil}\\[14pt]
-                接受设计（论文）任务日期：\ezboxul{12em}{\hfil}\\[14pt]
-                （注：由指导教师填写）\hspace{\fill}学生签名：\ezboxul{12em}{\hfil}\\
+                指导教师：\ezboxul{12em}{\xjtu@taskteachername}\\[14pt]
+                接受设计（论文）任务日期：\ezboxul{12em}{\xjtu@taskteacherdate}\\[14pt]
+                （注：由指导教师填写）\hspace{\fill}学生签名：\ezboxul{12em}{\xjtu@taskauthorname}\\
             \end{flushright}
         }
         \cleardoublepage
