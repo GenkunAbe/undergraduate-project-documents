@@ -456,6 +456,7 @@
 \thu@define@term{topicschoolpresidentmonth}
 \thu@define@term{topicschoolpresidentday}
 % 中期检查表
+\thu@define@term{interimchecklistclass}
 \thu@define@term{interimchecklistschool}
 \thu@define@term{interimchecklistteacher}
 \thu@define@term{interimchecklistauthor}
@@ -1224,7 +1225,7 @@
             {\xiaosan 本科毕业设计（论文）中期检查表}
         \end{center}
         \wuhao
-        \hspace*{\fill}专业班级：计算机44
+        \hspace*{\fill}专业班级：\xjtu@interimchecklistclass
         \vspace{-1em}
         \begin{center}
             \renewcommand\arraystretch{1.5}
@@ -1316,7 +1317,7 @@
 
             \xiaosi
             \noindent 毕业设计（论文）题目：\xjtu@progresschecklisttitle\\
-            学生姓名：\xjtu@progresschecklistauthor\qquad 学号：\xjtu@progresscheckliststuid\qquad 专业班级：\xjtu@progresschecklistclass\qquad 指导教师：\xjtu@progresschecklistteacher
+            \noindent 学生姓名：\xjtu@progresschecklistauthor\qquad 学号：\xjtu@progresscheckliststuid\qquad 专业班级：\xjtu@progresschecklistclass\qquad 指导教师：\xjtu@progresschecklistteacher
 
             \wuhao
             \setlength{\baselineskip}{10pt}
