@@ -58,6 +58,10 @@
 \DeclareOption{colorlinks}  {\xjtu@colorlinkstrue}
 \DeclareOption{compact}     {\xjtu@compacttrue}
 
+% 非常 dirty 的方式给任务书中的参考文献加下划线
+\newif\ifxjtu@taskunderline\xjtu@taskunderlinefalse
+\DeclareOption{taskunderline}{\xjtu@taskunderlinetrue}
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 
 \ProcessOptions\relax
@@ -871,18 +875,56 @@
             \vskip 10pt
             {\noindent 主要参考文献}\vspace{-15pt}\\
 
+            % 非常 dirty 的方式给任务书中的参考文献加下划线
+            \ifxjtu@taskunderline
+                \begin{tikzpicture}[line width=2pt]
+                    \put(-15,-20){\line(1,0){440}}
+                    \put(-15,-36){\line(1,0){440}}
+                    \put(-15,-52){\line(1,0){440}}
+                    \put(-15,-74){\line(1,0){440}}
+                    \put(-15,-90){\line(1,0){440}}
+                    \put(-15,-111){\line(1,0){440}}
+                    \put(-15,-127){\line(1,0){440}}
+                    \put(-15,-148){\line(1,0){440}}
+                    \put(-15,-164){\line(1,0){440}}
+                    \put(-15,-180){\line(1,0){440}}
+                    \put(-15,-201){\line(1,0){440}}
+                    \put(-15,-217){\line(1,0){440}}
+                    \put(-15,-238){\line(1,0){478}}
+                    \put(-15,-254){\line(1,0){440}}
+                    \put(-15,-275){\line(1,0){440}}
+                    \put(-15,-291){\line(1,0){440}}
+                    \put(-15,-312){\line(1,0){440}}
+                    \put(-15,-328){\line(1,0){440}}
+                    \put(-15,-349){\line(1,0){440}}
+                    \put(-15,-365){\line(1,0){440}}
+                \end{tikzpicture}
+                \xjtu@taskunderlinetrue
+            \fi
+
             \AtNextBibliography{\wuhao}
             \defbibheading{taskbib}[]{\vspace{-10pt}}
             \printbibliography[heading=taskbib]
             \xjtu@taskothertaskreference
 
-            \vspace{\fill}
+            \vspace{2\baselineskip}
+
 
             \begin{flushright}
                 指导教师：\ezboxul{12em}{\xjtu@taskteachername}\\[14pt]
                 接受设计（论文）任务日期：\ezboxul{12em}{\xjtu@taskteacherdate}\\[14pt]
                 （注：由指导教师填写）\hspace{\fill}学生签名：\ezboxul{12em}{\xjtu@taskauthorname}\\
             \end{flushright}
+
+            % 非常 dirty 的方式给任务书中的参考文献加下划线
+            \ifxjtu@taskunderline
+                \begin{tikzpicture}
+                    \put(-21,186){\line(1,0){446}}
+                    \put(-21,170){\line(1,0){446}}
+                    \put(-21,154){\line(1,0){446}}
+                \end{tikzpicture}
+            \fi
+
         }
         \xjtu@clearpage
     }
