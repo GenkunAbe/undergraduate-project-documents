@@ -87,12 +87,25 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
 
 训练阶段交叉熵误差（Loss）随着数据集训练批次数（Epoch）变化曲线如图~\ref{fig:loss}~所示。图中共展示了第~\ref{sec:modeltraining}~小节所述的3个训练阶段的训练过程，每个阶段包含60个Epoch。从图中可以看出，交叉熵误差在第一训练阶段下降很明显，同时之后的测试结果~\cite{sun2017beyond}也显示只使用基线模型也能达到较好的效果，说明了基线模型的稳健性。
 
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[width=9.00cm]{loss}
+% \caption{交叉熵误差随着迭代次数变化曲线}
+% \label{fig:loss}
+% \end{figure}
+
 \begin{figure}[!ht]
-\centering
-\includegraphics[width=9.00cm]{loss}
-\caption{交叉熵误差随着迭代次数变化曲线}
-\label{fig:loss}
+    \centering
+    \begin{tikzpicture}
+        \node (img)  {\includegraphics[width=9.00cm,trim={0 16 0 0},clip=true]{loss}};
+        \node[below=of img, node distance=0cm, yshift=1.1cm, xshift=0.1cm, font={\xiaoliu}] {训练数据批次（次）};
+        \node[left=of img, node distance=0cm, rotate=90, anchor=center, yshift=-1.5cm, xshift=-0.3cm, font={\xiaoliu}] {交叉熵误差};
+    \end{tikzpicture}
+    \caption{交叉熵误差随着迭代次数变化曲线}
+    \label{fig:loss}
 \end{figure}
+
+
 
 \subsection{测试准确率比较}
 
@@ -165,17 +178,6 @@ Multi-Cameras2 &  -~\tnote{c}   & 463~\tnote{d} & 24     & -~\tnote{e} & 是  & 
     \caption{经强化学习训练后选择的最优部署方案可视化}
     \label{fig:rlresult}
 \end{figure}
-
-% \begin{figure}[!ht]
-%     \centering
-%     \includegraphics[width=0.3\textwidth]{1-2}
-%     \includegraphics[width=0.3\textwidth]{1-4}\\
-%     \includegraphics[width=0.3\textwidth]{2-3}
-%     \includegraphics[width=0.3\textwidth]{3-2}
-%     \includegraphics[width=0.3\textwidth]{3-6}
-%     \caption{最优部署方案}
-%     \label{fig:rlresult}
-% \end{figure}
 
 \section{分布式CPU训练}
 

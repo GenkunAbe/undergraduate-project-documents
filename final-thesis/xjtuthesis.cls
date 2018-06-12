@@ -422,11 +422,11 @@
 \thu@define@term{resultgrade}
 \thu@define@term{resultprincipal}
 \thu@define@term{resultmenberaname}
-\thu@define@term{resultmenberatitle}
 \thu@define@term{resultmenberbname}
-\thu@define@term{resultmenberbtitle}
 \thu@define@term{resultmenbercname}
-\thu@define@term{resultmenberctitle}
+\thu@define@term{resultmenberdname}
+\thu@define@term{resultmenberename}
+\thu@define@term{resultmenberfname}
 \thu@define@term{resultyear}
 \thu@define@term{resultmonth}
 \thu@define@term{resultday}
@@ -986,30 +986,24 @@
             \erhao\bf{毕业设计(论文)答辩结果}\\
         \end{center}
         \vspace{0.7\baselineskip}
-        \hspace*{5cm}{\sanhao\bf{\ezboxul{8em}{\xjtu@resultschool}院}}\\
-        \vspace{\baselineskip}
-        \hspace*{5cm}{\sanhao\bf{\ezboxul{8em}{\xjtu@resultmajor}系(专业)}}\\
-        \vspace{-0.5\baselineskip}
+        \hspace*{4.2cm}{\sanhao{\ezboxul{10em}{\xjtu@resultschool}\bf{院}}}\\
+        \vspace{-10pt}\\
+        \hspace*{4.2cm}{\sanhao{\ezboxul{9em}{\xjtu@resultmajor}\bf{系(专业)}}}\\
+        \vspace{-18pt}\\
 
-        \xiaosi
-        \setlength{\baselineskip}{22.2pt}
-        毕业设计(论文)答辩组对学生\ezboxul{9.5em}{\xjtu@resultauthor}所完成的课题为\\
-        \ezfillul{\quad\xjtu@resulttitle\quad}\\
-        \blankul\\
+        \wuhao
+        \setlength{\baselineskip}{22.9pt}
+        毕业设计(论文)答辩组对学生\ezboxul{8em}{\xjtu@resultauthor}所完成的课题为\ezfillul{\quad\xjtu@resulttitle\quad}\\
         \blankul\\
         的毕业设计(论文)经过答辩，其意见为\ezfillul{\quad\xjtu@resultcomment\quad}\\
         \blankul\\
-        \blankul\\
-        \blankul\\
-        \blankul\\
-        \blankul\\
         \blankul\\\,\\
         并确定成绩为\ezul{\qquad\quad\xjtu@resultgrade\hspace{\fill}}\\
-        \vspace{2.5\baselineskip}\\
+        \vspace{2\baselineskip}\\
         \hspace*{\fill}毕业设计(论文)答辩组负责人\ezboxul{8em}{\xjtu@resultprincipal}\\
-        \hspace*{\fill}答辩组成员\ezboxul{7.25em}{\xjtu@resultmenberaname}\quad\ezboxul{7em}{\xjtu@resultmenberatitle}\\
-        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenberbname}\quad\ezboxul{7em}{\xjtu@resultmenberbtitle}\\
-        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenbercname}\quad\ezboxul{7em}{\xjtu@resultmenberctitle}\\
+        \hspace*{\fill}答辩组成员\ezboxul{7.25em}{\xjtu@resultmenberaname}\quad\ezboxul{7em}{\xjtu@resultmenberbname}\\
+        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenbercname}\quad\ezboxul{7em}{\xjtu@resultmenberdname}\\
+        \hspace*{\fill}\ezboxul{7.25em}{\xjtu@resultmenberename}\quad\ezboxul{7em}{\xjtu@resultmenberfname}\\
         \hspace*{\fill}\quad\xjtu@resultyear\quad 年\quad\xjtu@resultmonth\quad 月\quad\xjtu@resultday\quad 日\quad\,\\
 
         % \backgroundsetup{
