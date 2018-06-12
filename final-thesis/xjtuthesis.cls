@@ -136,6 +136,13 @@
     \begin{tabular}{@{}#1@{}}#2\end{tabular}
 }
 
+\def\xjtu@clearpage{%
+    \clearpage%
+    \ifodd\c@page\relax\else%
+        \null\thispagestyle{empty}\newpage%
+    \fi%
+}
+
 % 单页面横置
 \RequirePackage{lscape}
 
@@ -310,7 +317,7 @@
 % http://tex.stackexchange.com/questions/133264/circled-footnote-symbols-with-pifont-showing-arrows-instead-of-circled-numbers
 \newcommand*\circled[1]{
     \tikz[baseline=(char.base)]
-    \node[shape=circle,draw,inner sep=0.5pt,minimum size=8pt] (char) {#1};
+    \node[shape=circle,draw,inner sep=0.5pt] (char) {\xiaoliu #1};
 }
 \renewcommand\thefootnote{\protect\circled{\arabic{footnote}}}
 \renewcommand\@makefntext[1]{
@@ -469,6 +476,7 @@
 \thu@define@term{interimchecklistschoolpresidentyear}
 \thu@define@term{interimchecklistschoolpresidentmonth}
 \thu@define@term{interimchecklistschoolpresidentday}
+\newif\ifinterimchecklistrecord\interimchecklistrecordfalse
 % 进度表
 \thu@define@term{progresschecklisttitle}
 \thu@define@term{progresschecklistauthor}
@@ -798,7 +806,7 @@
                 \vspace{\baselineskip}
                 \makebox[4em][s]{指导教师}\ezcoverboxul{\textwidth-4em}{\xjtu@csupervisor}\\
                 \vspace{\baselineskip}
-                \makebox[6em][s]{设计所在单位}\ezcoverboxul{\textwidth-6em}{\xjtu@cactualinstitution}\\
+                \makebox[6em][s]{设计所在单位}\ezcoverboxul{\textwidth-6em}{\xjtu@cactualinstitution\qquad\,}\\
             \end{tabular}}
             \vskip 2\baselineskip
             \vskip -3pt
@@ -876,7 +884,7 @@
                 （注：由指导教师填写）\hspace{\fill}学生签名：\ezboxul{12em}{\xjtu@taskauthorname}\\
             \end{flushright}
         }
-        \cleardoublepage
+        \xjtu@clearpage
     }
 
     \newcommand\creviewopinion{
@@ -910,9 +918,6 @@
         \setlength{\baselineskip}{20pt}
 
         评审意见：\ezfillul{\quad\xjtu@reviewercomment}\\
-        \blankul\\
-        \blankul\\
-        \blankul\\
         \blankul\\
         评阅人建议成绩：\ezul{\quad\xjtu@reviewergrade\quad}\\
         \hspace*{\fill}评阅人\ezboxul{8em}{\xjtu@reviewername}职称\ezboxul{5.5em}{\xjtu@reviewertitle}\\
@@ -1033,7 +1038,7 @@
             \xjtu@ekeywords
         }
 
-        \cleardoublepage
+        \xjtu@clearpage
     }
 
     % booktabs parameters
@@ -1042,7 +1047,7 @@
     \setlength\heavyrulewidth{1.5pt}
 
     \renewcommand\xjtucontent{
-        \cleardoublepage
+        \xjtu@clearpage
         \pagenumbering{arabic}
         \titleformat{\chapter}[block]{\sanhao}{}{0em}{\centering\thechapter\quad}[]
         \xjtu@inmainbodytrue
@@ -1064,13 +1069,13 @@
     \newcommand{\xjtubib}[1]{ {
         \phantomsection
         \addcontentsline{toc}{chapter}{参考文献}
-        \chaptermark{参考文献}
-        \defbibheading{xjtubibhead}[]{\chapter*{参考文献}\vspace{2\baselineskip}\wuhao}
+        \defbibheading{xjtubibhead}[]{\chapter*{参考文献}\chaptermark{参考文献}\vspace{2\baselineskip}\wuhao}
         \printbibliography[heading=xjtubibhead]
-        \cleardoublepage
+        \clearpage
     } }
 
     \newcommand\xjtutopicreview{
+        \xjtu@clearpage
         \pagestyle{empty}
         \newgeometry{left=5mm,right=5mm,top=2mm,bottom=2mm}
         \setlength\parindent{20pt}
@@ -1166,7 +1171,7 @@
             }\\
         \end{supertabular}
         \end{center}
-
+        \xjtu@clearpage
         \restoregeometry
     }
 
@@ -1180,9 +1185,9 @@
         \hspace*{\fill}专业班级：计算机44
         \vspace{-1em}
         \begin{center}
-        \begin{tabular}{cccccc}
+            \renewcommand\arraystretch{1.5}
+            \begin{tabular}{cccccc}
             \shline
-
             \multicolumn{1}{Ic}{\multirow{2}{*}{学院}} &
             \multicolumn{1}{|c}{\multirow{2}{*}{\xjtu@interimchecklistschool}} &
             \multicolumn{1}{|c}{\multirow{2}{*}{导师}} &
@@ -1205,8 +1210,16 @@
             \multicolumn{1}{|c}{} &
             \multicolumn{1}{c}{} &
             \multicolumn{1}{c}{} &
-            \multicolumn{1}{|c}{有} &
-            \multicolumn{1}{|cI}{无}\\\hline
+            \multicolumn{1}{|c}{
+                \ifinterimchecklistrecord
+                $\surd$
+                \fi
+                有} &
+            \multicolumn{1}{|cI}{
+                \ifinterimchecklistrecord\else
+                $\surd$
+                \fi
+                无}\\\hline
 
             \multicolumn{4}{Il}{
                 \multirow{2}{*}{
@@ -1220,7 +1233,6 @@
             \multicolumn{1}{Ic}{} & & & & \multicolumn{2}{|cI}{\xjtu@interimchecklistfinalizedtime} \\\hline
 
             \multicolumn{6}{Ip{14.6cm}I}{
-                \vspace{-4pt}
                 1．指导情况（指导方式和内容、学生执行情况）：\par
                 \xjtu@interimchecklistguidance
                 \vspace{0.5em}\par
@@ -1235,7 +1247,6 @@
             }\\\hline
 
             \multicolumn{6}{Ip{14cm}I}{
-                \vspace{-4pt}
                 系（专业）意见：
                 \vspace{0.5em}\par
                 \xjtu@interimchecklistmajoropinion
@@ -1249,6 +1260,9 @@
         \noindent 注：理工医艺术类不填“初稿计划完成时间、修改稿计划完成时间、定稿计划完成时间”。
 
         \hspace{\fill}主管教学院长签名：\xjtu@interimchecklistschoolpresidentname~\quad \xjtu@interimchecklistschoolpresidentyear~年~\xjtu@interimchecklistschoolpresidentmonth~月~\xjtu@interimchecklistschoolpresidentday~日
+
+        \xjtu@clearpage
+        \restoregeometry
     }
 
     \newcommand\xjtuprogresschecklist{
@@ -1498,12 +1512,12 @@
     }
     \let\oldxjtutoc=\xjtutoc
     \def\xjtutoc{
-        \cleardoublepage
+        \xjtu@clearpage
         \oldxjtutoc
     }
 
     \renewcommand\xjtucontent{
-        \cleardoublepage
+        \xjtu@clearpage
         \pagenumbering{arabic}
         \titleformat{\chapter}[block]{\sanhao}{}{0em}{\begin{center}\thechapter\quad}[\end{center}]
         \xjtu@inmainbodytrue
@@ -1550,7 +1564,7 @@
     }
 
     \newcommand{\xjtuacademicintegrity}{\thispagestyle{fancy}\fancyfoot{}{ % 仅供参考
-        \cleardoublepage
+        \xjtu@clearpage
         \chaptermark{声明}
         \begin{center}
             \sanhao 学位论文独创性声明（1）

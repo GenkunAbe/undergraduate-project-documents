@@ -4,7 +4,8 @@
 
 \newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1pt}}
 \newcommand{\dt}[1]{\fontsize{8pt}{.1em}\selectfont \emph{#1}}
-\newlength\savewidth\newcommand\shline{\noalign{\global\savewidth\arrayrulewidth
+% \newlength\savewidth
+\renewcommand\shline{\noalign{\global\savewidth\arrayrulewidth
   \global\arrayrulewidth 1pt}\hline\noalign{\global\arrayrulewidth\savewidth}}
 \newcommand{\tablestyle}[2]{\setlength{\tabcolsep}{#1}\renewcommand{\arraystretch}{#2}\centering\footnotesize}
 \makeatletter\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
