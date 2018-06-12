@@ -122,6 +122,23 @@
 % titleformat
 \RequirePackage{titlesec,titletoc}
 
+% 长表格
+\RequirePackage{supertabular}
+\newcolumntype{I}{!{\vrule width 1.5pt}}
+\newlength\savewidth
+\newcommand\shline{
+    \noalign{\global\savewidth\arrayrulewidth
+            \global\arrayrulewidth 1.5pt}%
+            \hline
+            \noalign{\global\arrayrulewidth\savewidth}
+}
+\newcommand{\tabincell}[2]{
+    \begin{tabular}{@{}#1@{}}#2\end{tabular}
+}
+
+% 单页面横置
+\RequirePackage{lscape}
+
 % l10n here
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{图}
@@ -402,6 +419,112 @@
 \thu@define@term{resultyear}
 \thu@define@term{resultmonth}
 \thu@define@term{resultday}
+% 选题审核表
+\thu@define@term{topicschool}
+\thu@define@term{topicmajor}
+\thu@define@term{topicteachername}
+\thu@define@term{topicteachertitle}
+\thu@define@term{topictitle}
+\thu@define@term{topicprojecttype}
+\thu@define@term{topictopicsource}
+\thu@define@term{topicstudentnum}
+\thu@define@term{topicpurpose}
+\thu@define@term{topiccontent}
+\thu@define@term{topicbackground}
+\thu@define@term{topicteacheryear}
+\thu@define@term{topicteachermonth}
+\thu@define@term{topicteacherday}
+\thu@define@term{topicmajoropinion}
+\thu@define@term{topicmajorpresident}
+\thu@define@term{topicmajorpresidentyear}
+\thu@define@term{topicmajorpresidentmonth}
+\thu@define@term{topicmajorpresidentday}
+\thu@define@term{topicschoolopinion}
+\thu@define@term{topicschoolpresident}
+\thu@define@term{topicschoolpresidentyear}
+\thu@define@term{topicschoolpresidentmonth}
+\thu@define@term{topicschoolpresidentday}
+% 中期检查表
+\thu@define@term{interimchecklistschool}
+\thu@define@term{interimchecklistteacher}
+\thu@define@term{interimchecklistauthor}
+\thu@define@term{interimcheckliststuid}
+\thu@define@term{interimchecklisttitle}
+\thu@define@term{interimchecklistdrafttime}
+\thu@define@term{interimchecklistmanuscripttime}
+\thu@define@term{interimchecklistfinalizedtime}
+\thu@define@term{interimchecklistguidance}
+\thu@define@term{interimchecklistimplementation}
+\thu@define@term{interimchecklistproblem}
+\thu@define@term{interimchecklistteachername}
+\thu@define@term{interimchecklistteacheryear}
+\thu@define@term{interimchecklistteachermonth}
+\thu@define@term{interimchecklistteacherday}
+\thu@define@term{interimchecklistmajoropinion}
+\thu@define@term{interimchecklistmajorpresidentname}
+\thu@define@term{interimchecklistmajorpresidentyear}
+\thu@define@term{interimchecklistmajorpresidentmonth}
+\thu@define@term{interimchecklistmajorpresidentday}
+\thu@define@term{interimchecklistschoolpresidentname}
+\thu@define@term{interimchecklistschoolpresidentyear}
+\thu@define@term{interimchecklistschoolpresidentmonth}
+\thu@define@term{interimchecklistschoolpresidentday}
+% 进度表
+\thu@define@term{progresschecklisttitle}
+\thu@define@term{progresschecklistauthor}
+\thu@define@term{progresscheckliststuid}
+\thu@define@term{progresschecklistclass}
+\thu@define@term{progresschecklistteacher}
+\thu@define@term{progresschecklistauthorname}
+\thu@define@term{progresschecklistteachername}
+\thu@define@term{progresschecklistadate}
+\thu@define@term{progresschecklistbdate}
+\thu@define@term{progresschecklistcdate}
+\thu@define@term{progresschecklistddate}
+\thu@define@term{progresschecklistedate}
+\thu@define@term{progresschecklistfdate}
+\thu@define@term{progresschecklistgdate}
+\thu@define@term{progresschecklisthdate}
+\thu@define@term{progresschecklistidate}
+\thu@define@term{progresschecklistjdate}
+\thu@define@term{progresschecklistkdate}
+\thu@define@term{progresschecklistldate}
+\thu@define@term{progresschecklistmdate}
+\thu@define@term{progresschecklistndate}
+\thu@define@term{progresschecklistodate}
+\thu@define@term{progresschecklistpdate}
+\thu@define@term{progresschecklistawork}
+\thu@define@term{progresschecklistbwork}
+\thu@define@term{progresschecklistcwork}
+\thu@define@term{progresschecklistdwork}
+\thu@define@term{progresschecklistework}
+\thu@define@term{progresschecklistfwork}
+\thu@define@term{progresschecklistgwork}
+\thu@define@term{progresschecklisthwork}
+\thu@define@term{progresschecklistiwork}
+\thu@define@term{progresschecklistjwork}
+\thu@define@term{progresschecklistkwork}
+\thu@define@term{progresschecklistlwork}
+\thu@define@term{progresschecklistmwork}
+\thu@define@term{progresschecklistnwork}
+\thu@define@term{progresschecklistowork}
+\thu@define@term{progresschecklistpwork}
+\thu@define@term{progresschecklistateach}
+\thu@define@term{progresschecklistbteach}
+\thu@define@term{progresschecklistcteach}
+\thu@define@term{progresschecklistdteach}
+\thu@define@term{progresschecklisteteach}
+\thu@define@term{progresschecklistfteach}
+\thu@define@term{progresschecklistgteach}
+\thu@define@term{progresschecklisthteach}
+\thu@define@term{progresschecklistiteach}
+\thu@define@term{progresschecklistjteach}
+\thu@define@term{progresschecklistkteach}
+\thu@define@term{progresschecklistlteach}
+\thu@define@term{progresschecklistmteach}
+\thu@define@term{progresschecklistnteach}
+\thu@define@term{progresschecklistoteach}
+\thu@define@term{progresschecklistpteach}
 % Interfaces, or terms
 \thu@define@term{cauthor}
 \thu@define@term{stuid}
@@ -946,6 +1069,231 @@
         \printbibliography[heading=xjtubibhead]
         \cleardoublepage
     } }
+
+    \newcommand\xjtutopicreview{
+        \pagestyle{empty}
+        \newgeometry{left=5mm,right=5mm,top=2mm,bottom=2mm}
+        \setlength\parindent{20pt}
+        % \vspace*{-0.1\baselineskip}
+        \begin{center}
+            {\xiaosan 本科毕业设计（论文）选题审核表}
+        \end{center}
+        % \vspace*{\baselineskip}
+        \begin{center}
+        \xiaosi
+        \tablefirsthead{\shline}
+        \tablehead{\hline}
+        \tabletail{\hline}
+        \tablelasttail{\shline}
+
+        \begin{supertabular}{IccccccccI}
+            \multicolumn{1}{Im{10mm}<{\centering}}{学院} &
+            \multicolumn{1}{|m{22mm}<{\centering}}{\vspace{4pt}\xjtu@topicschool} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{系(专业)} &
+            \multicolumn{1}{|m{22mm}<{\centering}}{\vspace{4pt}\xjtu@topicmajor} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{指导教师} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{\xjtu@topicteachername} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{职称} &
+            \multicolumn{1}{|m{17mm}<{\centering}I}{\vspace{4pt}\xjtu@topicteachertitle} \\ \hline
+
+            \multicolumn{5}{Ip{90mm}<{\centering}}{\multirow{2}{*}{\tabincell{p{90mm}}{\vspace{-4pt}题目名称:\\\xjtu@topictitle}}} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{题目类别} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{题目来源} &
+            \multicolumn{1}{|m{17mm}<{\centering}I}{学生人数} \\ \cline{6-8}
+
+                & & & & &
+            \multicolumn{1}{|m{17mm}<{\centering}}{\xjtu@topicprojecttype} &
+            \multicolumn{1}{|m{17mm}<{\centering}}{\vspace{4pt}\xjtu@topictopicsource} &
+            \multicolumn{1}{|m{17mm}<{\centering}I}{\xjtu@topicstudentnum} \\ \hline
+
+            \multicolumn{8}{Ip{167mm}I}{
+            一、本题目目的、意义：
+            \vspace{0.5em}
+            \par\xjtu@topicpurpose\vspace{0.5em}}\\ \hline
+
+            \multicolumn{8}{Ip{167mm}I}{
+            二、主要工作内容：
+            \vspace{0.5em}
+            \par\xjtu@topiccontent\vspace{0.5em}}\\ \hline
+
+            \multicolumn{8}{Ip{167mm}I}{
+            三、前期工作及具备条件：
+            \vspace{0.5em}
+            \par\xjtu@topicbackground
+            \par\hspace*{\fill}指导教师签名：\xjtu@topicteachername\qquad\,
+            \par\hspace*{\fill}\xjtu@topicteacheryear~年~\xjtu@topicteachermonth~月~\xjtu@topicteacherday~日\qquad\,}\\ \hline
+
+            \multicolumn{8}{Ip{167mm}I}{
+            系(专业)意见：
+
+            \xjtu@topicmajoropinion
+            \vspace{2em}
+
+            \hspace*{\fill}系(专业)主任签名：\xjtu@topicmajorpresident\qquad\,
+
+            \hspace*{\fill}\xjtu@topicmajorpresidentyear~年~\xjtu@topicmajorpresidentmonth~月~\xjtu@topicmajorpresidentday~日\qquad\,
+            \vspace{1em}}\\ \hline
+
+            \multicolumn{8}{Ip{167mm}I}{
+            学院审核意见：
+
+            \xjtu@topicschoolopinion
+            \vspace{2em}
+
+            \hspace*{\fill}主管教学院长签名：\xjtu@topicschoolpresident\qquad\,
+
+            \hspace*{\fill}\xjtu@topicschoolpresidentyear~年~\xjtu@topicschoolpresidentmonth~月~\xjtu@topicschoolpresidentday~日\qquad\,
+            \vspace{1em}}\\
+
+        \end{supertabular}
+        \end{center}
+
+        \begin{center}
+        \tablefirsthead{}
+        \tablehead{}
+        \tabletail{}
+        \tablelasttail{}
+        \begin{supertabular}{ll}
+            注： &
+            \multicolumn{1}{p{160mm}}{
+                1、题目类别：工程设计、专题研究、综合实验。
+
+                2、题目来源：国家项目、省部级或学校科研任务、校外协作项目、实验室建设、就业所在单位项目、自选。
+
+                3、系(专业)意见主要是指对题目难度是否适中、题目内容能否达到毕业设计（论文）的教学要求和目的、完成本题目的条件是否满足等方面给出审核意见。
+
+                4、本表由指导教师填写，学院存档保存。
+            }\\
+        \end{supertabular}
+        \end{center}
+
+        \restoregeometry
+    }
+
+    \newcommand\xjtuinterimchecklist{
+        \pagestyle{empty}
+        \newgeometry{left=30mm,right=30mm,top=2mm,bottom=2mm}
+        \begin{center}
+            {\xiaosan 本科毕业设计（论文）中期检查表}
+        \end{center}
+        \wuhao
+        \hspace*{\fill}专业班级：计算机44
+        \vspace{-1em}
+        \begin{center}
+        \begin{tabular}{cccccc}
+            \shline
+
+            \multicolumn{1}{Ic}{\multirow{2}{*}{学院}} &
+            \multicolumn{1}{|c}{\multirow{2}{*}{\xjtu@interimchecklistschool}} &
+            \multicolumn{1}{|c}{\multirow{2}{*}{导师}} &
+            \multicolumn{1}{|c}{\multirow{2}{*}{\xjtu@interimchecklistteacher}} &
+            \multicolumn{1}{|c}{学生姓名} &
+            \multicolumn{1}{|cI}{\xjtu@interimchecklistauthor}\\\cline{5-6}
+
+            \multicolumn{1}{Ic}{} &
+            \multicolumn{1}{|c}{} &
+            \multicolumn{1}{|c}{} &
+            \multicolumn{1}{|c}{} &
+            \multicolumn{1}{|c}{学号} &
+            \multicolumn{1}{|cI}{\xjtu@interimcheckliststuid}\\ \hline
+
+            \multicolumn{1}{Ic}{\multirow{2}{*}{课题名称}} &
+            \multicolumn{3}{|c}{\multirow{2}{*}{\xjtu@interimchecklisttitle}} &
+            \multicolumn{2}{|cI}{有无关于指导的文字记录}\\\cline{5-6}
+
+            \multicolumn{1}{Ic}{} &
+            \multicolumn{1}{|c}{} &
+            \multicolumn{1}{c}{} &
+            \multicolumn{1}{c}{} &
+            \multicolumn{1}{|c}{有} &
+            \multicolumn{1}{|cI}{无}\\\hline
+
+            \multicolumn{4}{Il}{
+                \multirow{2}{*}{
+                    \begin{tabular}{p{4.42cm}<{\centering}|p{4.42cm}<{\centering}}
+                        初稿计划完成时间 & 修改稿计划完成时间 \\
+                        \xjtu@interimchecklistdrafttime & \xjtu@interimchecklistmanuscripttime
+                    \end{tabular}
+                }
+            } & \multicolumn{2}{|cI}{定稿计划完成时间} \\\hline
+
+            \multicolumn{1}{Ic}{} & & & & \multicolumn{2}{|cI}{\xjtu@interimchecklistfinalizedtime} \\\hline
+
+            \multicolumn{6}{Ip{14.6cm}I}{
+                \vspace{-4pt}
+                1．指导情况（指导方式和内容、学生执行情况）：\par
+                \xjtu@interimchecklistguidance
+                \vspace{0.5em}\par
+                2．对毕业设计（论文）目标与方案的执行情况：\par
+                \xjtu@interimchecklistimplementation
+                \vspace{0.5em}\par
+                3．存在的问题、拟采取解决问题的方案及措施：\par
+                \xjtu@interimchecklistproblem
+                \vspace{0.5em}\par
+                \hspace{\fill}导师签名：\xjtu@interimchecklistteachername\qquad\,\par
+                \hspace{\fill}\xjtu@interimchecklistteacheryear~年~\xjtu@interimchecklistteachermonth~月~\xjtu@interimchecklistteacherday~日\qquad\,
+            }\\\hline
+
+            \multicolumn{6}{Ip{14cm}I}{
+                \vspace{-4pt}
+                系（专业）意见：
+                \vspace{0.5em}\par
+                \xjtu@interimchecklistmajoropinion
+                \vspace{0.5em}\par
+                \hspace{\fill}系（专业）主任签名：\xjtu@interimchecklistmajorpresidentname\quad\,\par
+                \hspace{\fill}\xjtu@interimchecklistmajorpresidentyear~年~\xjtu@interimchecklistmajorpresidentmonth~月~\xjtu@interimchecklistmajorpresidentday~日\quad\,
+            }\\\shline
+        \end{tabular}
+        \end{center}
+        \vspace{0.5em}\par
+        \noindent 注：理工医艺术类不填“初稿计划完成时间、修改稿计划完成时间、定稿计划完成时间”。
+
+        \hspace{\fill}主管教学院长签名：\xjtu@interimchecklistschoolpresidentname~\quad \xjtu@interimchecklistschoolpresidentyear~年~\xjtu@interimchecklistschoolpresidentmonth~月~\xjtu@interimchecklistschoolpresidentday~日
+    }
+
+    \newcommand\xjtuprogresschecklist{
+        \pagestyle{empty}
+        \begin{landscape}
+            \begin{center}
+                {\xiaosan 本科毕业设计（论文）工作进展情况记录表}
+            \end{center}
+
+            \xiaosi
+            \noindent 毕业设计（论文）题目：\xjtu@progresschecklisttitle\\
+            学生姓名：\xjtu@progresschecklistauthor\qquad 学号：\xjtu@progresscheckliststuid\qquad 专业班级：\xjtu@progresschecklistclass\qquad 指导教师：\xjtu@progresschecklistteacher
+
+            \wuhao
+            \setlength{\baselineskip}{10pt}
+            \begin{table}[!h]
+                \centering
+                \begin{tabular}{llll}
+                    \shline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}周（次）} & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}日期}                          & \multicolumn{1}{|p{9cm}<{\centering}}{\vspace{-8pt}具体工作内容}                   & \multicolumn{1}{|p{9cm}<{\centering}I}{\vspace{-8pt}指导教师指导情况}               \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 1}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistadate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistawork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistateach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 2}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistbdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistbwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistbteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 3}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistcdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistcwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistcteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 4}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistddate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistdwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistdteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 5}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistedate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistework} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklisteteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 6}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistfdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistfwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistfteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 7}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistgdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistgwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistgteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 8}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklisthdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklisthwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklisthteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt} 9}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistidate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistiwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistiteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}10}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistjdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistjwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistjteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}11}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistkdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistkwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistkteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}12}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistldate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistlwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistlteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}13}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistmdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistmwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistmteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}14}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistndate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistnwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistnteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}15}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistodate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistowork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistoteach} \\[4pt]\hline
+                        \multicolumn{1}{Ip{2cm}<{\centering}}{\vspace{-8pt}16}      & \multicolumn{1}{|p{3cm}<{\centering}}{\vspace{-8pt}\xjtu@progresschecklistpdate} & \multicolumn{1}{|p{9cm}}{\vspace{-8pt}\xjtu@progresschecklistpwork} & \multicolumn{1}{|p{9cm}I}{\vspace{-8pt}\xjtu@progresschecklistpteach} \\[4pt]\hline
+                        \shline
+                \end{tabular}
+            \end{table}
+
+            \noindent 注：此表由学生如实填写，毕业设计（论文）工作完成后，此表交院（系）教学秘书存档。
+
+            \hspace*{\fill}学生签名：\xjtu@progresschecklistauthorname\qquad 指导教师签名：\xjtu@progresschecklistteachername
+        \end{landscape}
+    }
 
    \let\oldfootnote\footnote
    \renewcommand \footnote[1]{\oldfootnote{\xiaowu #1}}
