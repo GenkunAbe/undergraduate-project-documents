@@ -1041,7 +1041,7 @@
         \mbox{}
 
         {\wuhao \noindent
-            {\bf 关键词}：
+            {\bf 关~~键~~词}：
         \xjtu@ckeywords}
         \clearpage
     }
